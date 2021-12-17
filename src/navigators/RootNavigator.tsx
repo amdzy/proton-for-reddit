@@ -1,18 +1,35 @@
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import React, { useMemo } from "react";
+import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Button, Pressable, Text, View } from "react-native";
+import { Button, Text, View } from "react-native";
 import { MainPageTopTabs } from "./MainPageTopTabs";
 import { TabBarIcon } from "@/components";
 import { TabNavigatorButtons } from "./Components/TabNavigatorButtons";
+import { useThemeStore } from "@/stores/themeStore";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export const RootNavigator = () => {
+  const theme = useThemeStore((state) => state.colors);
+
+  const myTheme = useMemo(() => {
+    return {
+      ...DefaultTheme,
+      colors: {
+        ...DefaultTheme.colors,
+        primary: theme.primary,
+        background: theme.background,
+        card: theme.surface,
+        text: theme.text,
+        border: theme.surface,
+      },
+    };
+  }, [theme]);
+
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={myTheme}>
       <Stack.Navigator>
         <Stack.Screen
           name="Main"
@@ -34,8 +51,6 @@ const TabNav = () => {
     <Tab.Navigator
       screenOptions={({ navigation }) => ({
         tabBarShowLabel: false,
-        tabBarActiveTintColor: "tomato",
-        tabBarInactiveTintColor: "gray",
         headerRight: () => <TabNavigatorButtons navigation={navigation} />,
         headerRightContainerStyle: {
           marginRight: 12,

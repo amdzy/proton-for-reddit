@@ -24,7 +24,8 @@
     "react-native-tab-view": "^3.1.1",
     "react-native-web": "0.17.1",
     "zustand": "^3.6.7",
-    "react-native-pager-view": "5.4.9"
+    "react-native-pager-view": "5.4.9",
+    "@react-native-async-storage/async-storage": "~1.15.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
