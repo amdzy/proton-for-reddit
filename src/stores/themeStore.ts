@@ -1,25 +1,30 @@
 import create from "zustand";
-import { ColorProps } from "./types";
-import { useColorStore } from "./colorStore";
+import { ColorsDTO, ThemeName } from "./types";
 
 interface StoreProps {
-  colors: ColorProps;
+  theme: ThemeName;
+  colors: {
+    dark: ColorsDTO;
+  };
+  statusBar: "light" | "dark";
+  setTheme: (themeName: ThemeName) => void;
 }
-
-const theme = useColorStore.getState().theme;
-const mainColors = useColorStore.getState().colors;
-const defaultColors = mainColors[theme];
 
 export const useThemeStore = create<StoreProps>((set, get) => ({
   colors: {
-    primary: defaultColors.primary,
-    accent: defaultColors.accent,
-    highlight: defaultColors.highlight,
-    background: defaultColors.background,
-    surface: defaultColors.surface,
-    toolbar: defaultColors.toolbar,
-    backdrop: defaultColors.backdrop,
-    text: defaultColors.text,
-    placeholder: defaultColors.placeholder,
+    dark: {
+      primary: "#64ffda",
+      accent: "rgba(100, 255, 218, 0.1)",
+      highlight: "#57cbff",
+      background: "#020c1b",
+      surface: "#0a192f",
+      toolbar: "#112240",
+      backdrop: "#233554",
+      text: "#e6f1ff",
+      placeholder: "#a8b2d1",
+    },
   },
+  theme: "dark",
+  statusBar: "light",
+  setTheme: (themeName) => set(() => ({ theme: themeName })),
 }));

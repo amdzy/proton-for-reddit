@@ -4,7 +4,8 @@ import React from "react";
 import { Pressable, View } from "react-native";
 
 export const TabNavigatorButtons = ({ navigation }: any) => {
-  const color = useThemeStore((state) => state.colors.text);
+  const theme = useThemeStore((state) => state.theme);
+  const color = useThemeStore((state) => state.colors[theme].text);
   return (
     <View style={{ flexDirection: "row" }}>
       <Pressable onPress={() => navigation.navigate("Search")}>

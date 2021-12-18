@@ -12,7 +12,8 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export const RootNavigator = () => {
-  const theme = useThemeStore((state) => state.colors);
+  const chosenTheme = useThemeStore((state) => state.theme);
+  const theme = useThemeStore((state) => state.colors[chosenTheme]);
 
   const myTheme = useMemo(() => {
     return {

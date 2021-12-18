@@ -1,4 +1,4 @@
-export interface ColorProps {
+export interface ColorsDTO {
   primary: string;
   accent: string;
   highlight: string;
@@ -9,3 +9,5 @@ export interface ColorProps {
   text: string;
   placeholder: string;
 }
+
+export type ThemeName = "dark" | "light";
