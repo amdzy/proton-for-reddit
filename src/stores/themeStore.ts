@@ -15,7 +15,7 @@ export const useThemeStore = create<StoreProps>((set, get) => ({
     dark: {
       primary: "#64ffda",
       accent: "rgba(100, 255, 218, 0.1)",
-      highlight: "#57cbff",
+      highlight: "#64ffda",
       background: "#020c1b",
       surface: "#0a192f",
       toolbar: "#112240",

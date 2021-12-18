@@ -10,4 +10,4 @@ export interface ColorsDTO {
   placeholder: string;
 }
 
-export type ThemeName = "dark" | "light";
+export type ThemeName = "dark";
