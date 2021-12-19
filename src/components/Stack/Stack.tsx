@@ -4,7 +4,7 @@ import { Spacer } from "../Spacer/Spacer";
 
 interface Props {
   children: ReactNode;
-  size?: number;
+  space?: number;
   direction?: "row" | "column" | "row-reverse" | "column-reverse";
   spaceHorizontal?: boolean;
   style?: ViewStyle;
@@ -12,7 +12,7 @@ interface Props {
 
 export const Stack = ({
   children,
-  size = 0,
+  space = 0,
   direction = "column",
   spaceHorizontal = false,
   style,
@@ -29,7 +29,7 @@ export const Stack = ({
         return (
           <>
             {child}
-            <Spacer size={size} horizontal={spaceHorizontal} />
+            <Spacer size={space} horizontal={spaceHorizontal} />
           </>
         );
       })}

@@ -3,7 +3,7 @@ module.exports = function(api) {
   return {
     presets: ['babel-preset-expo'],
     plugins: [
-      ["tsconfig-paths-module-resolver"]
+      ["tsconfig-paths-module-resolver"],['react-native-reanimated/plugin']
     ]
   };
 };

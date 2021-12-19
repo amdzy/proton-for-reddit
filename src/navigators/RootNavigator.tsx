@@ -7,6 +7,7 @@ import { MainPageTopTabs } from "./MainPageTopTabs";
 import { TabBarIcon } from "@/components";
 import { TabNavigatorButtons } from "./Components/TabNavigatorButtons";
 import { useThemeStore } from "@/stores/themeStore";
+import { SubscriptionsScreen } from "@/screens";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -84,7 +85,7 @@ const TabNav = () => {
       />
       <Tab.Screen
         name="Subs"
-        component={SecondScreen}
+        component={SubscriptionsScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
             <TabBarIcon
@@ -93,6 +94,7 @@ const TabNav = () => {
               size={size}
             />
           ),
+          title: "SubReddits",
         }}
       />
       <Tab.Screen

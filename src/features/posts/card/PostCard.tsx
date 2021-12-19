@@ -1,7 +1,6 @@
-import { Stack } from "@/components";
 import { useThemeStore } from "@/stores/themeStore";
 import React from "react";
-import { Button, Image, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { CardFooter } from "../components/CardFooter/CardFooter";
 import { CardHeader } from "../components/CardHeader/CardHeader";
 import { CardMain } from "../components/CardMain/CardMain";

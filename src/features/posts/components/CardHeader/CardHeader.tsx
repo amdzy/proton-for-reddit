@@ -9,9 +9,9 @@ export const CardHeader = () => {
   const chosenTheme = useThemeStore((state) => state.theme);
   const theme = useThemeStore((state) => state.colors[chosenTheme]);
   return (
-    <Stack size={4} style={{ padding: 10 }}>
+    <Stack space={4} style={{ padding: 10 }}>
       <Stack
-        size={8}
+        space={8}
         direction="row"
         spaceHorizontal={true}
         style={{ alignItems: "center" }}
@@ -39,10 +39,10 @@ export const CardHeader = () => {
           pagination and filtering.
         </Text>
       </View>
-      <Stack size={8} direction="row" spaceHorizontal={true}>
+      <Stack space={8} direction="row" spaceHorizontal={true}>
         <Flair tag="General" />
       </Stack>
-      <Stack size={8} direction="row" spaceHorizontal={true}>
+      <Stack space={8} direction="row" spaceHorizontal={true}>
         <Text style={{ color: theme.placeholder }}>2430</Text>
         <Text style={{ color: theme.placeholder }}>-</Text>
         <Text style={{ color: theme.placeholder }}>100 Comments</Text>
