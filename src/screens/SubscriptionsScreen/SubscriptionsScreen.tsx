@@ -1,3 +1,4 @@
+import { Divider } from "@/components";
 import { useThemeStore } from "@/stores/themeStore";
 import React from "react";
 import { FlatList } from "react-native";
@@ -44,7 +45,7 @@ export const SubscriptionsScreen = ({ navigation }: Props) => {
   const chosenTheme = useThemeStore((state) => state.theme);
   const theme = useThemeStore((state) => state.colors[chosenTheme]);
   return (
-    <SafeAreaView style={{ backgroundColor: theme.background, flex: 1 }}>
+    <SafeAreaView style={{ backgroundColor: theme.surface, flex: 1 }}>
       <FlatList
         data={arr}
         renderItem={({ item }) => (
@@ -53,6 +54,9 @@ export const SubscriptionsScreen = ({ navigation }: Props) => {
             text={item.name}
             navigation={navigation}
           />
+        )}
+        ItemSeparatorComponent={() => (
+          <Divider style={{ backgroundColor: theme.background }} />
         )}
       />
     </SafeAreaView>

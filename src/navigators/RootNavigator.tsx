@@ -2,12 +2,13 @@ import React, { useMemo } from "react";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Button, Text, View } from "react-native";
+import { Button, Pressable, Text, View } from "react-native";
 import { MainPageTopTabs } from "./MainPageTopTabs";
-import { TabBarIcon } from "@/components";
+import { Avatar, TabBarIcon } from "@/components";
 import { TabNavigatorButtons } from "./Components/TabNavigatorButtons";
 import { useThemeStore } from "@/stores/themeStore";
 import { SubscriptionsScreen } from "@/screens";
+import { MessagesPageTopTab } from "./MessagesPageTopTab";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -57,6 +58,15 @@ const TabNav = () => {
         headerRightContainerStyle: {
           marginRight: 12,
         },
+        headerLeft: () => (
+          <Pressable onPress={() => navigation.navigate("Profile")}>
+            <Avatar size={30} />
+          </Pressable>
+        ),
+        headerLeftContainerStyle: {
+          marginRight: 12,
+          marginLeft: 12,
+        },
       })}
     >
       <Tab.Screen
@@ -71,9 +81,10 @@ const TabNav = () => {
         }}
       />
       <Tab.Screen
-        name="Messages"
-        component={SecondScreen}
+        name="Inbox"
+        component={MessagesPageTopTab}
         options={{
+          headerShadowVisible: false,
           tabBarIcon: ({ color, size }) => (
             <TabBarIcon
               color={color}
@@ -94,7 +105,7 @@ const TabNav = () => {
               size={size}
             />
           ),
-          title: "SubReddits",
+          title: "Subscriptions",
         }}
       />
       <Tab.Screen
@@ -108,6 +119,7 @@ const TabNav = () => {
               size={size}
             />
           ),
+          headerLeft: () => null,
         }}
       />
       <Tab.Screen
@@ -117,6 +129,7 @@ const TabNav = () => {
           tabBarIcon: ({ color, size }) => (
             <TabBarIcon color={color} icon={"cog"} size={size} />
           ),
+          headerLeft: () => null,
         }}
       />
     </Tab.Navigator>
