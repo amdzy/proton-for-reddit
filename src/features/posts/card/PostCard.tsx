@@ -14,6 +14,10 @@ export const PostCard = () => {
         backgroundColor: theme.surface,
         width: "100%",
         marginVertical: 6,
+        elevation: 2,
+        shadowOffset: { width: 1, height: 1 },
+        shadowColor: theme.backdrop,
+        shadowOpacity: 0.1,
       }}
     >
       <CardHeader />

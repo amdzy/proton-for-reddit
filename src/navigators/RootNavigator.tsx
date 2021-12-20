@@ -9,6 +9,7 @@ import { TabNavigatorButtons } from "./Components/TabNavigatorButtons";
 import { useThemeStore } from "@/stores/themeStore";
 import { SubscriptionsScreen } from "@/screens";
 import { MessagesPageTopTab } from "./MessagesPageTopTab";
+import { SettingsStack } from "./SettingsStack";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -24,7 +25,7 @@ export const RootNavigator = () => {
         ...DefaultTheme.colors,
         primary: theme.primary,
         background: theme.background,
-        card: theme.surface,
+        card: theme.toolbar,
         text: theme.text,
         border: theme.surface,
       },
@@ -124,12 +125,13 @@ const TabNav = () => {
       />
       <Tab.Screen
         name="Settings"
-        component={SecondScreen}
+        component={SettingsStack}
         options={{
           tabBarIcon: ({ color, size }) => (
             <TabBarIcon color={color} icon={"cog"} size={size} />
           ),
           headerLeft: () => null,
+          headerShown: false,
         }}
       />
     </Tab.Navigator>

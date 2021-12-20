@@ -13,24 +13,24 @@ const arr = [
       "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.G5cEdePPv-UVJyadWJCxlQHaE9%26pid%3DApi&f=1",
   },
   {
-    id: 1,
+    id: 2,
     name: "Popular",
     image: "",
   },
   {
-    id: 1,
+    id: 3,
     name: "All",
     image:
       "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.G5cEdePPv-UVJyadWJCxlQHaE9%26pid%3DApi&f=1",
   },
   {
-    id: 2,
+    id: 4,
     name: "Games",
     image:
       "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.G5cEdePPv-UVJyadWJCxlQHaE9%26pid%3DApi&f=1",
   },
   {
-    id: 3,
+    id: 5,
     name: "Games",
     image:
       "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.G5cEdePPv-UVJyadWJCxlQHaE9%26pid%3DApi&f=1",
@@ -45,7 +45,7 @@ export const SubscriptionsScreen = ({ navigation }: Props) => {
   const chosenTheme = useThemeStore((state) => state.theme);
   const theme = useThemeStore((state) => state.colors[chosenTheme]);
   return (
-    <SafeAreaView style={{ backgroundColor: theme.surface, flex: 1 }}>
+    <SafeAreaView style={{ backgroundColor: theme.background, flex: 1 }}>
       <FlatList
         data={arr}
         renderItem={({ item }) => (
@@ -54,9 +54,6 @@ export const SubscriptionsScreen = ({ navigation }: Props) => {
             text={item.name}
             navigation={navigation}
           />
-        )}
-        ItemSeparatorComponent={() => (
-          <Divider style={{ backgroundColor: theme.background }} />
         )}
       />
     </SafeAreaView>

@@ -5,8 +5,8 @@ interface StoreProps {
   theme: ThemeName;
   colors: {
     dark: ColorsDTO;
+    light: ColorsDTO;
   };
-  statusBar: "light" | "dark";
   setTheme: (themeName: ThemeName) => void;
 }
 
@@ -22,9 +22,21 @@ export const useThemeStore = create<StoreProps>((set, get) => ({
       backdrop: "#233554",
       text: "#e6f1ff",
       placeholder: "#a8b2d1",
+      statusBar: "light",
+    },
+    light: {
+      primary: "#64ffda",
+      accent: "rgba(100, 255, 218, 0.1)",
+      highlight: "#64ffda",
+      background: "#ffffff",
+      surface: "#e6f1ff",
+      toolbar: "#e6f1ff",
+      backdrop: "#e6f1ff",
+      text: "#020c1b",
+      placeholder: "#a8b2d1",
+      statusBar: "dark",
     },
   },
   theme: "dark",
-  statusBar: "light",
   setTheme: (themeName) => set(() => ({ theme: themeName })),
 }));

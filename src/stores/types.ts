@@ -8,6 +8,7 @@ export interface ColorsDTO {
   backdrop: string;
   text: string;
   placeholder: string;
+  statusBar: "dark" | "light";
 }
 
-export type ThemeName = "dark";
+export type ThemeName = "dark" | "light";

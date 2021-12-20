@@ -16,7 +16,7 @@ export const Divider = ({ size = 1, vertical = false, style }: Props) => {
       style={{
         width: vertical ? size : "100%",
         height: !vertical ? size : "100%",
-        backgroundColor: theme.placeholder,
+        backgroundColor: theme.backdrop,
         ...style,
       }}
     />
