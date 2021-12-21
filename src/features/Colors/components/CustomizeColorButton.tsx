@@ -1,17 +1,15 @@
 import { Spacer } from "@/components";
-import { useThemeStore } from "@/stores/themeStore";
-import { ColorsDTO } from "@/stores/types";
+import { useTheme } from "@/hooks";
 import React from "react";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, PressableProps, Text, View } from "react-native";
 
-interface Props {
+interface Props extends PressableProps {
   text: string;
-  type: keyof ColorsDTO;
+  color: string;
 }
 
-export const CustomizeColorButton = ({ text, type }: Props) => {
-  const chosenTheme = useThemeStore((state) => state.theme);
-  const theme = useThemeStore((state) => state.colors[chosenTheme]);
+export const CustomizeColorButton = ({ text, color, ...props }: Props) => {
+  const theme = useTheme();
 
   return (
     <Pressable
@@ -21,12 +19,13 @@ export const CustomizeColorButton = ({ text, type }: Props) => {
         alignItems: "center",
       }}
       android_ripple={{ color: theme.placeholder }}
+      {...props}
     >
       <View
         style={{
           width: 24,
           height: 24,
-          backgroundColor: theme[type],
+          backgroundColor: color,
           borderRadius: 12,
         }}
       />

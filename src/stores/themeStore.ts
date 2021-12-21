@@ -1,4 +1,5 @@
 import create from "zustand";
+import produce from "immer";
 import { ColorsDTO, ThemeName } from "./types";
 
 interface StoreProps {
@@ -8,6 +9,7 @@ interface StoreProps {
     light: ColorsDTO;
   };
   setTheme: (themeName: ThemeName) => void;
+  changeColor: (type: keyof ColorsDTO, value: string) => void;
 }
 
 export const useThemeStore = create<StoreProps>((set, get) => ({
@@ -39,4 +41,11 @@ export const useThemeStore = create<StoreProps>((set, get) => ({
   },
   theme: "dark",
   setTheme: (themeName) => set(() => ({ theme: themeName })),
+  changeColor: (type, value) =>
+    set(
+      produce((state) => {
+        const theme = get().theme;
+        state.colors[theme][type] = value;
+      })
+    ),
 }));
