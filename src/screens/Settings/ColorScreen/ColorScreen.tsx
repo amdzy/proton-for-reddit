@@ -1,4 +1,4 @@
-import { Divider } from "@/components";
+import { Divider, SettingsHeader } from "@/components";
 import {
   ColorPicker,
   CustomizeColorButton,
@@ -35,17 +35,9 @@ export const ColorScreen = () => {
   };
 
   return (
-    <ScrollView style={{ flex: 1 }}>
+    <ScrollView style={{ flex: 1, backgroundColor: theme.background }}>
+      <SettingsHeader text="Themes" />
       <View style={{ marginBottom: 18, padding: 16 }}>
-        <Text
-          style={{
-            color: theme.primary,
-            fontSize: 18,
-            marginBottom: 12,
-          }}
-        >
-          Themes
-        </Text>
         <FlatList
           keyExtractor={(item) => item.name}
           data={themes}
@@ -56,17 +48,11 @@ export const ColorScreen = () => {
         />
       </View>
       <Divider />
-      <Text
-        style={{
-          color: theme.primary,
-          fontSize: 18,
-          marginBottom: 12,
-          paddingHorizontal: 16,
-          paddingTop: 16,
-        }}
-      >
-        Customize Colors
-      </Text>
+      <SettingsHeader
+        text="Customize Colors"
+        style={{ padding: 16, paddingBottom: 0 }}
+      />
+
       {colors.map((item) => {
         return (
           <View key={item.type}>

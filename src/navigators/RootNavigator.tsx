@@ -7,7 +7,14 @@ import { MainPageTopTabs } from "./MainPageTopTabs";
 import { Avatar, TabBarIcon } from "@/components";
 import { TabNavigatorButtons } from "./Components/TabNavigatorButtons";
 import { useThemeStore } from "@/stores/themeStore";
-import { SubscriptionsScreen } from "@/screens";
+import {
+  ColorScreen,
+  FilterScreen,
+  FontScreen,
+  SettingsScreen,
+  SubscriptionsScreen,
+  ThemeScreen,
+} from "@/screens";
 import { MessagesPageTopTab } from "./MessagesPageTopTab";
 import { SettingsStack } from "./SettingsStack";
 
@@ -34,7 +41,7 @@ export const RootNavigator = () => {
 
   return (
     <NavigationContainer theme={myTheme}>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{ animation: "slide_from_right" }}>
         <Stack.Screen
           name="Main"
           component={TabNav}
@@ -45,6 +52,11 @@ export const RootNavigator = () => {
         <Stack.Screen name="Comments" component={SecondScreen} />
         <Stack.Screen name="Sub" component={SecondScreen} />
         <Stack.Screen name="Search" component={SecondScreen} />
+        <Stack.Screen name="General" component={ThemeScreen} />
+        <Stack.Screen name="Theme" component={ThemeScreen} />
+        <Stack.Screen name="Colors" component={ColorScreen} />
+        <Stack.Screen name="Fonts" component={FontScreen} />
+        <Stack.Screen name="Filters" component={FilterScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -125,13 +137,12 @@ const TabNav = () => {
       />
       <Tab.Screen
         name="Settings"
-        component={SettingsStack}
+        component={SettingsScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
             <TabBarIcon color={color} icon={"cog"} size={size} />
           ),
           headerLeft: () => null,
-          headerShown: false,
         }}
       />
     </Tab.Navigator>

@@ -1,4 +1,5 @@
 import { Avatar, Stack } from "@/components";
+import { useTheme } from "@/hooks";
 import { useThemeStore } from "@/stores/themeStore";
 import { Link } from "@react-navigation/native";
 import React from "react";
@@ -6,8 +7,8 @@ import { Text, View } from "react-native";
 import { Flair } from "../Flair/Flair";
 
 export const CardHeader = () => {
-  const chosenTheme = useThemeStore((state) => state.theme);
-  const theme = useThemeStore((state) => state.colors[chosenTheme]);
+  const theme = useTheme();
+  const fonts = useThemeStore((state) => state.fonts);
   return (
     <Stack space={4} style={{ padding: 10 }}>
       <Stack
@@ -34,7 +35,13 @@ export const CardHeader = () => {
         <Text style={{ color: theme.placeholder, fontSize: 12 }}>. 1h</Text>
       </Stack>
       <View>
-        <Text style={{ color: theme.text, fontSize: 18, lineHeight: 22 }}>
+        <Text
+          style={{
+            color: theme.text,
+            fontSize: fonts.fontSize.header,
+            lineHeight: 22,
+          }}
+        >
           Many endpoints on reddit use the same protocol for controlling
           pagination and filtering.
         </Text>

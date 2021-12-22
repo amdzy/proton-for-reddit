@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, ScrollView } from "react-native";
+import { FlatList } from "react-native";
 import { ListItem } from "@/components";
 
 const settings = [
@@ -16,7 +16,7 @@ const settings = [
   {
     name: "Content Filter",
     icon: "filter-variant",
-    screen: "General",
+    screen: "Filters",
   },
 ];
 

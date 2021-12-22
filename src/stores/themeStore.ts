@@ -8,8 +8,21 @@ interface StoreProps {
     dark: ColorsDTO;
     light: ColorsDTO;
   };
+  fonts: {
+    fontSize: {
+      header: number;
+      content: number;
+    };
+    fontFamily: {
+      header: string;
+      content: string;
+    };
+  };
+
   setTheme: (themeName: ThemeName) => void;
   changeColor: (type: keyof ColorsDTO, value: string) => void;
+  changeFontSize: (type: string, value: string) => void;
+  changeFontFamily: (type: string, value: string) => void;
 }
 
 export const useThemeStore = create<StoreProps>((set, get) => ({
@@ -40,12 +53,34 @@ export const useThemeStore = create<StoreProps>((set, get) => ({
     },
   },
   theme: "dark",
+  fonts: {
+    fontSize: {
+      header: 18,
+      content: 15,
+    },
+    fontFamily: {
+      header: "roboto",
+      content: "roboto",
+    },
+  },
   setTheme: (themeName) => set(() => ({ theme: themeName })),
   changeColor: (type, value) =>
     set(
       produce((state) => {
         const theme = get().theme;
         state.colors[theme][type] = value;
+      })
+    ),
+  changeFontSize: (type, value) =>
+    set(
+      produce((state) => {
+        state.fonts.fontSize[type] = value;
+      })
+    ),
+  changeFontFamily: (type, value) =>
+    set(
+      produce((state) => {
+        state.fonts.fontFamily[type] = value;
       })
     ),
 }));

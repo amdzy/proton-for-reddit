@@ -1,3 +1,4 @@
+import { useTheme } from "@/hooks";
 import { useThemeStore } from "@/stores/themeStore";
 import React from "react";
 import { Image, Text, View } from "react-native";
@@ -8,10 +9,10 @@ interface Props {
 }
 
 export const CardMain = ({ text, url }: Props) => {
-  const chosenTheme = useThemeStore((state) => state.theme);
-  const theme = useThemeStore((state) => state.colors[chosenTheme]);
+  const theme = useTheme();
+  const fonts = useThemeStore((state) => state.fonts);
 
-  if (text) {
+  if (true) {
     return (
       <View style={{ paddingHorizontal: 10 }}>
         <Text
@@ -21,6 +22,7 @@ export const CardMain = ({ text, url }: Props) => {
             padding: 8,
             borderRadius: 10,
             lineHeight: 20,
+            fontSize: fonts.fontSize.content,
           }}
           numberOfLines={5}
           ellipsizeMode={"tail"}
