@@ -11,12 +11,12 @@ import {
   ColorScreen,
   FilterScreen,
   FontScreen,
+  NotificationScreen,
   SettingsScreen,
   SubscriptionsScreen,
   ThemeScreen,
 } from "@/screens";
 import { MessagesPageTopTab } from "./MessagesPageTopTab";
-import { SettingsStack } from "./SettingsStack";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -57,6 +57,7 @@ export const RootNavigator = () => {
         <Stack.Screen name="Colors" component={ColorScreen} />
         <Stack.Screen name="Fonts" component={FontScreen} />
         <Stack.Screen name="Filters" component={FilterScreen} />
+        <Stack.Screen name="Notifications" component={NotificationScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -62,17 +62,19 @@ export const FilterScreen = () => {
           />
         }
       />
-      <ListItem
-        text="Blur images in NSFW"
-        icon="eye-off"
-        onPress={() => setFilter("blurNsfw")}
-        right={
-          <Checkbox
-            checked={filters.blurNsfw}
-            onValueChange={() => setFilter("blurNsfw")}
-          />
-        }
-      />
+      {filters.nsfw && (
+        <ListItem
+          text="Blur images in NSFW"
+          icon="eye-off"
+          onPress={() => setFilter("blurNsfw")}
+          right={
+            <Checkbox
+              checked={filters.blurNsfw}
+              onValueChange={() => setFilter("blurNsfw")}
+            />
+          }
+        />
+      )}
       <FilterModal
         visible={isModalOpen}
         onClose={handleCloseModal}

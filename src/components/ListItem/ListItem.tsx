@@ -1,6 +1,12 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Pressable, PressableProps, Text, View } from "react-native";
+import {
+  Pressable,
+  PressableProps,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { Spacer } from "../Spacer/Spacer";
 import { useTheme } from "@/hooks";
 
@@ -8,28 +14,28 @@ interface Props extends PressableProps {
   text: string;
   subText?: string;
   icon?: any;
-  right?: any;
+  right?: ReactNode;
+  left?: ReactNode;
 }
 
-export const ListItem = ({ text, subText, icon, right, ...props }: Props) => {
+export const ListItem = ({
+  text,
+  subText,
+  icon,
+  right,
+  left,
+  disabled,
+  ...props
+}: Props) => {
   const theme = useTheme();
   return (
     <Pressable
-      style={{
-        flexDirection: "row",
-        alignItems: "center",
-        padding: 20,
-        justifyContent: "space-between",
-      }}
+      style={styles.button}
       android_ripple={{ color: theme.placeholder }}
+      disabled={disabled}
       {...props}
     >
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-        }}
-      >
+      <View style={styles.leftContainer}>
         {icon && (
           <MaterialCommunityIcons
             name={icon}
@@ -37,9 +43,17 @@ export const ListItem = ({ text, subText, icon, right, ...props }: Props) => {
             color={theme.placeholder}
           />
         )}
-        <Spacer size={icon ? 35 : 58} horizontal />
+        {left && left}
+        <Spacer size={icon || left ? 35 : 58} horizontal />
         <View>
-          <Text style={{ color: theme.text, fontSize: 15 }}>{text}</Text>
+          <Text
+            style={{
+              color: disabled ? theme.placeholder : theme.text,
+              fontSize: 16,
+            }}
+          >
+            {text}
+          </Text>
           {subText && (
             <Text style={{ color: theme.placeholder, fontSize: 15 }}>
               {subText}
@@ -51,3 +65,16 @@ export const ListItem = ({ text, subText, icon, right, ...props }: Props) => {
     </Pressable>
   );
 };
+
+const styles = StyleSheet.create({
+  button: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 18,
+    justifyContent: "space-between",
+  },
+  leftContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+});

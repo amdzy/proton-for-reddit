@@ -1,6 +1,5 @@
 import React from "react";
 import { Pressable, StyleSheet } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useTheme } from "@/hooks";
 
 interface Props {
@@ -8,7 +7,7 @@ interface Props {
   onValueChange?: () => void;
 }
 
-export const Checkbox = ({ checked, onValueChange }: Props) => {
+export const RadioButton = ({ checked, onValueChange }: Props) => {
   const theme = useTheme();
   return (
     <Pressable
@@ -16,25 +15,21 @@ export const Checkbox = ({ checked, onValueChange }: Props) => {
         styles.checkboxBase,
         {
           borderColor: checked ? theme.primary : theme.placeholder,
-          backgroundColor: checked ? theme.accent : "transparent",
+          backgroundColor: checked ? theme.primary : "transparent",
         },
       ]}
       onPress={onValueChange}
-    >
-      {checked && (
-        <MaterialCommunityIcons name="check" size={16} color={theme.text} />
-      )}
-    </Pressable>
+    ></Pressable>
   );
 };
 
 const styles = StyleSheet.create({
   checkboxBase: {
-    width: 20,
-    height: 20,
+    width: 18,
+    height: 18,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 4,
+    borderRadius: 10,
     borderWidth: 2,
   },
 });

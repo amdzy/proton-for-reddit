@@ -18,6 +18,16 @@ const settings = [
     icon: "filter-variant",
     screen: "Filters",
   },
+  {
+    name: "Notification",
+    icon: "bell-ring-outline",
+    screen: "Notifications",
+  },
+  {
+    name: "Data Usage",
+    icon: "chart-bell-curve-cumulative",
+    screen: "Data",
+  },
 ];
 
 export const SettingsScreen = ({ navigation }: any) => {

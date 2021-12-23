@@ -6,3 +6,4 @@ export * from "./Settings/ThemeScreen/ThemeScreen";
 export * from "./Settings/ColorScreen/ColorScreen";
 export * from "./Settings/FontScreen/FontScreen";
 export * from "./Settings/FilterScreen/FilterScreen";
+export * from "./Settings/NotificationScreen/NotificationScreen";
