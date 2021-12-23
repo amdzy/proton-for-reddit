@@ -1,42 +1,39 @@
 import { Checkbox, ListItem, SettingsHeader } from "@/components";
+import { FilterModal } from "@/features/filters";
 import { useTheme } from "@/hooks";
 import { useFilterStore } from "@/stores";
-import React from "react";
+import React, { useState } from "react";
 import { ScrollView } from "react-native";
 
-export const FilterScreen = ({ navigation }: any) => {
+export const FilterScreen = () => {
   const theme = useTheme();
   const filters = useFilterStore((state) => state.posts);
   const setFilter = useFilterStore((state) => state.setPostsFilter);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalFilterType, setModalFilterType] = useState<any>("");
 
-  console.log(filters);
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleOpenModal = (type: string) => {
+    setModalFilterType(type);
+    setIsModalOpen(true);
+  };
+
   return (
     <ScrollView style={{ flex: 1, backgroundColor: theme.background }}>
       <SettingsHeader text="Filter by" />
-      <ListItem
-        text="Subreddits"
-        subText="Hide posts from these subreddits"
-        icon="reddit"
-        onPress={() => {}}
-      />
-      <ListItem
-        text="Users"
-        subText="Hide posts from these users"
-        icon="account-off"
-        onPress={() => {}}
-      />
-      <ListItem
-        text="Keywords"
-        subText="Hide posts containing keywords in title"
-        icon="text-search"
-        onPress={() => {}}
-      />
-      <ListItem
-        text="Flairs"
-        subText="Hide posts with these flairs"
-        icon="tag-text-outline"
-        onPress={() => {}}
-      />
+      {filterBy.map((filter) => {
+        return (
+          <ListItem
+            text={filter.text}
+            subText={filter.subText}
+            icon={filter.icon}
+            onPress={() => handleOpenModal(filter.type)}
+          />
+        );
+      })}
       <SettingsHeader text="Show Posts with" />
       {postFilters.map((item) => {
         return (
@@ -76,6 +73,11 @@ export const FilterScreen = ({ navigation }: any) => {
           />
         }
       />
+      <FilterModal
+        visible={isModalOpen}
+        onClose={handleCloseModal}
+        type={modalFilterType}
+      />
     </ScrollView>
   );
 };
@@ -100,5 +102,32 @@ const postFilters = [
   {
     text: "Text",
     type: "text",
+  },
+] as const;
+
+const filterBy = [
+  {
+    text: "Subreddits",
+    subText: "Hide posts from these subreddits",
+    icon: "reddit",
+    type: "subs",
+  },
+  {
+    text: "Users",
+    subText: "Hide posts from these users",
+    icon: "account-off",
+    type: "users",
+  },
+  {
+    text: "Keywords",
+    subText: "Hide posts containing keywords in title",
+    icon: "text-search",
+    type: "keywords",
+  },
+  {
+    text: "Flairs",
+    subText: "Hide posts with these flairs",
+    icon: "tag-text-outline",
+    type: "flairs",
   },
 ] as const;

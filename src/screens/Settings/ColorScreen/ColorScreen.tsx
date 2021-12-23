@@ -3,7 +3,7 @@ import {
   ColorPicker,
   CustomizeColorButton,
   ThemeButton,
-} from "@/features/Colors";
+} from "@/features/colors";
 import { useTheme } from "@/hooks";
 import { useThemeStore } from "@/stores/themeStore";
 import { ColorsDTO } from "@/stores/types";

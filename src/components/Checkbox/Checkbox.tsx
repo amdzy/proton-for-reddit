@@ -15,7 +15,7 @@ export const Checkbox = ({ checked, onValueChange }: Props) => {
       style={[
         styles.checkboxBase,
         {
-          borderColor: theme.primary,
+          borderColor: checked ? theme.primary : theme.placeholder,
           backgroundColor: checked ? theme.accent : "transparent",
         },
       ]}

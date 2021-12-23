@@ -4,7 +4,7 @@ import Slider from "@react-native-community/slider";
 import { useTheme } from "@/hooks";
 import { hexToRgb } from "../utils/hexToRgb";
 import { rgbToHex } from "../utils/rgbToHex";
-import { CustomModal } from "@/components";
+import { CustomModal, Button } from "@/components";
 
 interface Props {
   isOpen: boolean;
@@ -87,12 +87,8 @@ export const ColorPicker = ({ isOpen, color, onClose, onSubmit }: Props) => {
         })}
       </ScrollView>
       <View style={styles.buttonsContainer}>
-        <Pressable style={{ padding: 10 }} onPress={onClose}>
-          <Text style={{ color: theme.primary }}>Cancel</Text>
-        </Pressable>
-        <Pressable style={{ padding: 10 }} onPress={() => onSubmit(ColorValue)}>
-          <Text style={{ color: theme.primary }}>Done</Text>
-        </Pressable>
+        <Button text="Cancel" onPress={onClose} />
+        <Button text="Done" onPress={() => onSubmit(ColorValue)} />
       </View>
     </CustomModal>
   );

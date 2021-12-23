@@ -15,8 +15,10 @@ interface StoreProps {
   flairs: string[];
   keywords: string[];
   users: string[];
-  subreddit: string[];
+  subs: string[];
   setPostsFilter: (type: string) => void;
+  addFilter: (type: string, value: string) => void;
+  removeFilter: (type: string, value: string) => void;
 }
 
 export const useFilterStore = create<StoreProps>((set, get) => ({
@@ -33,11 +35,23 @@ export const useFilterStore = create<StoreProps>((set, get) => ({
   flairs: [],
   keywords: [],
   users: [],
-  subreddit: [],
+  subs: [],
   setPostsFilter: (type) =>
     set(
       produce((state) => {
         state.posts[type] = !state.posts[type];
+      })
+    ),
+  addFilter: (type, value) =>
+    set(
+      produce((state) => {
+        state[type].push(value);
+      })
+    ),
+  removeFilter: (type, value) =>
+    set(
+      produce((state) => {
+        state[type] = state[type].filter((x: string) => x !== value);
       })
     ),
 }));

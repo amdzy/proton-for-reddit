@@ -2,7 +2,7 @@ import React from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Pressable, PressableProps, Text, View } from "react-native";
 import { Spacer } from "../Spacer/Spacer";
-import { useThemeStore } from "@/stores/themeStore";
+import { useTheme } from "@/hooks";
 
 interface Props extends PressableProps {
   text: string;
@@ -12,8 +12,7 @@ interface Props extends PressableProps {
 }
 
 export const ListItem = ({ text, subText, icon, right, ...props }: Props) => {
-  const chosenTheme = useThemeStore((state) => state.theme);
-  const theme = useThemeStore((state) => state.colors[chosenTheme]);
+  const theme = useTheme();
   return (
     <Pressable
       style={{
