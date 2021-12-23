@@ -9,8 +9,10 @@ interface StoreProps {
       text: string;
     };
   };
+  dataSaver: boolean;
   setNotifications: () => void;
   setNotificationsInterval: (text: string, value: number) => void;
+  setDataSaver: () => void;
 }
 
 export const useSettingsStore = create<StoreProps>((set, get) => ({
@@ -21,6 +23,7 @@ export const useSettingsStore = create<StoreProps>((set, get) => ({
       text: "1 Sec",
     },
   },
+  dataSaver: true,
   setNotifications: () =>
     set(
       produce((state) => {
@@ -34,4 +37,5 @@ export const useSettingsStore = create<StoreProps>((set, get) => ({
         state.notifications.interval.value = value;
       })
     ),
+  setDataSaver: () => set((state) => ({ dataSaver: !state.dataSaver })),
 }));

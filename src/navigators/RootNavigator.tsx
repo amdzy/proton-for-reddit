@@ -9,6 +9,7 @@ import { TabNavigatorButtons } from "./Components/TabNavigatorButtons";
 import { useThemeStore } from "@/stores/themeStore";
 import {
   ColorScreen,
+  DataScreen,
   FilterScreen,
   FontScreen,
   NotificationScreen,
@@ -58,6 +59,11 @@ export const RootNavigator = () => {
         <Stack.Screen name="Fonts" component={FontScreen} />
         <Stack.Screen name="Filters" component={FilterScreen} />
         <Stack.Screen name="Notifications" component={NotificationScreen} />
+        <Stack.Screen
+          name="Data"
+          component={DataScreen}
+          options={{ title: "Data Usage" }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
