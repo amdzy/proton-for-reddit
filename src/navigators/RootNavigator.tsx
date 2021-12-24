@@ -8,6 +8,7 @@ import { Avatar, TabBarIcon } from "@/components";
 import { TabNavigatorButtons } from "./Components/TabNavigatorButtons";
 import {
   ColorScreen,
+  CommentSettingScreen,
   DataScreen,
   FilterScreen,
   FontScreen,
@@ -69,6 +70,11 @@ export const RootNavigator = () => {
           name="PostSettings"
           component={PostSettingScreen}
           options={{ title: "Posts" }}
+        />
+        <Stack.Screen
+          name="CommentSettings"
+          component={CommentSettingScreen}
+          options={{ title: "Comments" }}
         />
       </Stack.Navigator>
     </NavigationContainer>

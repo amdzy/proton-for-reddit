@@ -5,10 +5,15 @@ import { useTheme } from "@/hooks";
 
 interface Props {
   checked?: boolean;
+  passThrough?: boolean;
   onValueChange?: () => void;
 }
 
-export const Checkbox = ({ checked, onValueChange }: Props) => {
+export const Checkbox = ({
+  checked,
+  passThrough = false,
+  onValueChange,
+}: Props) => {
   const theme = useTheme();
   return (
     <Pressable
@@ -20,6 +25,7 @@ export const Checkbox = ({ checked, onValueChange }: Props) => {
         },
       ]}
       onPress={onValueChange}
+      pointerEvents={passThrough ? "none" : "auto"}
     >
       {checked && (
         <MaterialCommunityIcons name="check" size={16} color={theme.text} />
