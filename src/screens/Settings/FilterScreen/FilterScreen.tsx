@@ -42,12 +42,7 @@ export const FilterScreen = () => {
             key={item.type}
             text={item.text}
             onPress={() => setFilter(item.type)}
-            right={
-              <Checkbox
-                checked={filters[item.type]}
-                onValueChange={() => setFilter(item.type)}
-              />
-            }
+            right={<Checkbox checked={filters[item.type]} passThrough />}
           />
         );
       })}
@@ -56,24 +51,14 @@ export const FilterScreen = () => {
         text="Enable NSFW"
         icon="baby-carriage-off"
         onPress={() => setFilter("nsfw")}
-        right={
-          <Checkbox
-            checked={filters.nsfw}
-            onValueChange={() => setFilter("nsfw")}
-          />
-        }
+        right={<Checkbox checked={filters.nsfw} passThrough />}
       />
       {filters.nsfw && (
         <ListItem
           text="Blur images in NSFW"
           icon="eye-off"
           onPress={() => setFilter("blurNsfw")}
-          right={
-            <Checkbox
-              checked={filters.blurNsfw}
-              onValueChange={() => setFilter("blurNsfw")}
-            />
-          }
+          right={<Checkbox checked={filters.blurNsfw} passThrough />}
         />
       )}
       <FilterModal

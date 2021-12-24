@@ -28,12 +28,7 @@ export const NotificationScreen = () => {
         text="Check Notifications"
         icon="email"
         onPress={setNotifications}
-        right={
-          <Checkbox
-            checked={notifications.enabled}
-            onValueChange={setNotifications}
-          />
-        }
+        right={<Checkbox checked={notifications.enabled} passThrough />}
       />
       <ListItem
         text="Check Interval"
@@ -57,7 +52,7 @@ export const NotificationScreen = () => {
                 left={
                   <RadioButton
                     checked={notifications.interval.text === item.text}
-                    onValueChange={() => handleSubmit(item.text, item.value)}
+                    passThrough
                   />
                 }
               />

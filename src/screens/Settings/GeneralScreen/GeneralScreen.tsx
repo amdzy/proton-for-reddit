@@ -31,12 +31,7 @@ export const GeneralScreen = ({ navigation }: any) => {
             subText={item.subText}
             icon={item.icon}
             onPress={() => setVideoSettings(item.type)}
-            right={
-              <Checkbox
-                checked={videoSettings[item.type]}
-                onValueChange={() => setVideoSettings(item.type)}
-              />
-            }
+            right={<Checkbox checked={videoSettings[item.type]} passThrough />}
           />
         );
       })}

@@ -21,7 +21,7 @@ export const DataScreen = () => {
         text="Data Saver"
         subText="Load lower-sized media"
         onPress={setDataSaver}
-        right={<Checkbox checked={dataSaver} onValueChange={setDataSaver} />}
+        right={<Checkbox checked={dataSaver} passThrough />}
       />
       <Divider />
       <SettingsHeader text="Videos" />

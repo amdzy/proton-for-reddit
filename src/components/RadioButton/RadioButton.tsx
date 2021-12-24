@@ -4,10 +4,15 @@ import { useTheme } from "@/hooks";
 
 interface Props {
   checked?: boolean;
+  passThrough?: boolean;
   onValueChange?: () => void;
 }
 
-export const RadioButton = ({ checked, onValueChange }: Props) => {
+export const RadioButton = ({
+  checked,
+  passThrough = false,
+  onValueChange,
+}: Props) => {
   const theme = useTheme();
   return (
     <Pressable
@@ -19,6 +24,7 @@ export const RadioButton = ({ checked, onValueChange }: Props) => {
         },
       ]}
       onPress={onValueChange}
+      pointerEvents={passThrough ? "none" : "auto"}
     ></Pressable>
   );
 };
