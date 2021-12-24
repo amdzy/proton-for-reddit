@@ -33,15 +33,33 @@ interface StoreProps {
     hideRead: boolean;
     dimImage: boolean;
   };
+  comments: {
+    sort: string;
+    avatar: boolean;
+    buttonsVisible: boolean;
+    highlightName: boolean;
+    awards: boolean;
+    tapAwards: boolean;
+    flairs: boolean;
+    flairsColor: boolean;
+  };
+  card: {
+    fullHeight: boolean;
+    subIcon: boolean;
+    carousel: boolean;
+    previewText: boolean;
+  };
   setNotifications: () => void;
   setNotificationsInterval: (text: string, value: number) => void;
   setDataSaver: () => void;
   setVideoSettings: (type: string) => void;
   setPostSort: (val: string) => void;
   setPostSettings: (type: string) => void;
+  setCommentSettings: (type: string) => void;
+  setCardSettings: (type: string) => void;
 }
 
-export const useSettingsStore = create<StoreProps>((set, get) => ({
+export const useSettingsStore = create<StoreProps>((set) => ({
   notifications: {
     enabled: true,
     interval: {
@@ -72,6 +90,22 @@ export const useSettingsStore = create<StoreProps>((set, get) => ({
     markRead: true,
     hideRead: false,
     dimImage: false,
+  },
+  comments: {
+    sort: "hot",
+    avatar: false,
+    buttonsVisible: false,
+    highlightName: true,
+    awards: true,
+    tapAwards: true,
+    flairs: true,
+    flairsColor: true,
+  },
+  card: {
+    fullHeight: true,
+    subIcon: true,
+    carousel: true,
+    previewText: true,
   },
   setNotifications: () =>
     set(
@@ -106,6 +140,18 @@ export const useSettingsStore = create<StoreProps>((set, get) => ({
           state.posts.buttons[type] = !state.posts.buttons[type];
         }
         state.posts[type] = !state.posts[type];
+      })
+    ),
+  setCommentSettings: (type) =>
+    set(
+      produce((state) => {
+        state.comments[type] = !state.comments[type];
+      })
+    ),
+  setCardSettings: (type) =>
+    set(
+      produce((state) => {
+        state.card[type] = !state.card[type];
       })
     ),
 }));

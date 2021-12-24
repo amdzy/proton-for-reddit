@@ -18,6 +18,7 @@ import {
   SettingsScreen,
   SubscriptionsScreen,
   ThemeScreen,
+  ViewSettingScreen,
 } from "@/screens";
 import { MessagesPageTopTab } from "./MessagesPageTopTab";
 import { useTheme } from "@/hooks";
@@ -75,6 +76,11 @@ export const RootNavigator = () => {
           name="CommentSettings"
           component={CommentSettingScreen}
           options={{ title: "Comments" }}
+        />
+        <Stack.Screen
+          name="ViewSettings"
+          component={ViewSettingScreen}
+          options={{ title: "Views" }}
         />
       </Stack.Navigator>
     </NavigationContainer>

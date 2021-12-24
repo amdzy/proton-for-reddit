@@ -8,3 +8,4 @@ export * from "./DataScreen/DataScreen";
 export * from "./GeneralScreen/GeneralScreen";
 export * from "./PostSettingScreen/PostSettingScreen";
 export * from "./CommentSettingScreen/CommentSettingScreen";
+export * from "./ViewSettingScreen/ViewSettingScreen";

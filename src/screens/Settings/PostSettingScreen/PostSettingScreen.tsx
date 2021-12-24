@@ -2,6 +2,13 @@ import { Checkbox, Divider, ListItem, SettingsHeader } from "@/components";
 import { useSettingsStore } from "@/stores";
 import React from "react";
 import { ScrollView } from "react-native";
+import {
+  awards,
+  flairs,
+  markRead,
+  postInfo,
+  visibleButtons,
+} from "./postSettingsData";
 
 export const PostSettingScreen = () => {
   const postSettings = useSettingsStore((state) => state.posts);
@@ -15,6 +22,7 @@ export const PostSettingScreen = () => {
       {postInfo.map((x) => {
         return (
           <ListItem
+            key={x.type}
             text={x.text}
             onPress={() => setPostSettings(x.type)}
             right={<Checkbox checked={postSettings[x.type]} passThrough />}
@@ -26,6 +34,7 @@ export const PostSettingScreen = () => {
       {awards.map((x) => {
         return (
           <ListItem
+            key={x.type}
             text={x.text}
             onPress={() => setPostSettings(x.type)}
             right={<Checkbox checked={postSettings[x.type]} passThrough />}
@@ -37,6 +46,7 @@ export const PostSettingScreen = () => {
       {flairs.map((x) => {
         return (
           <ListItem
+            key={x.type}
             text={x.text}
             onPress={() => setPostSettings(x.type)}
             right={<Checkbox checked={postSettings[x.type]} passThrough />}
@@ -48,6 +58,7 @@ export const PostSettingScreen = () => {
       {visibleButtons.map((x) => {
         return (
           <ListItem
+            key={x.type}
             text={x.text}
             icon={x.icon}
             onPress={() => setPostSettings(x.type)}
@@ -62,6 +73,7 @@ export const PostSettingScreen = () => {
       {markRead.map((x) => {
         return (
           <ListItem
+            key={x.type}
             text={x.text}
             subText={x.subText}
             onPress={() => setPostSettings(x.type)}
@@ -72,81 +84,3 @@ export const PostSettingScreen = () => {
     </ScrollView>
   );
 };
-
-const postInfo = [
-  {
-    text: "Show author",
-    type: "author",
-  },
-  {
-    text: "Tap subreddit to visit",
-    type: "tapSub",
-  },
-  {
-    text: "Tap username to view profile",
-    type: "tapUser",
-  },
-] as const;
-
-const awards = [
-  {
-    text: "Show awards",
-    type: "awards",
-  },
-  {
-    text: "Clickable awards",
-    type: "tapAwards",
-  },
-] as const;
-
-const flairs = [
-  {
-    text: "Show post flairs",
-    type: "flairs",
-  },
-  {
-    text: "Show flair colors",
-    type: "flairsColor",
-  },
-] as const;
-
-const visibleButtons = [
-  {
-    text: "Mark as read",
-    type: "read",
-    icon: "check",
-  },
-  {
-    text: "Share",
-    type: "share",
-    icon: "share-variant",
-  },
-  {
-    text: "Comments",
-    type: "comments",
-    icon: "comment-outline",
-  },
-  {
-    text: "Favourite",
-    type: "favourite",
-    icon: "star",
-  },
-] as const;
-
-const markRead = [
-  {
-    text: "Mark as read",
-    subText: "Clicking on a post will mark as read",
-    type: "markRead",
-  },
-  {
-    text: "Hide read",
-    subText: 'Pressing "Hide read" will hide posts',
-    type: "hideRead",
-  },
-  {
-    text: "Dim images in read posts",
-    subText: "Post images will be dimmed when marked as read",
-    type: "dimImage",
-  },
-] as const;
