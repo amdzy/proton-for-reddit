@@ -6,25 +6,25 @@ import { Button, Pressable, Text, View } from "react-native";
 import { MainPageTopTabs } from "./MainPageTopTabs";
 import { Avatar, TabBarIcon } from "@/components";
 import { TabNavigatorButtons } from "./Components/TabNavigatorButtons";
-import { useThemeStore } from "@/stores/themeStore";
 import {
   ColorScreen,
   DataScreen,
   FilterScreen,
   FontScreen,
+  GeneralScreen,
   NotificationScreen,
   SettingsScreen,
   SubscriptionsScreen,
   ThemeScreen,
 } from "@/screens";
 import { MessagesPageTopTab } from "./MessagesPageTopTab";
+import { useTheme } from "@/hooks";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export const RootNavigator = () => {
-  const chosenTheme = useThemeStore((state) => state.theme);
-  const theme = useThemeStore((state) => state.colors[chosenTheme]);
+  const theme = useTheme();
 
   const myTheme = useMemo(() => {
     return {
@@ -53,17 +53,13 @@ export const RootNavigator = () => {
         <Stack.Screen name="Comments" component={SecondScreen} />
         <Stack.Screen name="Sub" component={SecondScreen} />
         <Stack.Screen name="Search" component={SecondScreen} />
-        <Stack.Screen name="General" component={ThemeScreen} />
+        <Stack.Screen name="General" component={GeneralScreen} />
         <Stack.Screen name="Theme" component={ThemeScreen} />
         <Stack.Screen name="Colors" component={ColorScreen} />
         <Stack.Screen name="Fonts" component={FontScreen} />
         <Stack.Screen name="Filters" component={FilterScreen} />
         <Stack.Screen name="Notifications" component={NotificationScreen} />
-        <Stack.Screen
-          name="Data"
-          component={DataScreen}
-          options={{ title: "Data Usage" }}
-        />
+        <Stack.Screen name="Data" component={DataScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -27,6 +27,7 @@ export const FilterScreen = () => {
       {filterBy.map((filter) => {
         return (
           <ListItem
+            key={filter.text}
             text={filter.text}
             subText={filter.subText}
             icon={filter.icon}
@@ -38,6 +39,7 @@ export const FilterScreen = () => {
       {postFilters.map((item) => {
         return (
           <ListItem
+            key={item.type}
             text={item.text}
             onPress={() => setFilter(item.type)}
             right={
@@ -46,7 +48,6 @@ export const FilterScreen = () => {
                 onValueChange={() => setFilter(item.type)}
               />
             }
-            key={item.type}
           />
         );
       })}

@@ -10,9 +10,14 @@ interface StoreProps {
     };
   };
   dataSaver: boolean;
+  videos: {
+    mute: boolean;
+    loop: boolean;
+  };
   setNotifications: () => void;
   setNotificationsInterval: (text: string, value: number) => void;
   setDataSaver: () => void;
+  setVideoSettings: (type: string) => void;
 }
 
 export const useSettingsStore = create<StoreProps>((set, get) => ({
@@ -24,6 +29,10 @@ export const useSettingsStore = create<StoreProps>((set, get) => ({
     },
   },
   dataSaver: true,
+  videos: {
+    mute: false,
+    loop: false,
+  },
   setNotifications: () =>
     set(
       produce((state) => {
@@ -38,4 +47,10 @@ export const useSettingsStore = create<StoreProps>((set, get) => ({
       })
     ),
   setDataSaver: () => set((state) => ({ dataSaver: !state.dataSaver })),
+  setVideoSettings: (type) =>
+    set(
+      produce((state) => {
+        state.videos[type] = !state.videos[type];
+      })
+    ),
 }));

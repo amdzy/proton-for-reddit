@@ -1,4 +1,4 @@
-import { Checkbox, ListItem, SettingsHeader } from "@/components";
+import { Checkbox, Divider, ListItem, SettingsHeader } from "@/components";
 import { useTheme } from "@/hooks";
 import { useSettingsStore } from "@/stores";
 import React from "react";
@@ -23,9 +23,11 @@ export const DataScreen = () => {
         onPress={setDataSaver}
         right={<Checkbox checked={dataSaver} onValueChange={setDataSaver} />}
       />
+      <Divider />
       <SettingsHeader text="Videos" />
       <ListItem text="Autoplay videos" subText="Never" />
       <ListItem text="Video quality" subText="Prefer lower size" />
+      <Divider />
       <SettingsHeader text="Images" />
       <ListItem text="Load Images" subText="Enabled" />
     </View>
