@@ -45,6 +45,7 @@ export const FilterModal = ({ visible, type, onClose }: Props) => {
             borderColor: theme.primary,
             fontSize: 16,
             flex: 1,
+            maxWidth: "90%",
           }}
           placeholder="Add filter here"
           placeholderTextColor={theme.placeholder}

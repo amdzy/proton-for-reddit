@@ -13,6 +13,7 @@ import {
   FontScreen,
   GeneralScreen,
   NotificationScreen,
+  PostSettingScreen,
   SettingsScreen,
   SubscriptionsScreen,
   ThemeScreen,
@@ -59,7 +60,16 @@ export const RootNavigator = () => {
         <Stack.Screen name="Fonts" component={FontScreen} />
         <Stack.Screen name="Filters" component={FilterScreen} />
         <Stack.Screen name="Notifications" component={NotificationScreen} />
-        <Stack.Screen name="Data" component={DataScreen} />
+        <Stack.Screen
+          name="Data"
+          component={DataScreen}
+          options={{ title: "Data Saver" }}
+        />
+        <Stack.Screen
+          name="PostSettings"
+          component={PostSettingScreen}
+          options={{ title: "Posts" }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

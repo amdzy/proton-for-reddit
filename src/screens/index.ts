@@ -9,3 +9,4 @@ export * from "./Settings/FilterScreen/FilterScreen";
 export * from "./Settings/NotificationScreen/NotificationScreen";
 export * from "./Settings/DataScreen/DataScreen";
 export * from "./Settings/GeneralScreen/GeneralScreen";
+export * from "./Settings/PostSettingScreen/PostSettingScreen";

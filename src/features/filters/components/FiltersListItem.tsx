@@ -12,7 +12,9 @@ export const FilterListItem = ({ text, onPress }: Props) => {
   const theme = useTheme();
   return (
     <View style={styles.container}>
-      <Text style={{ color: theme.text, fontSize: 16 }}>{text}</Text>
+      <Text style={{ color: theme.text, fontSize: 16, width: "90%" }}>
+        {text}
+      </Text>
       <IconButton icon="delete" onPress={onPress} />
     </View>
   );

@@ -45,7 +45,7 @@ export const ListItem = ({
         )}
         {left && left}
         <Spacer size={icon || left ? 35 : 58} horizontal />
-        <View>
+        <View style={{ flex: 1 }}>
           <Text
             style={{
               color: disabled ? theme.placeholder : theme.text,
@@ -55,7 +55,12 @@ export const ListItem = ({
             {text}
           </Text>
           {subText && (
-            <Text style={{ color: theme.placeholder, fontSize: 15 }}>
+            <Text
+              style={{
+                color: theme.placeholder,
+                fontSize: 15,
+              }}
+            >
               {subText}
             </Text>
           )}
@@ -76,5 +81,6 @@ const styles = StyleSheet.create({
   leftContainer: {
     flexDirection: "row",
     alignItems: "center",
+    flex: 1,
   },
 });
