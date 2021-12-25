@@ -1,6 +1,7 @@
 import { Checkbox, Divider, ListItem, SettingsHeader } from "@/components";
+import { SortModal } from "@/features/sort";
 import { useSettingsStore } from "@/stores";
-import React from "react";
+import React, { useState } from "react";
 import { ScrollView } from "react-native";
 import { appearance, awards, flairs } from "./commentSettingsData";
 
@@ -9,9 +10,19 @@ export const CommentSettingScreen = () => {
   const setCommentSettings = useSettingsStore(
     (state) => state.setCommentSettings
   );
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
   return (
     <ScrollView>
-      <ListItem text="Default sort" subText="Hot" icon="text" />
+      <ListItem
+        text="Default sort"
+        subText={commentSettings.sort}
+        icon="text"
+        onPress={() => setIsModalOpen(true)}
+      />
       <Divider />
       <SettingsHeader text="Appearance" />
       {appearance.map((x) => {
@@ -48,6 +59,7 @@ export const CommentSettingScreen = () => {
           />
         );
       })}
+      <SortModal visible={isModalOpen} onClose={handleCloseModal} comment />
     </ScrollView>
   );
 };

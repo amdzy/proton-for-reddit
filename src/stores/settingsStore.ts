@@ -55,6 +55,7 @@ interface StoreProps {
   setVideoSettings: (type: string) => void;
   setPostSort: (val: string) => void;
   setPostSettings: (type: string) => void;
+  setCommentSort: (val: string) => void;
   setCommentSettings: (type: string) => void;
   setCardSettings: (type: string) => void;
 }
@@ -67,11 +68,34 @@ export const useSettingsStore = create<StoreProps>((set) => ({
       text: "1 Sec",
     },
   },
+  setNotifications: () =>
+    set(
+      produce((state) => {
+        state.notifications.enabled = !state.notifications.enabled;
+      })
+    ),
+  setNotificationsInterval: (text, value) =>
+    set(
+      produce((state) => {
+        state.notifications.interval.text = text;
+        state.notifications.interval.value = value;
+      })
+    ),
+
   dataSaver: true,
+  setDataSaver: () => set((state) => ({ dataSaver: !state.dataSaver })),
+
   videos: {
     mute: false,
     loop: false,
   },
+  setVideoSettings: (type) =>
+    set(
+      produce((state) => {
+        state.videos[type] = !state.videos[type];
+      })
+    ),
+
   posts: {
     sort: "hot",
     author: true,
@@ -91,42 +115,6 @@ export const useSettingsStore = create<StoreProps>((set) => ({
     hideRead: false,
     dimImage: false,
   },
-  comments: {
-    sort: "hot",
-    avatar: false,
-    buttonsVisible: false,
-    highlightName: true,
-    awards: true,
-    tapAwards: true,
-    flairs: true,
-    flairsColor: true,
-  },
-  card: {
-    fullHeight: true,
-    subIcon: true,
-    carousel: true,
-    previewText: true,
-  },
-  setNotifications: () =>
-    set(
-      produce((state) => {
-        state.notifications.enabled = !state.notifications.enabled;
-      })
-    ),
-  setNotificationsInterval: (text, value) =>
-    set(
-      produce((state) => {
-        state.notifications.interval.text = text;
-        state.notifications.interval.value = value;
-      })
-    ),
-  setDataSaver: () => set((state) => ({ dataSaver: !state.dataSaver })),
-  setVideoSettings: (type) =>
-    set(
-      produce((state) => {
-        state.videos[type] = !state.videos[type];
-      })
-    ),
   setPostSort: (value) =>
     set(
       produce((state) => {
@@ -142,12 +130,36 @@ export const useSettingsStore = create<StoreProps>((set) => ({
         state.posts[type] = !state.posts[type];
       })
     ),
+
+  comments: {
+    sort: "hot",
+    avatar: false,
+    buttonsVisible: false,
+    highlightName: true,
+    awards: true,
+    tapAwards: true,
+    flairs: true,
+    flairsColor: true,
+  },
+  setCommentSort: (value) =>
+    set(
+      produce((state) => {
+        state.comments.sort = value;
+      })
+    ),
   setCommentSettings: (type) =>
     set(
       produce((state) => {
         state.comments[type] = !state.comments[type];
       })
     ),
+
+  card: {
+    fullHeight: true,
+    subIcon: true,
+    carousel: true,
+    previewText: true,
+  },
   setCardSettings: (type) =>
     set(
       produce((state) => {

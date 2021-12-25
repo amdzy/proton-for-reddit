@@ -1,6 +1,7 @@
 import { Checkbox, Divider, ListItem, SettingsHeader } from "@/components";
+import { SortModal } from "@/features/sort";
 import { useSettingsStore } from "@/stores";
-import React from "react";
+import React, { useState } from "react";
 import { ScrollView } from "react-native";
 import {
   awards,
@@ -13,10 +14,20 @@ import {
 export const PostSettingScreen = () => {
   const postSettings = useSettingsStore((state) => state.posts);
   const setPostSettings = useSettingsStore((state) => state.setPostSettings);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <ScrollView>
-      <ListItem text="Default sort" subText="Hot" icon="text" />
+      <ListItem
+        text="Default sort"
+        subText={postSettings.sort}
+        icon="text"
+        onPress={() => setIsModalOpen(true)}
+      />
       <Divider />
       <SettingsHeader text="Post Info" />
       {postInfo.map((x) => {
@@ -81,6 +92,7 @@ export const PostSettingScreen = () => {
           />
         );
       })}
+      <SortModal visible={isModalOpen} onClose={handleCloseModal} post />
     </ScrollView>
   );
 };
