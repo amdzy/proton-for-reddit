@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Button, Pressable, Text, View } from "react-native";
+import { Button, Pressable, Text, TextInput, View } from "react-native";
 import { MainPageTopTabs } from "./MainPageTopTabs";
 import { Avatar, TabBarIcon } from "@/components";
 import { TabNavigatorButtons } from "./Components/TabNavigatorButtons";
@@ -22,6 +22,7 @@ import {
 } from "@/screens";
 import { MessagesPageTopTab } from "./MessagesPageTopTab";
 import { useTheme } from "@/hooks";
+import { SearchBar } from "@/features/search";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -55,7 +56,16 @@ export const RootNavigator = () => {
         />
         <Stack.Screen name="Comments" component={SecondScreen} />
         <Stack.Screen name="Sub" component={SecondScreen} />
-        <Stack.Screen name="Search" component={SecondScreen} />
+        <Stack.Screen
+          name="Search"
+          component={SecondScreen}
+          options={{
+            headerTitle: () => {
+              return <SearchBar />;
+            },
+            headerBackTitleVisible: false,
+          }}
+        />
         <Stack.Screen name="General" component={GeneralScreen} />
         <Stack.Screen name="Theme" component={ThemeScreen} />
         <Stack.Screen name="Colors" component={ColorScreen} />
