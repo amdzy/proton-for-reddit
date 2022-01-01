@@ -119,7 +119,7 @@ export const ColorPicker = ({ isOpen, color, onClose, onSubmit }: Props) => {
       </ScrollView>
       <View style={styles.buttonsContainer}>
         <Button text="Cancel" onPress={onClose} />
-        <Button text="Done" onPress={() => onSubmit(colorValue)} />
+        <Button text="Done" onPress={() => onSubmit(`#${colorValue}`)} />
       </View>
     </CustomModal>
   );

@@ -6,14 +6,23 @@ import {
 } from "@/features/colors";
 import { useTheme } from "@/hooks";
 import { useThemeStore } from "@/stores/themeStore";
-import { ColorsDTO } from "@/stores/types";
-import React, { useState } from "react";
-import { FlatList, ScrollView, Text, View } from "react-native";
+import { ColorsDTO, ThemeName } from "@/stores/types";
+import React, { useMemo, useState } from "react";
+import { FlatList, ScrollView, View } from "react-native";
+
+type colors = keyof ColorsDTO;
 
 export const ColorScreen = () => {
   const chosenTheme = useThemeStore((state) => state.theme);
   const theme = useTheme();
   const changeColor = useThemeStore((state) => state.changeColor);
+  const themes = Object.keys(
+    useThemeStore((state) => state.colors)
+  ) as ThemeName[];
+  const colors = useMemo(
+    () => Object.keys(theme).filter((x) => x !== "statusBar") as colors[],
+    [theme]
+  );
 
   const [isModalShown, setIsModalShown] = useState(false);
   const [color, setColor] = useState("");
@@ -39,10 +48,10 @@ export const ColorScreen = () => {
       <SettingsHeader text="Themes" />
       <View style={{ marginBottom: 18, padding: 16 }}>
         <FlatList
-          keyExtractor={(item) => item.name}
+          keyExtractor={(item) => item}
           data={themes}
           renderItem={({ item }) => (
-            <ThemeButton theme={item.name} active={chosenTheme === item.name} />
+            <ThemeButton theme={item} active={chosenTheme === item} />
           )}
           horizontal
         />
@@ -55,11 +64,11 @@ export const ColorScreen = () => {
 
       {colors.map((item) => {
         return (
-          <View key={item.type}>
+          <View key={item}>
             <CustomizeColorButton
-              text={item.text}
-              color={theme[item.type]}
-              onPress={() => handleOpenModal(theme[item.type], item.type)}
+              text={item}
+              color={theme[item]}
+              onPress={() => handleOpenModal(theme[item], item)}
             />
             <Divider />
           </View>
@@ -75,47 +84,3 @@ export const ColorScreen = () => {
     </ScrollView>
   );
 };
-
-const themes = [
-  {
-    name: "dark",
-  },
-  {
-    name: "light",
-  },
-] as const;
-
-const colors = [
-  {
-    text: "Primary",
-    type: "primary",
-  },
-  {
-    text: "Accent",
-    type: "accent",
-  },
-  {
-    text: "Highlight",
-    type: "highlight",
-  },
-  {
-    text: "Background",
-    type: "background",
-  },
-  {
-    text: "Surface",
-    type: "surface",
-  },
-  {
-    text: "Toolbar",
-    type: "toolbar",
-  },
-  {
-    text: "Text",
-    type: "text",
-  },
-  {
-    text: "Placeholder",
-    type: "placeholder",
-  },
-] as const;

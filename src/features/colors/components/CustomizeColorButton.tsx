@@ -30,7 +30,11 @@ export const CustomizeColorButton = ({ text, color, ...props }: Props) => {
         }}
       />
       <Spacer size={24} horizontal />
-      <Text style={{ color: theme.text, fontSize: 16 }}>{text}</Text>
+      <Text
+        style={{ color: theme.text, fontSize: 16, textTransform: "capitalize" }}
+      >
+        {text}
+      </Text>
     </Pressable>
   );
 };
