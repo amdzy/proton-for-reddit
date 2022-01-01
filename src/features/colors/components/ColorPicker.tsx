@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import Slider from "@react-native-community/slider";
 import { useTheme } from "@/hooks";
 import { hexToRgb } from "../utils/hexToRgb";
@@ -13,22 +13,48 @@ interface Props {
   onSubmit: (val: string) => void;
 }
 
-export const ColorPicker = ({ isOpen, color, onClose, onSubmit }: Props) => {
-  const theme = useTheme();
-  const [ColorValue, setColorValue] = useState(color);
-  const [rgbValue, setRgbValue] = useState({ red: 0, green: 0, blue: 0 });
+const nonHexChar = new RegExp("[g-z\\W\\s]", "gi");
 
-  const handleChange = (value: number, type: string) => {
-    setRgbValue((old) => ({ ...old, [type]: value }));
-    const hex = rgbToHex(rgbValue.red, rgbValue.green, rgbValue.blue);
-    setColorValue(`#${hex}`);
+export const ColorPicker = ({ isOpen, color, onClose, onSubmit }: Props) => {
+  color = color.replace("#", "").toUpperCase();
+  const theme = useTheme();
+  const [colorValue, setColorValue] = useState(color);
+  const [rgbValue, setRgbValue] = useState({ red: 0, green: 0, blue: 0 });
+  const [inputValue, setInputValue] = useState(color);
+
+  const handleSliderChange = (value: number, type: string) => {
+    const colors = {
+      ...rgbValue,
+      [type]: value,
+    };
+    setRgbValue(colors);
+    const hex = rgbToHex(colors.red, colors.green, colors.blue).toUpperCase();
+    setColorValue(hex);
+    setInputValue(hex);
+  };
+
+  const handleInputChange = (value: string) => {
+    value = value.replace(nonHexChar, "");
+    setInputValue(value);
+    if (value.length === 6) {
+      setColorValue(value);
+      try {
+        setRgbValue(hexToRgb(value));
+      } catch {
+        return;
+      }
+    }
   };
 
   useEffect(() => {
     if (isOpen) {
-      const rgb = hexToRgb(color);
       setColorValue(color);
-      setRgbValue(rgb);
+      setInputValue(color);
+      try {
+        setRgbValue(hexToRgb(color));
+      } catch {
+        return;
+      }
     }
   }, [isOpen]);
 
@@ -51,22 +77,27 @@ export const ColorPicker = ({ isOpen, color, onClose, onSubmit }: Props) => {
           style={{
             width: "100%",
             height: 120,
-            backgroundColor: ColorValue,
+            backgroundColor: `#${colorValue}`,
             marginVertical: 18,
           }}
         ></View>
-
-        <Text
-          style={{
-            color: theme.text,
-            textAlign: "center",
-            marginVertical: 8,
-            textTransform: "uppercase",
-            fontSize: 16,
-          }}
-        >
-          {ColorValue}
-        </Text>
+        <View style={styles.inputContainer}>
+          <Text style={{ color: theme.text, fontSize: 16 }}>#</Text>
+          <TextInput
+            style={{
+              color: theme.text,
+              fontSize: 18,
+              borderBottomWidth: 2,
+              borderColor: theme.primary,
+            }}
+            autoCapitalize="characters"
+            placeholder={color}
+            placeholderTextColor={theme.placeholder}
+            value={inputValue}
+            onChangeText={handleInputChange}
+            maxLength={6}
+          />
+        </View>
         {sliders.map((x) => {
           return (
             <View style={styles.sliderContainer} key={x.text}>
@@ -76,7 +107,7 @@ export const ColorPicker = ({ isOpen, color, onClose, onSubmit }: Props) => {
                 maximumValue={255}
                 style={{ flex: 1, paddingHorizontal: 8 }}
                 value={rgbValue[x.value]}
-                onValueChange={(value) => handleChange(value, x.value)}
+                onValueChange={(value) => handleSliderChange(value, x.value)}
                 minimumTrackTintColor={theme.primary}
                 maximumTrackTintColor={theme.placeholder}
                 thumbTintColor={theme.primary}
@@ -88,7 +119,7 @@ export const ColorPicker = ({ isOpen, color, onClose, onSubmit }: Props) => {
       </ScrollView>
       <View style={styles.buttonsContainer}>
         <Button text="Cancel" onPress={onClose} />
-        <Button text="Done" onPress={() => onSubmit(ColorValue)} />
+        <Button text="Done" onPress={() => onSubmit(colorValue)} />
       </View>
     </CustomModal>
   );
@@ -104,6 +135,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     paddingVertical: 14,
+  },
+  inputContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+    paddingBottom: 8,
   },
 });
 
