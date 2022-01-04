@@ -24,6 +24,7 @@ export const Stack = ({
         flexWrap: "wrap",
         ...style,
       }}
+      testID="stack"
     >
       {React.Children.map(children, (child) => {
         return (

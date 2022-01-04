@@ -17,6 +17,7 @@ export const SettingsHeader = ({ text, style }: Props) => {
         padding: 12,
         ...style,
       }}
+      testID="settingsHeader"
     >
       {text}
     </Text>

@@ -16,6 +16,7 @@ export const TabBarIcon = ({ icon, color, size, style }: Props) => {
       size={size}
       color={color}
       style={{ ...style }}
+      testID="icon"
     />
   );
 };

@@ -19,6 +19,7 @@ export const Spacer = ({ horizontal = false, size }: Props) => {
         width: horizontal ? size : defaultValue,
         height: !horizontal ? size : defaultValue,
       }}
+      testID="spacer"
     />
   );
 };
