@@ -22,6 +22,7 @@ export const IconButton = ({
       onPress={onPress}
       style={style}
       {...props}
+      testID="iconButton"
     >
       <MaterialCommunityIcons
         name={icon}

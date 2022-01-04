@@ -22,15 +22,25 @@ describe("Stack component", () => {
     expect(getAllByText("Children")).toHaveLength(2);
   });
 
-  Component = (
-    <Stack space={1} direction="row">
-      <Text>Children</Text>
-      <Text>Children</Text>
-    </Stack>
-  );
-
   it("renders Childrens Vertically", () => {
+    Component = (
+      <Stack space={1} direction="row">
+        <Text>Children</Text>
+        <Text>Children</Text>
+      </Stack>
+    );
     const { getByTestId } = render(Component);
     expect(getByTestId("stack")).toHaveStyle({ flexDirection: "row" });
+  });
+
+  it("renders without spacer when space is 0", () => {
+    Component = (
+      <Stack>
+        <Text>Children</Text>
+        <Text>Children</Text>
+      </Stack>
+    );
+    const { queryAllByTestId } = render(Component);
+    expect(queryAllByTestId("spacer")).toHaveLength(0);
   });
 });

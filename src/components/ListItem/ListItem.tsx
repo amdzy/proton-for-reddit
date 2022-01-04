@@ -34,6 +34,7 @@ export const ListItem = ({
       android_ripple={{ color: theme.placeholder }}
       disabled={disabled}
       {...props}
+      testID="listItem"
     >
       <View style={styles.leftContainer}>
         {icon && (
@@ -41,6 +42,7 @@ export const ListItem = ({
             name={icon}
             size={24}
             color={theme.placeholder}
+            testID="icon"
           />
         )}
         {left && left}

@@ -5,6 +5,9 @@ describe("hex to rgb", () => {
     expect(() => hexToRgb("#64ffdaa")).toThrowError(TypeError);
     expect(() => hexToRgb("#123456789")).toThrowError(TypeError);
     expect(() => hexToRgb("12389")).toThrowError("Expected a valid hex string");
+    expect(() => hexToRgb("%12389")).toThrowError(
+      "Expected a valid hex string"
+    );
   });
 
   it("pass with valid hex", () => {

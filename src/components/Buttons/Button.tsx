@@ -14,6 +14,7 @@ export const Button = ({ text, ...props }: Props) => {
       style={{ padding: 10 }}
       {...props}
       android_ripple={{ color: theme.placeholder }}
+      testID="button"
     >
       <Text style={{ color: theme.primary }}>{text}</Text>
     </Pressable>

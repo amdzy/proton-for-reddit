@@ -16,6 +16,7 @@ export const CustomModal = ({ visible, onClose, children }: Props) => {
       transparent={true}
       visible={visible}
       onRequestClose={onClose}
+      testID="modal"
     >
       <View style={styles.container}>
         <View style={[styles.modalView, { backgroundColor: theme.surface }]}>
@@ -30,6 +31,7 @@ export const CustomModal = ({ visible, onClose, children }: Props) => {
             position: "absolute",
           }}
           onPress={onClose}
+          testID="closeModal"
         ></Pressable>
       </View>
     </Modal>
