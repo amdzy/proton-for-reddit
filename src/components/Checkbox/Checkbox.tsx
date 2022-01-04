@@ -26,6 +26,7 @@ export const Checkbox = ({
       ]}
       onPress={onValueChange}
       pointerEvents={passThrough ? "none" : "auto"}
+      testID="checkbox"
     >
       {checked && (
         <MaterialCommunityIcons name="check" size={16} color={theme.text} />
