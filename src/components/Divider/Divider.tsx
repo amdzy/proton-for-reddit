@@ -19,6 +19,7 @@ export const Divider = ({ size = 1, vertical = false, style }: Props) => {
         backgroundColor: theme.backdrop,
         ...style,
       }}
+      testID="divider"
     />
   );
 };

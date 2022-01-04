@@ -25,6 +25,7 @@ export const RadioButton = ({
       ]}
       onPress={onValueChange}
       pointerEvents={passThrough ? "none" : "auto"}
+      testID="radiobutton"
     ></Pressable>
   );
 };
