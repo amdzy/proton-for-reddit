@@ -13,6 +13,7 @@ import {
   FilterScreen,
   FontScreen,
   GeneralScreen,
+  LoginScreen,
   NotificationScreen,
   PostSettingScreen,
   SettingsScreen,
@@ -158,7 +159,7 @@ const TabNav = () => {
       />
       <Tab.Screen
         name="Profile"
-        component={SecondScreen}
+        component={LoginScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
             <TabBarIcon
