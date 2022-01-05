@@ -1,6 +1,7 @@
 import React from "react";
-import { Button, ScrollView, Text } from "react-native";
+import { Text, View } from "react-native";
 import useRedditAuth from "@/hooks/useRedditAuth";
+import { Button } from "@/components";
 
 export const LoginScreen = ({ navigation }: any) => {
   const { authRequest, isAuthenticated, authenticateAsync } = useRedditAuth();
@@ -10,16 +11,24 @@ export const LoginScreen = ({ navigation }: any) => {
   }
 
   return (
-    <ScrollView>
-      <Text>Looks like you haven't logged in yet</Text>
-      <Text>Press to login</Text>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Text style={{ color: "white", fontSize: 16 }}>
+        Looks like you haven't logged in yet
+      </Text>
       <Button
         disabled={!authRequest}
-        title="Login"
+        text="Login"
         onPress={() => {
           authenticateAsync();
         }}
+        style={{ width: "100%", alignItems: "center", padding: 20 }}
       />
-    </ScrollView>
+    </View>
   );
 };

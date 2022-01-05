@@ -27,7 +27,27 @@ export default function useRedditAuth() {
   const [authRequest, authResponse, promptAsync] = useAuthRequest(
     {
       clientId: CLIENT_ID,
-      scopes: ["identity"],
+      scopes: [
+        "identity",
+        "edit",
+        "flair",
+        "history",
+        "modconfig",
+        "modflair",
+        "modlog",
+        "modposts",
+        "modwiki",
+        "mysubreddits",
+        "privatemessages",
+        "read",
+        "report",
+        "save",
+        "submit",
+        "subscribe",
+        "vote",
+        "wikiedit",
+        "wikiread",
+      ],
       redirectUri: makeRedirectUri({
         native: REDIRECT_URI,
       }),

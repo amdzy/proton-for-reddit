@@ -24,6 +24,7 @@ import {
 import { MessagesPageTopTab } from "./MessagesPageTopTab";
 import { useTheme } from "@/hooks";
 import { SearchBar } from "@/features/search";
+import { useAuthStore } from "@/stores";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -99,6 +100,7 @@ export const RootNavigator = () => {
 };
 
 const TabNav = () => {
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   return (
     <Tab.Navigator
       screenOptions={({ navigation }) => ({
@@ -131,7 +133,7 @@ const TabNav = () => {
       />
       <Tab.Screen
         name="Inbox"
-        component={MessagesPageTopTab}
+        component={isAuthenticated ? MessagesPageTopTab : LoginScreen}
         options={{
           headerShadowVisible: false,
           tabBarIcon: ({ color, size }) => (
@@ -159,7 +161,7 @@ const TabNav = () => {
       />
       <Tab.Screen
         name="Profile"
-        component={LoginScreen}
+        component={isAuthenticated ? SecondScreen : LoginScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
             <TabBarIcon

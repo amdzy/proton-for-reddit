@@ -1,12 +1,14 @@
 import {
   ColorScreen,
+  CommentSettingScreen,
   DataScreen,
   FilterScreen,
   FontScreen,
   GeneralScreen,
   NotificationScreen,
-  SettingsScreen,
+  PostSettingScreen,
   ThemeScreen,
+  ViewSettingScreen,
 } from "@/screens";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
@@ -22,7 +24,26 @@ export const SettingsStack = () => {
       <Stack.Screen name="Fonts" component={FontScreen} />
       <Stack.Screen name="Filters" component={FilterScreen} />
       <Stack.Screen name="Notifications" component={NotificationScreen} />
-      <Stack.Screen name="Data" component={DataScreen} />
+      <Stack.Screen
+        name="Data"
+        component={DataScreen}
+        options={{ title: "Data Saver" }}
+      />
+      <Stack.Screen
+        name="PostSettings"
+        component={PostSettingScreen}
+        options={{ title: "Posts" }}
+      />
+      <Stack.Screen
+        name="CommentSettings"
+        component={CommentSettingScreen}
+        options={{ title: "Comments" }}
+      />
+      <Stack.Screen
+        name="ViewSettings"
+        component={ViewSettingScreen}
+        options={{ title: "Views" }}
+      />
     </Stack.Navigator>
   );
 };
