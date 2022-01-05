@@ -13,4 +13,14 @@ describe("Avatar Component", () => {
     const { getByTestId } = render(<Avatar size={size} />);
     expect(getByTestId("avatar")).toHaveStyle({ width: size, height: size });
   });
+
+  it("renders with image", () => {
+    const { getByTestId } = render(
+      <Avatar
+        size={24}
+        image="https://cdn.pixabay.com/photo/2014/06/03/19/38/road-sign-361513_960_720.jpg"
+      />
+    );
+    expect(getByTestId("avatar")).not.toBe(null);
+  });
 });

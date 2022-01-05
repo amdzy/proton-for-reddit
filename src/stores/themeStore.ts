@@ -21,7 +21,7 @@ interface StoreProps {
 
   setTheme: (themeName: ThemeName) => void;
   changeColor: (type: keyof ColorsDTO, value: string) => void;
-  changeFontSize: (type: string, value: string) => void;
+  changeFontSize: (type: string, value: number) => void;
   changeFontFamily: (type: string, value: string) => void;
 }
 
