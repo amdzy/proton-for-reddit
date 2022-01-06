@@ -6,17 +6,9 @@ import {
 } from "expo-auth-session";
 import * as WebBrowser from "expo-web-browser";
 import { useAuthStore, useToastStore } from "@/stores";
+import { CLIENT_ID, discovery, REDIRECT_URI } from "@/features/auth";
 
 WebBrowser.maybeCompleteAuthSession();
-
-const discovery = {
-  authorizationEndpoint: "https://www.reddit.com/api/v1/authorize.compact",
-  tokenEndpoint: "https://www.reddit.com/api/v1/access_token",
-};
-
-const REDIRECT_URI = "http://localhost:19006";
-
-const CLIENT_ID = "K3f5iWgOg4dpS3eJCr5I0A";
 
 export default function useRedditAuth() {
   const addToast = useToastStore((state) => state.addToast);
