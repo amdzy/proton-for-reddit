@@ -14,11 +14,13 @@ async function authRequestInterceptor(config: AxiosRequestConfig) {
   const token = useAuthStore.getState().token;
   config.headers.Authorization = `Bearer ${token}`;
   config.headers.Accept = "application/json";
+  config.headers["User-Agent"] =
+    "android:com.sr.proton:0.0.1 (by /u/Soul-Remix)";
   return config;
 }
 
 export const axios = Axios.create({
-  baseURL: "https://www.reddit.com",
+  baseURL: "https://oauth.reddit.com",
 });
 
 axios.interceptors.request.use(authRequestInterceptor);

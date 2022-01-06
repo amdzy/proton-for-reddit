@@ -1,5 +1,4 @@
-import { Divider } from "@/components";
-import { useThemeStore } from "@/stores/themeStore";
+import { useTheme } from "@/hooks";
 import React from "react";
 import { FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -42,8 +41,8 @@ interface Props {
 }
 
 export const SubscriptionsScreen = ({ navigation }: Props) => {
-  const chosenTheme = useThemeStore((state) => state.theme);
-  const theme = useThemeStore((state) => state.colors[chosenTheme]);
+  const theme = useTheme();
+
   return (
     <SafeAreaView style={{ backgroundColor: theme.background, flex: 1 }}>
       <FlatList

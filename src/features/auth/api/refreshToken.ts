@@ -9,6 +9,7 @@ export const refreshToken = async (expiresIn: number, refreshToken: string) => {
   if (isFresh) {
     return;
   }
+  console.log("ran refresh token");
 
   const data = await refreshAsync(
     {
