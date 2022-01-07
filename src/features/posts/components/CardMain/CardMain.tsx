@@ -1,18 +1,19 @@
 import { useTheme } from "@/hooks";
 import { useThemeStore } from "@/stores/themeStore";
-import React from "react";
+import React, { useState } from "react";
 import { Image, Text, View } from "react-native";
+import { Thumbnail } from "../Thumbnail/Thumbnail";
 
 interface Props {
-  text?: string;
-  url?: string;
+  post: any;
 }
 
-export const CardMain = ({ text, url }: Props) => {
+export const CardMain = ({ post }: Props) => {
   const theme = useTheme();
   const fonts = useThemeStore((state) => state.fonts);
+  const [ratio, setRatio] = useState(1);
 
-  if (true) {
+  if (post.selftext) {
     return (
       <View style={{ paddingHorizontal: 10 }}>
         <Text
@@ -27,21 +28,34 @@ export const CardMain = ({ text, url }: Props) => {
           numberOfLines={5}
           ellipsizeMode={"tail"}
         >
-          Listings do not use page numbers because their content changes so
-          frequently. Instead, they allow you to view slices of the underlying
-          data. Listing JSON responses contain after and before fields which are
-          equivalent to the "next" and "prev" buttons on the site and in
-          combination with count can be used to page through the listing.
+          {post.selftext}
         </Text>
       </View>
     );
   }
-  return (
-    <Image
-      source={{
-        uri: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.QDOmzOh-mruIm3MlC7aezgHaE8%26pid%3DApi&f=1",
-      }}
-      style={{ width: "100%", minHeight: 250 }}
-    />
-  );
+
+  if (post.post_hint === "image") {
+    Image.getSize(post.url, (width, height) => {
+      setRatio(width / height);
+    });
+    return (
+      <Image
+        source={{
+          uri: post.url,
+        }}
+        style={{
+          flex: 1,
+          width: "100%",
+          height: undefined,
+          aspectRatio: ratio,
+        }}
+        resizeMode="cover"
+      />
+    );
+  }
+
+  if (post.post_hint === "link") {
+    return <Thumbnail url={post.thumbnail} />;
+  }
+  return null;
 };

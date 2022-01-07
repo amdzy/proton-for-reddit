@@ -6,35 +6,32 @@ import React from "react";
 import { Text, View } from "react-native";
 import { Flair } from "../Flair/Flair";
 
-export const CardHeader = () => {
+export const CardHeader = ({ post }: any) => {
   const theme = useTheme();
   const fonts = useThemeStore((state) => state.fonts);
   return (
-    <Stack space={4} style={{ padding: 10 }}>
+    <Stack space={5} style={{ padding: 10 }}>
       <Stack
         space={8}
         direction="row"
         spaceHorizontal={true}
         style={{ alignItems: "center" }}
       >
-        <Avatar
-          image={
-            "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.QDOmzOh-mruIm3MlC7aezgHaE8%26pid%3DApi&f=1"
-          }
-          size={24}
-        />
+        <Avatar size={24} />
         <Link to={{ screen: "Sub" }} style={{ color: theme.highlight }}>
-          Subreddit
+          {post.subreddit_name_prefixed}
         </Link>
         <Link
           to={{ screen: "Profile" }}
           style={{ color: theme.placeholder, fontSize: 12 }}
         >
-          . User Name
+          u/{post.author}
         </Link>
-        <Text style={{ color: theme.placeholder, fontSize: 12 }}>. 1h</Text>
+        <Text style={{ color: theme.placeholder, fontSize: 12 }}>
+          {post.created_utc}
+        </Text>
       </Stack>
-      <View>
+      <View style={{ paddingVertical: 4 }}>
         <Text
           style={{
             color: theme.text,
@@ -42,18 +39,29 @@ export const CardHeader = () => {
             lineHeight: 22,
           }}
         >
-          Many endpoints on reddit use the same protocol for controlling
-          pagination and filtering.
+          {post.title}
         </Text>
       </View>
-      <Stack space={8} direction="row" spaceHorizontal={true}>
-        <Flair tag="General" />
+      <Stack direction="row">
+        <Flair
+          tag={post.link_flair_text}
+          bgColor={post.link_flair_background_color}
+          color={post.link_flair_text_color}
+        />
+        {post.post_hint === "link" && (
+          <Flair tag="Link" bgColor={theme.highlight} color={"dark"} />
+        )}
       </Stack>
       <Stack space={8} direction="row" spaceHorizontal={true}>
-        <Text style={{ color: theme.placeholder }}>2430</Text>
+        <Text style={{ color: theme.placeholder }}>{post.ups}</Text>
         <Text style={{ color: theme.placeholder }}>-</Text>
-        <Text style={{ color: theme.placeholder }}>100 Comments</Text>
+        <Text style={{ color: theme.placeholder }}>
+          {post.num_comments} Comments
+        </Text>
       </Stack>
+      {post.post_hint === "link" && (
+        <Text style={{ color: theme.placeholder }}>{post.domain}</Text>
+      )}
     </Stack>
   );
 };

@@ -5,9 +5,10 @@ import { CardFooter } from "../components/CardFooter/CardFooter";
 import { CardHeader } from "../components/CardHeader/CardHeader";
 import { CardMain } from "../components/CardMain/CardMain";
 
-export const PostCard = () => {
+export const PostCard = ({ post }: any) => {
   const chosenTheme = useThemeStore((state) => state.theme);
   const theme = useThemeStore((state) => state.colors[chosenTheme]);
+
   return (
     <View
       style={{
@@ -18,10 +19,12 @@ export const PostCard = () => {
         shadowOffset: { width: 1, height: 1 },
         shadowColor: theme.backdrop,
         shadowOpacity: 0.1,
+        borderRadius: 20,
+        overflow: "hidden",
       }}
     >
-      <CardHeader />
-      <CardMain />
+      <CardHeader post={post} />
+      <CardMain post={post} />
       <CardFooter />
     </View>
   );

@@ -1,23 +1,30 @@
 import { PostCard } from "@/features/posts";
+import { useGetPosts } from "@/features/posts/api/getPosts";
 import React from "react";
-import { FlatList, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 
-const arr = [1, 1, 1, 1];
 export const MainScreen = () => {
-  return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        width: "100%",
-      }}
-    >
-      <FlatList
-        renderItem={() => <PostCard />}
-        data={arr}
-        style={{ width: "100%" }}
-      />
-    </View>
-  );
+  const query = useGetPosts();
+  if (query.isLoading) {
+    return <Text>Loading</Text>;
+  }
+  if (query.data) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          width: "100%",
+        }}
+      >
+        <FlatList
+          renderItem={({ item }) => <PostCard post={item.data} />}
+          data={query.data?.data.children}
+          style={{ width: "100%" }}
+        />
+      </View>
+    );
+  }
+  return null;
 };
