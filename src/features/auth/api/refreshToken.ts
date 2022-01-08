@@ -3,8 +3,12 @@ import { refreshAsync } from "expo-auth-session";
 import { CLIENT_ID, discovery } from "..";
 import { isTokenFresh } from "../utils/isTokenFresh";
 
-export const refreshToken = async (expiresIn: number, refreshToken: string) => {
-  const isFresh = isTokenFresh(expiresIn);
+export const refreshToken = async (
+  expiresIn: number,
+  issuedAt: number,
+  refreshToken: string
+) => {
+  const isFresh = isTokenFresh(expiresIn, issuedAt);
 
   if (isFresh) {
     return;

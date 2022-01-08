@@ -18,6 +18,5 @@ export const loginAnon = async () => {
     },
     data: body,
   });
-
   useAuthStore.getState().setTokenAnon(res.data);
 };

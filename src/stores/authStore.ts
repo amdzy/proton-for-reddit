@@ -4,6 +4,7 @@ interface Store {
   token: string | null;
   refreshToken: string | null;
   expiresIn: number | null;
+  issuedAt: number | null;
   isAuthenticated: boolean;
   setToken: (token: any) => void;
   clearToken: () => void;
@@ -15,6 +16,7 @@ export const useAuthStore = create<Store>((set) => ({
   token: null,
   refreshToken: null,
   expiresIn: null,
+  issuedAt: null,
   isAuthenticated: false,
 
   setToken: (token) =>
@@ -22,6 +24,7 @@ export const useAuthStore = create<Store>((set) => ({
       token: token.accessToken,
       refreshToken: token.refreshToken,
       expiresIn: token.expiresIn,
+      issuedAt: Math.floor(Date.now() / 1000),
       isAuthenticated: true,
     })),
 
@@ -30,6 +33,7 @@ export const useAuthStore = create<Store>((set) => ({
       token: null,
       refreshToken: null,
       expiresIn: null,
+      issuedAt: null,
       isAuthenticated: false,
     })),
 
@@ -37,11 +41,13 @@ export const useAuthStore = create<Store>((set) => ({
     set(() => ({
       token: token.accessToken,
       expiresIn: token.expiresIn,
+      issuedAt: Math.floor(Date.now() / 1000),
     })),
 
   setTokenAnon: (token) =>
     set(() => ({
       token: token.access_token,
       expiresIn: token.expires_in,
+      issuedAt: Math.floor(Date.now() / 1000),
     })),
 }));
