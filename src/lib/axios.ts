@@ -16,6 +16,7 @@ async function authRequestInterceptor(config: AxiosRequestConfig) {
   config.headers.Accept = "application/json";
   config.headers["User-Agent"] =
     "android:com.sr.proton:0.0.1 (by /u/Soul-Remix)";
+  config.params.raw_json = 1;
   return config;
 }
 

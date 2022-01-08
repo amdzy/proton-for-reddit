@@ -5,7 +5,7 @@ const fetchPosts = () => {
   return axios({
     url: "/best",
     params: {
-      limit: 25,
+      limit: 100,
     },
   });
 };

@@ -1,8 +1,9 @@
 import { useTheme } from "@/hooks";
 import { useThemeStore } from "@/stores/themeStore";
-import React, { useState } from "react";
-import { Image, Text, View } from "react-native";
-import { Thumbnail } from "../Thumbnail/Thumbnail";
+import React from "react";
+import { Dimensions, FlatList, Image, Text, View } from "react-native";
+import { ImageCarousel } from "../ImageCarousel/ImageCarousel";
+import { PostImage } from "../PostImage/PostImage";
 
 interface Props {
   post: any;
@@ -11,7 +12,6 @@ interface Props {
 export const CardMain = ({ post }: Props) => {
   const theme = useTheme();
   const fonts = useThemeStore((state) => state.fonts);
-  const [ratio, setRatio] = useState(1);
 
   if (post.selftext) {
     return (
@@ -35,27 +35,13 @@ export const CardMain = ({ post }: Props) => {
   }
 
   if (post.post_hint === "image") {
-    Image.getSize(post.url, (width, height) => {
-      setRatio(width / height);
-    });
-    return (
-      <Image
-        source={{
-          uri: post.url,
-        }}
-        style={{
-          flex: 1,
-          width: "100%",
-          height: undefined,
-          aspectRatio: ratio,
-        }}
-        resizeMode="cover"
-      />
-    );
+    const image = post.preview.images[0].source;
+    return <PostImage image={image} />;
   }
 
-  if (post.post_hint === "link") {
-    return <Thumbnail url={post.thumbnail} />;
+  if (post.is_gallery) {
+    const imgArr = Object.values(post.media_metadata);
+    return <ImageCarousel images={imgArr} />;
   }
   return null;
 };

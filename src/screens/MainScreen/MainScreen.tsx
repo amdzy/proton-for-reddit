@@ -21,6 +21,7 @@ export const MainScreen = () => {
         <FlatList
           renderItem={({ item }) => <PostCard post={item.data} />}
           data={query.data?.data.children}
+          keyExtractor={(item) => item.data.id}
           style={{ width: "100%" }}
         />
       </View>

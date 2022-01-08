@@ -14,6 +14,7 @@ import {
   FontScreen,
   GeneralScreen,
   LoginScreen,
+  MainScreen,
   NotificationScreen,
   PostSettingScreen,
   SettingsScreen,
@@ -122,7 +123,7 @@ const TabNav = () => {
     >
       <Tab.Screen
         name="Feed"
-        component={MainPageTopTabs}
+        component={MainScreen}
         options={{
           headerShadowVisible: false,
           title: "Proton",
