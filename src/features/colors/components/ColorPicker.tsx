@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import Slider from "@react-native-community/slider";
 import { useTheme } from "@/hooks";
@@ -21,6 +21,8 @@ export const ColorPicker = ({ isOpen, color, onClose, onSubmit }: Props) => {
   const [colorValue, setColorValue] = useState(color);
   const [rgbValue, setRgbValue] = useState({ red: 0, green: 0, blue: 0 });
   const [inputValue, setInputValue] = useState(color);
+
+  const styles = useMemo(() => makeStyles(theme), [theme]);
 
   const handleSliderChange = (value: number, type: string) => {
     const colors = {
@@ -60,42 +62,28 @@ export const ColorPicker = ({ isOpen, color, onClose, onSubmit }: Props) => {
 
   return (
     <CustomModal onClose={onClose} visible={isOpen}>
-      <View style={{ paddingHorizontal: 35 }}>
-        <Text
-          style={{
-            fontSize: 18,
-            marginBottom: 8,
-            fontWeight: "bold",
-            color: theme.text,
-          }}
-        >
-          Customize
-        </Text>
+      <View style={styles.headerContainer}>
+        <Text style={styles.header}>Customize</Text>
       </View>
       <ScrollView>
         <View
           style={{
-            width: "100%",
-            height: 120,
             backgroundColor: `#${colorValue}`,
-            marginVertical: 18,
+            ...styles.previewBox,
           }}
+          testID="previewBox"
         ></View>
         <View style={styles.inputContainer}>
-          <Text style={{ color: theme.text, fontSize: 16 }}>#</Text>
+          <Text style={styles.inputHash}>#</Text>
           <TextInput
-            style={{
-              color: theme.text,
-              fontSize: 18,
-              borderBottomWidth: 2,
-              borderColor: theme.primary,
-            }}
+            style={styles.input}
             autoCapitalize="characters"
             placeholder={color}
             placeholderTextColor={theme.placeholder}
             value={inputValue}
             onChangeText={handleInputChange}
             maxLength={6}
+            testID="colorInput"
           />
         </View>
         {sliders.map((x) => {
@@ -105,12 +93,13 @@ export const ColorPicker = ({ isOpen, color, onClose, onSubmit }: Props) => {
               <Slider
                 step={1}
                 maximumValue={255}
-                style={{ flex: 1, paddingHorizontal: 8 }}
+                style={styles.slider}
                 value={rgbValue[x.value]}
                 onValueChange={(value) => handleSliderChange(value, x.value)}
                 minimumTrackTintColor={theme.primary}
                 maximumTrackTintColor={theme.placeholder}
                 thumbTintColor={theme.primary}
+                testID="slider"
               />
               <Text style={{ color: theme.text }}>{rgbValue[x.value]}</Text>
             </View>
@@ -125,25 +114,46 @@ export const ColorPicker = ({ isOpen, color, onClose, onSubmit }: Props) => {
   );
 };
 
-const styles = StyleSheet.create({
-  sliderContainer: {
-    flexDirection: "row",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-  },
-  buttonsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    paddingVertical: 14,
-  },
-  inputContainer: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "row",
-    paddingBottom: 8,
-  },
-});
+const makeStyles = (theme: any) =>
+  StyleSheet.create({
+    headerContainer: { paddingHorizontal: 35 },
+    header: {
+      fontSize: 18,
+      marginBottom: 8,
+      fontWeight: "bold",
+      color: theme.text,
+    },
+    previewBox: {
+      width: "100%",
+      height: 120,
+      marginVertical: 18,
+    },
+    inputContainer: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      flexDirection: "row",
+      paddingBottom: 8,
+    },
+    input: {
+      color: theme.text,
+      fontSize: 18,
+      borderBottomWidth: 2,
+      borderColor: theme.primary,
+    },
+    inputHash: { color: theme.text, fontSize: 16 },
+    sliderContainer: {
+      flexDirection: "row",
+      paddingHorizontal: 20,
+      paddingVertical: 10,
+    },
+    slider: { flex: 1, paddingHorizontal: 8 },
+    buttonsContainer: {
+      flexDirection: "row",
+      justifyContent: "space-around",
+      paddingVertical: 14,
+    },
+  });
 
 const sliders = [
   {
