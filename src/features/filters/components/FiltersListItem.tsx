@@ -11,7 +11,7 @@ export const FilterListItem = ({ text, onPress }: Props) => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{text}</Text>
-      <IconButton icon="delete" onPress={onPress} />
+      <IconButton icon="delete" onPress={onPress} testID="FilterListItemIcon" />
     </View>
   );
 };

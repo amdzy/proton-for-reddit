@@ -32,6 +32,11 @@ export const FilterModal = ({ visible, type, onClose }: Props) => {
     setValue("");
   };
 
+  const submitAndClose = () => {
+    handleSubmit();
+    onClose();
+  };
+
   const styles = useMemo(() => makeStyles(theme), [theme]);
 
   return (
@@ -47,8 +52,9 @@ export const FilterModal = ({ visible, type, onClose }: Props) => {
           placeholderTextColor={theme.placeholder}
           autoCapitalize="none"
           value={value}
-          onChangeText={(value) => setValue(value)}
+          onChangeText={setValue}
           onSubmitEditing={handleSubmit}
+          testID="input"
         />
         <IconButton icon="plus" style={styles.icon} onPress={handleSubmit} />
       </View>
@@ -64,13 +70,7 @@ export const FilterModal = ({ visible, type, onClose }: Props) => {
       />
       <View style={styles.buttonsContainer}>
         <Button text="Cancel" onPress={onClose} />
-        <Button
-          text="Done"
-          onPress={() => {
-            handleSubmit();
-            onClose();
-          }}
-        />
+        <Button text="Done" onPress={submitAndClose} />
       </View>
     </CustomModal>
   );
