@@ -1,7 +1,6 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { useTheme } from "@/hooks";
-import { IconButton } from "@/components";
+import { StyleSheet, View } from "react-native";
+import { IconButton, Text } from "@/components";
 
 interface Props {
   text: string;
@@ -9,12 +8,9 @@ interface Props {
 }
 
 export const FilterListItem = ({ text, onPress }: Props) => {
-  const theme = useTheme();
   return (
     <View style={styles.container}>
-      <Text style={{ color: theme.text, fontSize: 16, width: "90%" }}>
-        {text}
-      </Text>
+      <Text style={styles.text}>{text}</Text>
       <IconButton icon="delete" onPress={onPress} />
     </View>
   );
@@ -26,5 +22,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 20,
     justifyContent: "space-between",
+    flex: 1,
   },
+  text: { fontSize: 16 },
 });

@@ -1,6 +1,6 @@
 import { useAuthStore } from "@/stores";
 import { refreshAsync } from "expo-auth-session";
-import { CLIENT_ID, discovery } from "..";
+import { CLIENT_ID, discovery } from "../authConstants";
 import { isTokenFresh } from "../utils/isTokenFresh";
 
 export const refreshToken = async (

@@ -7,7 +7,8 @@ import {
 } from "@/components";
 import { useTheme } from "@/hooks";
 import { useFilterStore } from "@/stores";
-import React, { useState } from "react";
+import { ColorsDTO } from "@/stores/types";
+import React, { useMemo, useState } from "react";
 import { FlatList, StyleSheet, TextInput, View } from "react-native";
 import { FilterListItem } from "./components/FiltersListItem";
 
@@ -31,6 +32,8 @@ export const FilterModal = ({ visible, type, onClose }: Props) => {
     setValue("");
   };
 
+  const styles = useMemo(() => makeStyles(theme), [theme]);
+
   return (
     <CustomModal visible={visible} onClose={onClose}>
       <View style={styles.titleContainer}>
@@ -39,14 +42,7 @@ export const FilterModal = ({ visible, type, onClose }: Props) => {
       </View>
       <View style={styles.inputContainer}>
         <TextInput
-          style={{
-            color: theme.text,
-            borderBottomWidth: 1,
-            borderColor: theme.primary,
-            fontSize: 16,
-            flex: 1,
-            maxWidth: "90%",
-          }}
+          style={styles.input}
           placeholder="Add filter here"
           placeholderTextColor={theme.placeholder}
           autoCapitalize="none"
@@ -54,11 +50,7 @@ export const FilterModal = ({ visible, type, onClose }: Props) => {
           onChangeText={(value) => setValue(value)}
           onSubmitEditing={handleSubmit}
         />
-        <IconButton
-          icon="plus"
-          style={{ marginLeft: 12 }}
-          onPress={handleSubmit}
-        />
+        <IconButton icon="plus" style={styles.icon} onPress={handleSubmit} />
       </View>
       <FlatList
         keyExtractor={(item) => item}
@@ -84,25 +76,35 @@ export const FilterModal = ({ visible, type, onClose }: Props) => {
   );
 };
 
-const styles = StyleSheet.create({
-  titleContainer: {
-    paddingHorizontal: 20,
-    paddingBottom: 20,
-  },
-  title: {
-    textAlign: "center",
-    textTransform: "capitalize",
-    paddingTop: 0,
-  },
-  inputContainer: {
-    padding: 20,
-    paddingTop: 0,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  buttonsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    paddingVertical: 14,
-  },
-});
+const makeStyles = (theme: ColorsDTO) =>
+  StyleSheet.create({
+    titleContainer: {
+      paddingHorizontal: 20,
+      paddingBottom: 20,
+    },
+    title: {
+      textAlign: "center",
+      textTransform: "capitalize",
+      paddingTop: 0,
+    },
+    inputContainer: {
+      padding: 20,
+      paddingTop: 0,
+      flexDirection: "row",
+      alignItems: "center",
+    },
+    input: {
+      color: theme.text,
+      borderBottomWidth: 1,
+      borderColor: theme.primary,
+      fontSize: 16,
+      flex: 1,
+      maxWidth: "90%",
+    },
+    buttonsContainer: {
+      flexDirection: "row",
+      justifyContent: "space-around",
+      paddingVertical: 14,
+    },
+    icon: { marginLeft: 12 },
+  });

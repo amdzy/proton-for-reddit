@@ -7,6 +7,5 @@ export * from "./ListItem/ListItem";
 export * from "./Checkbox/Checkbox";
 export * from "./RadioButton/RadioButton";
 export * from "./CustomModal/CustomModal";
-// Typography
-export * from "./Typography/SettingsHeader";
+export * from "./Typography";
 export * from "./Buttons";

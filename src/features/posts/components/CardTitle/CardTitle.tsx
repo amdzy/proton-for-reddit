@@ -1,6 +1,6 @@
-import { useTheme } from "@/hooks";
+import { Header, SubText } from "@/components";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Thumbnail } from "../Thumbnail/Thumbnail";
 
 interface Props {
@@ -16,22 +16,11 @@ export const CardTitle = ({
   showThumbnail,
   domain,
 }: Props) => {
-  const theme = useTheme();
   return (
     <View style={styles.container} testID="CardTitle">
-      <View style={{ flex: 1 }}>
-        <Text
-          style={{
-            color: theme.text,
-            fontSize: 18,
-            lineHeight: 22,
-          }}
-        >
-          {title}
-        </Text>
-        {showThumbnail && (
-          <Text style={{ color: theme.placeholder }}>{domain}</Text>
-        )}
+      <View style={styles.textContainer}>
+        <Header>{title}</Header>
+        {showThumbnail && <SubText>{domain}</SubText>}
       </View>
 
       {showThumbnail && <Thumbnail url={thumbnail} />}
@@ -47,5 +36,8 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  textContainer: {
+    flex: 1,
   },
 });
