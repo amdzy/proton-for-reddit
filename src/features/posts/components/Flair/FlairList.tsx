@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { Flair } from "./Flair";
 
 interface Props {
-  tag: string;
+  tag: string | undefined;
   bgColor: string;
   color: string;
   hint: string | undefined;
@@ -12,7 +12,7 @@ interface Props {
 export const FlairList = ({ tag, bgColor, color, hint }: Props) => {
   return (
     <View style={styles.container}>
-      <Flair tag={tag} bgColor={bgColor} color={color} />
+      {tag && <Flair tag={tag} bgColor={bgColor} color={color} />}
       {hint === "link" && (
         <Flair tag="Link" bgColor={"#FFFFFF"} color={"dark"} />
       )}
@@ -21,5 +21,5 @@ export const FlairList = ({ tag, bgColor, color, hint }: Props) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flexDirection: "row", flexWrap: "wrap", padding: 10 },
+  container: { flexDirection: "row", flexWrap: "wrap", paddingHorizontal: 10 },
 });

@@ -18,7 +18,7 @@ export const CardTitle = ({
 }: Props) => {
   const theme = useTheme();
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="CardTitle">
       <View style={{ flex: 1 }}>
         <Text
           style={{

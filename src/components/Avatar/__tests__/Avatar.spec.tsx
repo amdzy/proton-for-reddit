@@ -23,4 +23,11 @@ describe("Avatar Component", () => {
     );
     expect(getByTestId("avatar")).not.toBe(null);
   });
+
+  it("renders without placeholder", () => {
+    const { getByTestId } = render(
+      <Avatar size={24} showPlaceholder={false} />
+    );
+    expect(getByTestId("avatar")).not.toBe(null);
+  });
 });

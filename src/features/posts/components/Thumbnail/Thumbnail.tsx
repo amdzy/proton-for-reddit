@@ -10,7 +10,7 @@ interface ThumbnailProps {
 export const Thumbnail = ({ url }: ThumbnailProps) => {
   const theme = useTheme();
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="Thumbnail">
       <Image
         source={{
           uri: url,

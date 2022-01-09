@@ -36,7 +36,9 @@ export const CardMain = ({ post }: Props) => {
 
   if (post.post_hint === "image") {
     const image = post.preview.images[0].source;
-    return <PostImage image={image} />;
+    return (
+      <PostImage url={image.url} width={image.width} height={image.height} />
+    );
   }
 
   if (post.is_gallery) {

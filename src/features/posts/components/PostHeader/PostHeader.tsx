@@ -18,17 +18,26 @@ export const PostHeader = ({ subName, author, createdAt, sub }: Props) => {
   useEffect(() => {
     if (!subIcon) {
       fetch(`https://www.reddit.com/r/${sub}/about.json`).then((res) =>
-        res.json().then((data) => {
-          console.log(data);
-
-          setSubIcon(data.data.icon_img);
-        })
+        res
+          .json()
+          .then((data) => {
+            setSubIcon(data.data.icon_img);
+          })
+          .catch((err) => {
+            setSubIcon("");
+            return;
+          })
       );
     }
   }, []);
   return (
     <View style={styles.container}>
-      <Avatar size={24} style={{ marginRight: 8 }} image={subIcon} />
+      <Avatar
+        size={24}
+        style={{ marginRight: 8 }}
+        image={subIcon}
+        showPlaceholder={false}
+      />
       <Link
         to={{ screen: "Sub" }}
         style={{ color: theme.highlight, marginRight: 8 }}

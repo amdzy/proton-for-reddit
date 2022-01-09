@@ -3,15 +3,11 @@ import { Text } from "react-native";
 
 interface Props {
   tag: string;
-  bgColor: string;
+  bgColor?: string;
   color: string;
 }
 
 export const Flair = ({ tag, bgColor, color }: Props) => {
-  if (!tag) {
-    return null;
-  }
-
   return (
     <Text
       style={{
