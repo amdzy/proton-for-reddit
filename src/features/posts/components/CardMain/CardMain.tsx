@@ -10,9 +10,10 @@ import { YoutubeImage } from "../YoutubeImage/YoutubeImage";
 
 interface Props {
   post: any;
+  openLink: () => void;
 }
 
-export const CardMain = ({ post }: Props) => {
+export const CardMain = ({ post, openLink }: Props) => {
   const theme = useTheme();
   const fonts = useThemeStore((state) => state.fonts);
   const navigation = useNavigation<any>();
@@ -93,6 +94,7 @@ export const CardMain = ({ post }: Props) => {
           url={media.thumbnail_url}
           width={media.thumbnail_width}
           height={media.thumbnail_height}
+          onPress={openLink}
         />
       );
     }

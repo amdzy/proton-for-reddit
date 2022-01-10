@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import { Flair } from "./Flair";
 
@@ -10,10 +10,14 @@ interface Props {
 }
 
 export const FlairList = ({ tag, bgColor, color, hint }: Props) => {
+  const newHint = useMemo(
+    () => hint?.replace("rich:", "").replace("hosted:", "").toUpperCase(),
+    []
+  );
   return (
     <View style={styles.container}>
+      {newHint && <Flair tag={newHint} bgColor={"#FFFFFF"} color={"dark"} />}
       {tag && <Flair tag={tag} bgColor={bgColor} color={color} />}
-      {hint && <Flair tag={hint} bgColor={"#FFFFFF"} color={"dark"} />}
     </View>
   );
 };

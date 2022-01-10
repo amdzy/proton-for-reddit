@@ -9,6 +9,7 @@ interface Props {
   showThumbnail: boolean;
   domain: string;
   showDomain: boolean;
+  onPressThumbnail: () => void;
 }
 
 export const CardTitle = ({
@@ -17,6 +18,7 @@ export const CardTitle = ({
   showThumbnail,
   domain,
   showDomain,
+  onPressThumbnail,
 }: Props) => {
   return (
     <View style={styles.container} testID="CardTitle">
@@ -24,8 +26,9 @@ export const CardTitle = ({
         <Header>{title}</Header>
         {showDomain && <SubText>{domain}</SubText>}
       </View>
-
-      {showThumbnail && <Thumbnail url={thumbnail} />}
+      {showThumbnail && (
+        <Thumbnail url={thumbnail} onPress={onPressThumbnail} />
+      )}
     </View>
   );
 };

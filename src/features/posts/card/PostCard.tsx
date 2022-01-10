@@ -6,10 +6,15 @@ import { PostHeader } from "../components/PostHeader/PostHeader";
 import { CardMain } from "../components/CardMain/CardMain";
 import { FlairList } from "../components/Flair/FlairList";
 import { CardTitle } from "../components/CardTitle/CardTitle";
+import * as WebBrowser from "expo-web-browser";
 
 export const PostCard = ({ post }: any) => {
   const chosenTheme = useThemeStore((state) => state.theme);
   const theme = useThemeStore((state) => state.colors[chosenTheme]);
+
+  const openLink = () => {
+    WebBrowser.openBrowserAsync(post.url);
+  };
 
   return (
     <View
@@ -31,6 +36,7 @@ export const PostCard = ({ post }: any) => {
         showThumbnail={
           post.post_hint === "link" && post.domain !== "i.imgur.com"
         }
+        onPressThumbnail={openLink}
         domain={post.domain}
         showDomain={
           (post.post_hint === "link" && post.domain !== "i.imgur.com") ||
@@ -43,7 +49,7 @@ export const PostCard = ({ post }: any) => {
         color={post.link_flair_text_color}
         hint={post.post_hint}
       />
-      <CardMain post={post} />
+      <CardMain post={post} openLink={openLink} />
       <CardFooter />
     </View>
   );

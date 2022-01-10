@@ -13,6 +13,7 @@ describe("CardTitle component", () => {
         showThumbnail={true}
         domain="test.com"
         showDomain={true}
+        onPressThumbnail={() => {}}
       />
     ));
   });

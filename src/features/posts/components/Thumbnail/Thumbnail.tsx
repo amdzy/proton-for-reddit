@@ -1,16 +1,17 @@
 import { useTheme } from "@/hooks";
 import React from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { Image, Pressable, StyleSheet, View } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 
 interface ThumbnailProps {
   url: string;
+  onPress?: () => void;
 }
 
-export const Thumbnail = ({ url }: ThumbnailProps) => {
+export const Thumbnail = ({ url, onPress }: ThumbnailProps) => {
   const theme = useTheme();
   return (
-    <View style={styles.container} testID="Thumbnail">
+    <Pressable style={styles.container} onPress={onPress} testID="Thumbnail">
       <Image
         source={{
           uri: url,
@@ -22,7 +23,7 @@ export const Thumbnail = ({ url }: ThumbnailProps) => {
       <View style={styles.icon}>
         <FontAwesome name="external-link" size={7} color={theme.background} />
       </View>
-    </View>
+    </Pressable>
   );
 };
 
