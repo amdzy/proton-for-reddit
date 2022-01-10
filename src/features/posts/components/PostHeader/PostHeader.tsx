@@ -1,8 +1,10 @@
 import { Avatar } from "@/components";
 import { useTheme } from "@/hooks";
+import { useSubIconStore } from "@/stores";
 import { Link } from "@react-navigation/native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { fetchIcon } from "../../utils/fetchIcon";
 
 interface Props {
   subName: string;
@@ -11,23 +13,13 @@ interface Props {
   sub: string;
 }
 
-const fetchIcon = async (sub: string) => {
-  try {
-    const res = await fetch(`https://www.reddit.com/r/${sub}/about.json`);
-    const data = await res.json();
-    return data.data.icon_img;
-  } catch {
-    return "";
-  }
-};
-
 export const PostHeader = ({ subName, author, createdAt, sub }: Props) => {
   const theme = useTheme();
-  const [subIcon, setSubIcon] = useState("");
+  const subIcon = useSubIconStore((state) => state.icons.get(sub));
 
   useEffect(() => {
     if (!subIcon) {
-      fetchIcon(sub).then((icon) => setSubIcon(icon));
+      fetchIcon(sub);
     }
   }, [subIcon]);
 
