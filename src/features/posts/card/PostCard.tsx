@@ -28,8 +28,14 @@ export const PostCard = ({ post }: any) => {
       <CardTitle
         title={post.title}
         thumbnail={post.thumbnail}
-        showThumbnail={post.post_hint === "link"}
+        showThumbnail={
+          post.post_hint === "link" && post.domain !== "i.imgur.com"
+        }
         domain={post.domain}
+        showDomain={
+          (post.post_hint === "link" && post.domain !== "i.imgur.com") ||
+          (post.post_hint === "rich:video" && post.domain === "youtu.be")
+        }
       />
       <FlairList
         tag={post.link_flair_text}

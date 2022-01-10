@@ -13,7 +13,7 @@ describe("FlairList Component", () => {
     const { getByText } = render(
       <FlairList tag="flair" color="light" bgColor="#FFFFFF" hint="link" />
     );
-    expect(getByText("Link")).not.toBe(null);
+    expect(getByText("link")).not.toBe(null);
   });
 
   it("renders link flair & passed tag", () => {
@@ -21,7 +21,7 @@ describe("FlairList Component", () => {
       <FlairList tag="flair" color="light" bgColor="#FFFFFF" hint="link" />
     );
     expect(getByText("flair")).not.toBe(null);
-    expect(getByText("Link")).not.toBe(null);
+    expect(getByText("link")).not.toBe(null);
   });
 
   it("renders nothing", () => {
@@ -34,6 +34,6 @@ describe("FlairList Component", () => {
       />
     );
     expect(queryByText("flair")).toBe(null);
-    expect(queryByText("Link")).toBe(null);
+    expect(queryByText("link")).toBe(null);
   });
 });

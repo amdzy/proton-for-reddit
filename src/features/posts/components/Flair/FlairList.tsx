@@ -13,13 +13,16 @@ export const FlairList = ({ tag, bgColor, color, hint }: Props) => {
   return (
     <View style={styles.container}>
       {tag && <Flair tag={tag} bgColor={bgColor} color={color} />}
-      {hint === "link" && (
-        <Flair tag="Link" bgColor={"#FFFFFF"} color={"dark"} />
-      )}
+      {hint && <Flair tag={hint} bgColor={"#FFFFFF"} color={"dark"} />}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flexDirection: "row", flexWrap: "wrap", paddingHorizontal: 10 },
+  container: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    padding: 10,
+    paddingTop: 0,
+  },
 });

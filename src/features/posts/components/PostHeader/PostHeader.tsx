@@ -11,25 +11,26 @@ interface Props {
   sub: string;
 }
 
+const fetchIcon = async (sub: string) => {
+  try {
+    const res = await fetch(`https://www.reddit.com/r/${sub}/about.json`);
+    const data = await res.json();
+    return data.data.icon_img;
+  } catch {
+    return "";
+  }
+};
+
 export const PostHeader = ({ subName, author, createdAt, sub }: Props) => {
   const theme = useTheme();
   const [subIcon, setSubIcon] = useState("");
 
   useEffect(() => {
     if (!subIcon) {
-      fetch(`https://www.reddit.com/r/${sub}/about.json`).then((res) =>
-        res
-          .json()
-          .then((data) => {
-            setSubIcon(data.data.icon_img);
-          })
-          .catch((err) => {
-            setSubIcon("");
-            return;
-          })
-      );
+      fetchIcon(sub).then((icon) => setSubIcon(icon));
     }
-  }, []);
+  }, [subIcon]);
+
   return (
     <View style={styles.container}>
       <Avatar

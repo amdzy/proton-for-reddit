@@ -20,6 +20,7 @@ import {
   SettingsScreen,
   SubscriptionsScreen,
   ThemeScreen,
+  VideoScreen,
   ViewSettingScreen,
 } from "@/screens";
 import { MessagesPageTopTab } from "./MessagesPageTopTab";
@@ -94,6 +95,15 @@ export const RootNavigator = () => {
           name="ViewSettings"
           component={ViewSettingScreen}
           options={{ title: "Views" }}
+        />
+        <Stack.Screen
+          name="Video"
+          component={VideoScreen}
+          options={{
+            title: "",
+            headerShadowVisible: false,
+            headerStyle: { backgroundColor: theme.background },
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
