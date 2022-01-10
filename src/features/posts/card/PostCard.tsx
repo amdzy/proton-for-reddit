@@ -9,7 +9,12 @@ import * as WebBrowser from "expo-web-browser";
 import { Awards } from "../components/Awards/Awards";
 import { useTheme } from "@/hooks";
 
-export const PostCard = ({ post }: any) => {
+interface Props {
+  post: any;
+  fullText?: boolean;
+}
+
+export const PostCard = ({ post, fullText }: Props) => {
   const theme = useTheme();
   const styles = useMemo(() => makeStyles(theme), [theme]);
 
@@ -45,7 +50,7 @@ export const PostCard = ({ post }: any) => {
         color={post.link_flair_text_color}
         hint={post.post_hint}
       />
-      <CardMain post={post} openLink={openLink} />
+      <CardMain post={post} openLink={openLink} fullText={fullText} />
       <CardFooter />
     </View>
   );

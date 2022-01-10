@@ -30,7 +30,7 @@ export const PostImage = ({ url, width, height }: Props) => {
             name="information-outline"
             size={24}
             color={theme.text}
-            style={{ textAlign: "center" }}
+            style={styles.icon}
           />
           <Text>An error happened click to reload</Text>
         </View>
@@ -89,5 +89,8 @@ const makeStyles = (width: number, height: number) =>
       height: "100%",
       justifyContent: "center",
       alignItems: "center",
+    },
+    icon: {
+      textAlign: "center",
     },
   });

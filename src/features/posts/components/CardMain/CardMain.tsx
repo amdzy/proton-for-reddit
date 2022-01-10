@@ -1,8 +1,7 @@
-import { useTheme } from "@/hooks";
-import { useThemeStore } from "@/stores/themeStore";
 import { useNavigation } from "@react-navigation/core";
 import React from "react";
-import { Dimensions, Text, View } from "react-native";
+import { Dimensions } from "react-native";
+import { CardText } from "../CardText/CardText";
 import { ImageCarousel } from "../ImageCarousel/ImageCarousel";
 import { PostImage } from "../PostImage/PostImage";
 import { VideoImage } from "../VideoImage/VideoImage";
@@ -11,32 +10,14 @@ import { YoutubeImage } from "../YoutubeImage/YoutubeImage";
 interface Props {
   post: any;
   openLink: () => void;
+  fullText?: boolean;
 }
 
-export const CardMain = ({ post, openLink }: Props) => {
-  const theme = useTheme();
-  const fonts = useThemeStore((state) => state.fonts);
+export const CardMain = ({ post, openLink, fullText }: Props) => {
   const navigation = useNavigation<any>();
 
   if (post.selftext) {
-    return (
-      <View style={{ paddingHorizontal: 10 }}>
-        <Text
-          style={{
-            backgroundColor: theme.backdrop,
-            color: theme.text,
-            padding: 8,
-            borderRadius: 10,
-            lineHeight: 20,
-            fontSize: fonts.fontSize.content,
-          }}
-          numberOfLines={5}
-          ellipsizeMode={"tail"}
-        >
-          {post.selftext}
-        </Text>
-      </View>
-    );
+    return <CardText text={post.selftext} fullText={fullText} />;
   }
 
   if (post.post_hint === "image") {

@@ -2,25 +2,28 @@ import { Avatar, Spacer, Text } from "@/components";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 
-export const Awards = ({ awards }: any) => {
-  if (awards.length === 0) {
-    return null;
-  }
+export const Awards = React.memo(
+  ({ awards }: any) => {
+    if (awards.length === 0) {
+      return null;
+    }
 
-  return (
-    <View style={styles.container}>
-      {awards.map((award: any) => {
-        return (
-          <View style={styles.awardContainer} key={award.id}>
-            <Avatar size={16} image={award.resized_static_icons[0].url} />
-            <Spacer size={6} horizontal />
-            <Text>x{award.count}</Text>
-          </View>
-        );
-      })}
-    </View>
-  );
-};
+    return (
+      <View style={styles.container}>
+        {awards.map((award: any) => {
+          return (
+            <View style={styles.awardContainer} key={award.id}>
+              <Avatar size={16} image={award.resized_static_icons[0].url} />
+              <Spacer size={6} horizontal />
+              <Text>x{award.count}</Text>
+            </View>
+          );
+        })}
+      </View>
+    );
+  },
+  () => true
+);
 
 const styles = StyleSheet.create({
   container: {

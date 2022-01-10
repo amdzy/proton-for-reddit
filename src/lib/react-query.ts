@@ -12,7 +12,8 @@ const queryConfig: DefaultOptions = {
     useErrorBoundary: true,
     refetchOnWindowFocus: false,
     retry: false,
-    staleTime: 10000,
+    staleTime: Infinity,
+    cacheTime: Infinity,
   },
 };
 

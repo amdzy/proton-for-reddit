@@ -1,16 +1,22 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import {
-  Dimensions,
   FlatList,
   Image,
   StyleSheet,
   Text,
+  useWindowDimensions,
   View,
   ViewToken,
 } from "react-native";
+import { PostImage } from "../PostImage/PostImage";
 
 export const ImageCarousel = ({ images }: any) => {
-  const width = Dimensions.get("screen").width;
+  const width = useWindowDimensions().width;
+
+  const styles = useMemo(
+    () => makeStyles(width, images[0].s.x, images[0].s.y),
+    [width]
+  );
 
   const viewabilityConfig = useRef({
     itemVisiblePercentThreshold: 50,
@@ -28,7 +34,7 @@ export const ImageCarousel = ({ images }: any) => {
     []
   );
   return (
-    <View style={{ flex: 1, width }}>
+    <View style={styles.container}>
       <FlatList
         viewabilityConfig={viewabilityConfig.current}
         onViewableItemsChanged={handleViewedImageChange}
@@ -42,19 +48,11 @@ export const ImageCarousel = ({ images }: any) => {
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => {
           return (
-            <View style={{ width, flex: 1 }}>
-              <Image
-                source={{
-                  uri: item.s.u,
-                }}
-                style={{
-                  flex: 1,
-                  width,
-                  height: undefined,
-                  aspectRatio: item.s.x / item.s.y || 1,
-                }}
-                resizeMode="cover"
-                fadeDuration={0}
+            <View style={styles.container}>
+              <PostImage
+                url={item.s.u}
+                width={images[0].s.x}
+                height={images[0].s.y}
               />
             </View>
           );
@@ -67,14 +65,21 @@ export const ImageCarousel = ({ images }: any) => {
   );
 };
 
-const styles = StyleSheet.create({
-  indicator: {
-    position: "absolute",
-    top: 10,
-    right: 10,
-    backgroundColor: "rgba(0,0,0,.5)",
-    color: "white",
-    padding: 6,
-    borderRadius: 13,
-  },
-});
+const makeStyles = (width: number, imageWidth: number, imageHeight: number) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      width,
+      height: undefined,
+      aspectRatio: imageWidth / imageHeight || 1,
+    },
+    indicator: {
+      position: "absolute",
+      top: 10,
+      right: 10,
+      backgroundColor: "rgba(0,0,0,.5)",
+      color: "white",
+      padding: 6,
+      borderRadius: 13,
+    },
+  });

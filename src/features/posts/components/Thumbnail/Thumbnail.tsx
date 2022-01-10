@@ -28,7 +28,15 @@ export const Thumbnail = ({ url, onPress }: ThumbnailProps) => {
 };
 
 const styles = StyleSheet.create({
-  container: { width: 75, height: 75, marginLeft: 16, borderRadius: 3 },
+  container: {
+    width: 75,
+    height: 75,
+    marginLeft: 16,
+    borderRadius: 3,
+    overflow: "hidden",
+    borderColor: "blue",
+    borderWidth: StyleSheet.hairlineWidth,
+  },
   image: {
     width: "100%",
     height: "100%",

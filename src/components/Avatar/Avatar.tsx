@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const Avatar = ({
-  image = "",
+  image,
   size,
   style,
   showPlaceholder = true,
