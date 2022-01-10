@@ -6,11 +6,7 @@ async function authRequestInterceptor(config: AxiosRequestConfig) {
   if (config.headers === undefined) {
     config.headers = {};
   }
-  try {
-    await handleToken();
-  } catch (err) {
-    console.log(err);
-  }
+  await handleToken();
   const token = useAuthStore.getState().token;
   config.headers.Authorization = `Bearer ${token}`;
   config.headers.Accept = "application/json";

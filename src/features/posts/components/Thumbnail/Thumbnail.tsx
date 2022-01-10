@@ -28,7 +28,7 @@ export const Thumbnail = ({ url, onPress }: ThumbnailProps) => {
 };
 
 const styles = StyleSheet.create({
-  container: { width: 75, height: 75, marginLeft: 16 },
+  container: { width: 75, height: 75, marginLeft: 16, borderRadius: 3 },
   image: {
     width: "100%",
     height: "100%",

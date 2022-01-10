@@ -1,0 +1,39 @@
+import { Avatar, Spacer, Text } from "@/components";
+import React from "react";
+import { StyleSheet, View } from "react-native";
+
+export const Awards = ({ awards }: any) => {
+  if (awards.length === 0) {
+    return null;
+  }
+
+  return (
+    <View style={styles.container}>
+      {awards.map((award: any) => {
+        return (
+          <View style={styles.awardContainer} key={award.id}>
+            <Avatar size={16} image={award.resized_static_icons[0].url} />
+            <Spacer size={6} horizontal />
+            <Text>x{award.count}</Text>
+          </View>
+        );
+      })}
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    padding: 10,
+    paddingTop: 0,
+  },
+  awardContainer: {
+    flexDirection: "row",
+    marginRight: 8,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});

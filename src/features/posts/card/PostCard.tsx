@@ -1,5 +1,4 @@
-import { useThemeStore } from "@/stores/themeStore";
-import React from "react";
+import React, { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import { CardFooter } from "../components/CardFooter/CardFooter";
 import { PostHeader } from "../components/PostHeader/PostHeader";
@@ -7,23 +6,19 @@ import { CardMain } from "../components/CardMain/CardMain";
 import { FlairList } from "../components/Flair/FlairList";
 import { CardTitle } from "../components/CardTitle/CardTitle";
 import * as WebBrowser from "expo-web-browser";
+import { Awards } from "../components/Awards/Awards";
+import { useTheme } from "@/hooks";
 
 export const PostCard = ({ post }: any) => {
-  const chosenTheme = useThemeStore((state) => state.theme);
-  const theme = useThemeStore((state) => state.colors[chosenTheme]);
+  const theme = useTheme();
+  const styles = useMemo(() => makeStyles(theme), [theme]);
 
   const openLink = () => {
     WebBrowser.openBrowserAsync(post.url);
   };
 
   return (
-    <View
-      style={{
-        backgroundColor: theme.surface,
-        shadowColor: theme.backdrop,
-        ...styles.card,
-      }}
-    >
+    <View style={styles.card}>
       <PostHeader
         subName={post.subreddit_name_prefixed}
         author={post.author}
@@ -43,6 +38,7 @@ export const PostCard = ({ post }: any) => {
           (post.post_hint === "rich:video" && post.domain === "youtu.be")
         }
       />
+      {false && <Awards awards={post.all_awardings} />}
       <FlairList
         tag={post.link_flair_text}
         bgColor={post.link_flair_background_color}
@@ -55,14 +51,17 @@ export const PostCard = ({ post }: any) => {
   );
 };
 
-const styles = StyleSheet.create({
-  card: {
-    width: "100%",
-    marginVertical: 6,
-    elevation: 2,
-    shadowOffset: { width: 1, height: 1 },
-    shadowOpacity: 0.1,
-    borderRadius: 20,
-    overflow: "hidden",
-  },
-});
+const makeStyles = (theme: any) =>
+  StyleSheet.create({
+    card: {
+      width: "100%",
+      marginVertical: 6,
+      elevation: 2,
+      shadowOffset: { width: 1, height: 1 },
+      shadowOpacity: 0.1,
+      borderRadius: 20,
+      overflow: "hidden",
+      backgroundColor: theme.surface,
+      shadowColor: theme.backdrop,
+    },
+  });

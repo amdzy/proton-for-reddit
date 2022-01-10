@@ -8,19 +8,22 @@ export const handleToken = async () => {
   const expiresIn = useAuthStore.getState().expiresIn;
   const issuedAt = useAuthStore.getState().issuedAt;
   const refresh = useAuthStore.getState().refreshToken;
+  try {
+    if (refresh && expiresIn && issuedAt) {
+      await refreshToken(expiresIn, issuedAt, refresh);
+      return;
+    }
 
-  if (refresh && expiresIn && issuedAt) {
-    await refreshToken(expiresIn, issuedAt, refresh);
-    return;
-  }
+    if (!token || !expiresIn || !issuedAt) {
+      await loginAnon();
+      return;
+    }
 
-  if (!token || !expiresIn || !issuedAt) {
-    await loginAnon();
-    return;
-  }
-
-  if (!isTokenFresh(expiresIn, issuedAt)) {
-    await loginAnon();
+    if (!isTokenFresh(expiresIn, issuedAt)) {
+      await loginAnon();
+      return;
+    }
+  } catch (err) {
     return;
   }
 };
