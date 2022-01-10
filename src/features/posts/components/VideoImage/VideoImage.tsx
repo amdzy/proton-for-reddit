@@ -15,13 +15,12 @@ export const VideoImage = ({ url, width, height, onPress }: Props) => {
     <View>
       <PostImage url={url} width={width} height={height} />
       <Pressable style={styles.button} onPress={onPress}>
-        <View pointerEvents="none">
-          <MaterialCommunityIcons
-            name="play-circle-outline"
-            size={80}
-            color="white"
-          />
-        </View>
+        <MaterialCommunityIcons
+          name="play-circle-outline"
+          size={60}
+          color="white"
+          style={styles.icon}
+        />
       </Pressable>
     </View>
   );
@@ -40,4 +39,5 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
   },
+  icon: { position: "absolute", top: 20, left: 20 },
 });

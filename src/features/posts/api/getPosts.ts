@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 
 const fetchPosts = () => {
   return axios({
-    url: "/best",
+    url: "/hot",
     params: {
       limit: 100,
     },
