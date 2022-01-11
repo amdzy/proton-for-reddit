@@ -8,9 +8,10 @@ import { CardTitle } from "../components/CardTitle/CardTitle";
 import * as WebBrowser from "expo-web-browser";
 import { Awards } from "../components/Awards/Awards";
 import { useTheme } from "@/hooks";
+import { PostType } from "../types";
 
 interface Props {
-  post: any;
+  post: PostType;
   fullText?: boolean;
 }
 
@@ -21,7 +22,6 @@ export const PostCard = ({ post, fullText }: Props) => {
   const openLink = () => {
     WebBrowser.openBrowserAsync(post.url);
   };
-
   return (
     <View style={styles.card}>
       <PostHeader
@@ -43,14 +43,28 @@ export const PostCard = ({ post, fullText }: Props) => {
           (post.post_hint === "rich:video" && post.domain === "youtu.be")
         }
       />
-      {false && <Awards awards={post.all_awardings} />}
+      <Awards awards={post.all_awardings} />
       <FlairList
         tag={post.link_flair_text}
         bgColor={post.link_flair_background_color}
         color={post.link_flair_text_color}
         hint={post.post_hint}
+        isNsfw={post.over_18}
       />
-      <CardMain post={post} openLink={openLink} fullText={fullText} />
+      <CardMain
+        selftext={post.selftext}
+        hint={post.post_hint}
+        preview={post.preview}
+        media={post.media}
+        isGallery={post.is_gallery}
+        mediaMetadata={post.media_metadata}
+        galleryData={post.gallery_data}
+        isVideo={post.is_video}
+        url={post.url}
+        openLink={openLink}
+        fullText={fullText}
+        isNsfw={post.over_18}
+      />
       <CardFooter />
     </View>
   );

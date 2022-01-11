@@ -7,9 +7,10 @@ interface Props {
   bgColor: string;
   color: string;
   hint: string | undefined;
+  isNsfw: boolean;
 }
 
-export const FlairList = ({ tag, bgColor, color, hint }: Props) => {
+export const FlairList = ({ tag, bgColor, color, hint, isNsfw }: Props) => {
   const newHint = useMemo(
     () => hint?.replace("rich:", "").replace("hosted:", "").toUpperCase(),
     []
@@ -18,6 +19,7 @@ export const FlairList = ({ tag, bgColor, color, hint }: Props) => {
     <View style={styles.container}>
       {newHint && <Flair tag={newHint} bgColor={"#FFFFFF"} color={"dark"} />}
       {tag && <Flair tag={tag} bgColor={bgColor} color={color} />}
+      {isNsfw && <Flair tag={"NSFW"} bgColor={"#e52d27"} color={"light"} />}
     </View>
   );
 };

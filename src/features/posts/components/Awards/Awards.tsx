@@ -1,9 +1,14 @@
-import { Avatar, Spacer, Text } from "@/components";
+import { Avatar, Spacer, SubText } from "@/components";
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import { AwardsDTO } from "../../types";
+
+interface Props {
+  awards: Array<AwardsDTO>;
+}
 
 export const Awards = React.memo(
-  ({ awards }: any) => {
+  ({ awards }: Props) => {
     if (awards.length === 0) {
       return null;
     }
@@ -15,7 +20,7 @@ export const Awards = React.memo(
             <View style={styles.awardContainer} key={award.id}>
               <Avatar size={16} image={award.resized_static_icons[0].url} />
               <Spacer size={6} horizontal />
-              <Text>x{award.count}</Text>
+              <SubText>x{award.count}</SubText>
             </View>
           );
         })}

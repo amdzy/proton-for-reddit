@@ -1,7 +1,6 @@
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import {
   FlatList,
-  Image,
   StyleSheet,
   Text,
   useWindowDimensions,
@@ -14,7 +13,7 @@ export const ImageCarousel = ({ images }: any) => {
   const width = useWindowDimensions().width;
 
   const styles = useMemo(
-    () => makeStyles(width, images[0].s.x, images[0].s.y),
+    () => makeStyles(width, images[0].x, images[0].y),
     [width]
   );
 
@@ -42,7 +41,7 @@ export const ImageCarousel = ({ images }: any) => {
         snapToInterval={width}
         decelerationRate="fast"
         pagingEnabled
-        keyExtractor={(item) => item.s.u}
+        keyExtractor={(item) => item.u}
         data={images}
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -50,9 +49,9 @@ export const ImageCarousel = ({ images }: any) => {
           return (
             <View style={styles.container}>
               <PostImage
-                url={item.s.u}
-                width={images[0].s.x}
-                height={images[0].s.y}
+                url={item.u}
+                width={images[0].x}
+                height={images[0].y}
               />
             </View>
           );

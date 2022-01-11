@@ -1,7 +1,8 @@
+import { Text } from "@/components";
 import { PostCard } from "@/features/posts";
 import { useGetPosts } from "@/features/posts/api/getPosts";
 import React from "react";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 
 export const MainScreen = () => {
   const query = useGetPosts();
@@ -10,17 +11,10 @@ export const MainScreen = () => {
   }
   if (query.data) {
     return (
-      <View
-        style={{
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-          width: "100%",
-        }}
-      >
+      <View style={styles.container}>
         <FlatList
           renderItem={({ item }) => <PostCard post={item.data} />}
-          data={query.data?.data.children}
+          data={query.data.data.children}
           keyExtractor={(item) => item.data.id}
           style={{ width: "100%" }}
         />
@@ -29,3 +23,12 @@ export const MainScreen = () => {
   }
   return null;
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+  },
+});

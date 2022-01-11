@@ -1,6 +1,8 @@
+import { useFilterStore, useSettingsStore } from "@/stores";
 import { useNavigation } from "@react-navigation/core";
 import React from "react";
 import { Dimensions } from "react-native";
+import { mediaDTO, PreviewDTO } from "../../types";
 import { CardText } from "../CardText/CardText";
 import { ImageCarousel } from "../ImageCarousel/ImageCarousel";
 import { PostImage } from "../PostImage/PostImage";
@@ -8,23 +10,71 @@ import { VideoImage } from "../VideoImage/VideoImage";
 import { YoutubeImage } from "../YoutubeImage/YoutubeImage";
 
 interface Props {
-  post: any;
-  openLink: () => void;
+  selftext: string;
+  hint?: string;
+  preview: PreviewDTO;
+  media: mediaDTO | null;
+  isGallery: boolean;
+  mediaMetadata: any;
+  galleryData: {
+    items: Array<{ media_id: string }>;
+  };
+  isVideo: boolean;
+  url: string;
   fullText?: boolean;
+  isNsfw: boolean;
+  openLink: () => void;
 }
 
-export const CardMain = ({ post, openLink, fullText }: Props) => {
+export const CardMain = ({
+  selftext,
+  hint,
+  preview,
+  media,
+  isGallery,
+  mediaMetadata,
+  galleryData,
+  isVideo,
+  url,
+  fullText,
+  isNsfw,
+  openLink,
+}: Props) => {
   const navigation = useNavigation<any>();
+  const dataSaver = useSettingsStore((state) => state.dataSaver);
+  const blurNsfw = useFilterStore((state) => state.posts.blurNsfw);
 
-  if (post.selftext) {
-    return <CardText text={post.selftext} fullText={fullText} />;
+  const handleImageChoice = () => {
+    let image = preview.images[0].source;
+
+    if (dataSaver) {
+      image =
+        preview.images[0].resolutions[1] || preview.images[0].resolutions[0];
+    }
+    if (isNsfw && blurNsfw) {
+      image = preview.images[0].variants.obfuscated.source;
+    }
+    if (isNsfw && blurNsfw && dataSaver) {
+      image =
+        preview.images[0].variants.obfuscated.resolutions[1] ||
+        preview.images[0].variants.obfuscated.resolutions[0];
+    }
+    return image;
+  };
+
+  if (selftext) {
+    return <CardText text={selftext} fullText={fullText} />;
   }
 
-  if (post.post_hint === "image") {
-    const image = post.preview.images[0].source;
-
-    if (post.preview.images[0].variants.mp4) {
-      const media = post.preview.images[0].variants.mp4.source;
+  if (hint === "image") {
+    const image = handleImageChoice();
+    if (preview.images[0].variants.mp4) {
+      let media = preview.images[0].variants.mp4.source;
+      if (dataSaver) {
+        media =
+          preview.images[0].variants.mp4.resolutions[1] ||
+          preview.images[0].variants.mp4.resolutions[0];
+      }
       return (
         <VideoImage
           url={image.url}
@@ -45,60 +95,94 @@ export const CardMain = ({ post, openLink, fullText }: Props) => {
     );
   }
 
-  if (post.is_gallery) {
-    const imgArr = Object.values(post.media_metadata);
+  if (isGallery) {
+    const imgArr = galleryData.items.map(({ media_id }) => {
+      let image = mediaMetadata[media_id].s;
+
+      if (dataSaver) {
+        image = mediaMetadata[media_id].p[1] || mediaMetadata[media_id].p[0];
+      }
+      if (isNsfw && blurNsfw) {
+        image = mediaMetadata[media_id].o[0];
+      }
+      return image;
+    });
+
     return <ImageCarousel images={imgArr} />;
   }
 
-  if (post.post_hint === "rich:video") {
-    if (post.preview.reddit_video_preview) {
-      const media = post.preview.reddit_video_preview;
-      const image = post.preview.images[0].source.url;
+  if (hint === "rich:video") {
+    if (preview.reddit_video_preview) {
+      const video = preview.reddit_video_preview;
+      const image = handleImageChoice();
       return (
         <VideoImage
-          url={image}
-          width={media.width}
-          height={media.height}
+          url={image.url}
+          width={video.width}
+          height={video.height}
           onPress={() =>
             navigation.navigate("Video", {
-              videoUrl: media.fallback_url,
+              videoUrl: dataSaver
+                ? video.scrubber_media_url
+                : video.fallback_url,
+              imageUrl: image.url,
             })
           }
         />
       );
     }
 
-    if (post.media.oembed) {
-      const media = post.media.oembed;
+    if (media && media.oembed) {
+      const image = media.oembed;
       return (
         <YoutubeImage
-          url={media.thumbnail_url}
-          width={media.thumbnail_width}
-          height={media.thumbnail_height}
+          url={image.thumbnail_url}
+          width={image.thumbnail_width}
+          height={image.thumbnail_height}
           onPress={openLink}
         />
       );
     }
   }
 
-  if (post.post_hint === "link" && post.preview.reddit_video_preview) {
-    const media = post.preview.reddit_video_preview;
-    const image = post.preview.images[0].source.url;
+  if (hint === "link" && preview.reddit_video_preview) {
+    const video = preview.reddit_video_preview;
+    const image = handleImageChoice();
     return (
       <VideoImage
-        url={image}
-        width={media.width}
-        height={media.height}
+        url={image.url}
+        width={video.width}
+        height={video.height}
         onPress={() =>
           navigation.navigate("Video", {
-            videoUrl: media.fallback_url,
+            videoUrl: dataSaver ? video.scrubber_media_url : video.fallback_url,
+            imageUrl: image.url,
           })
         }
       />
     );
   }
 
-  if (post.url.slice(-3) === "mp4") {
+  if (isVideo && media) {
+    const video = media.reddit_video;
+
+    const image = handleImageChoice();
+    return (
+      <VideoImage
+        url={image.url}
+        width={video.width}
+        height={video.height}
+        onPress={() =>
+          navigation.navigate("Video", {
+            videoUrl: dataSaver ? video.scrubber_media_url : video.fallback_url,
+            imageUrl: image.url,
+          })
+        }
+      />
+    );
+  }
+
+  if (url.slice(-3) === "mp4") {
     return (
       <VideoImage
         url={""}
@@ -106,26 +190,7 @@ export const CardMain = ({ post, openLink, fullText }: Props) => {
         height={250}
         onPress={() =>
           navigation.navigate("Video", {
-            videoUrl: post.url,
-          })
-        }
-      />
-    );
-  }
-
-  if (post.is_video) {
-    const media = post.media.reddit_video;
-
-    const image = post.preview.images[0].source;
-    return (
-      <VideoImage
-        url={image.url}
-        width={media.width}
-        height={media.height}
-        onPress={() =>
-          navigation.navigate("Video", {
-            videoUrl: media.fallback_url,
-            imageUrl: image.url,
+            videoUrl: url,
           })
         }
       />
