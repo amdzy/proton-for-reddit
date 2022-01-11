@@ -1,12 +1,12 @@
 import { useFilterStore, useSettingsStore } from "@/stores";
 import { useNavigation } from "@react-navigation/core";
-import React from "react";
+import React, { useMemo } from "react";
 import { Dimensions } from "react-native";
 import { mediaDTO, PreviewDTO } from "../../types";
 import { CardText } from "../CardText/CardText";
 import { ImageCarousel } from "../ImageCarousel/ImageCarousel";
 import { PostImage } from "../PostImage/PostImage";
-import { VideoImage } from "../VideoImage/VideoImage";
+import { ImageWithIcon } from "../ImageWithIcon/ImageWithIcon";
 import { YoutubeImage } from "../YoutubeImage/YoutubeImage";
 
 interface Props {
@@ -43,6 +43,7 @@ export const CardMain = ({
   const navigation = useNavigation<any>();
   const dataSaver = useSettingsStore((state) => state.dataSaver);
   const blurNsfw = useFilterStore((state) => state.posts.blurNsfw);
+  const carousel = useSettingsStore((state) => state.card.carousel);
 
   const handleImageChoice = () => {
     let image = preview.images[0].source;
@@ -76,7 +77,7 @@ export const CardMain = ({
           preview.images[0].variants.mp4.resolutions[0];
       }
       return (
-        <VideoImage
+        <ImageWithIcon
           url={image.url}
           width={media.width}
           height={media.height}
@@ -91,24 +92,59 @@ export const CardMain = ({
     }
 
     return (
-      <PostImage url={image.url} width={image.width} height={image.height} />
+      <PostImage
+        url={image.url}
+        width={image.width}
+        height={image.height}
+        onPress={() => {
+          navigation.navigate("Images", {
+            images: [preview.images[0].source],
+          });
+        }}
+      />
     );
   }
 
   if (isGallery) {
-    const imgArr = galleryData.items.map(({ media_id }) => {
-      let image = mediaMetadata[media_id].s;
+    const { imgArr, imgSourceArr, singleImage } = useMemo(() => {
+      const arr: any = [];
+      let img: any;
+      const imgArr = galleryData.items.map(({ media_id }, i) => {
+        let image = mediaMetadata[media_id].s;
 
-      if (dataSaver) {
-        image = mediaMetadata[media_id].p[1] || mediaMetadata[media_id].p[0];
-      }
-      if (isNsfw && blurNsfw) {
-        image = mediaMetadata[media_id].o[0];
-      }
-      return image;
-    });
+        arr.push({ url: image.u, width: image.x, height: image.y });
 
-    return <ImageCarousel images={imgArr} />;
+        if (dataSaver) {
+          image = mediaMetadata[media_id].p[1] || mediaMetadata[media_id].p[0];
+        }
+        if (isNsfw && blurNsfw) {
+          image = mediaMetadata[media_id].o[0];
+        }
+        if (i === 0) {
+          img = { url: image.u, width: image.x, height: image.y };
+        }
+
+        return { url: image.u, width: image.x, height: image.y };
+      });
+      return { imgArr: imgArr, imgSourceArr: arr, singleImage: img };
+    }, []);
+
+    const handlePress = () => {
+      navigation.navigate("Images", { images: imgSourceArr });
+    };
+    if (carousel) {
+      return <ImageCarousel images={imgArr} onPress={handlePress} />;
+    } else {
+      return (
+        <ImageWithIcon
+          url={singleImage.url}
+          width={singleImage.width}
+          height={singleImage.height}
+          icon="image-multiple-outline"
+          onPress={handlePress}
+        />
+      );
+    }
   }
 
   if (hint === "rich:video") {
@@ -116,15 +152,13 @@ export const CardMain = ({
       const video = preview.reddit_video_preview;
       const image = handleImageChoice();
       return (
-        <VideoImage
+        <ImageWithIcon
           url={image.url}
           width={video.width}
           height={video.height}
           onPress={() =>
             navigation.navigate("Video", {
-              videoUrl: dataSaver
-                ? video.scrubber_media_url
-                : video.fallback_url,
+              videoUrl: video.fallback_url,
               imageUrl: image.url,
             })
           }
@@ -149,13 +183,13 @@ export const CardMain = ({
     const video = preview.reddit_video_preview;
     const image = handleImageChoice();
     return (
-      <VideoImage
+      <ImageWithIcon
         url={image.url}
         width={video.width}
         height={video.height}
         onPress={() =>
           navigation.navigate("Video", {
-            videoUrl: dataSaver ? video.scrubber_media_url : video.fallback_url,
+            videoUrl: video.fallback_url,
             imageUrl: image.url,
           })
         }
@@ -166,15 +200,17 @@ export const CardMain = ({
   if (isVideo && media) {
     const video = media.reddit_video;
 
+    // Fetch the xml for video data
+
     const image = handleImageChoice();
     return (
-      <VideoImage
+      <ImageWithIcon
         url={image.url}
         width={video.width}
         height={video.height}
         onPress={() =>
           navigation.navigate("Video", {
-            videoUrl: dataSaver ? video.scrubber_media_url : video.fallback_url,
+            videoUrl: video.fallback_url,
             imageUrl: image.url,
           })
         }
@@ -184,7 +220,7 @@ export const CardMain = ({
 
   if (url.slice(-3) === "mp4") {
     return (
-      <VideoImage
+      <ImageWithIcon
         url={""}
         width={Dimensions.get("screen").width}
         height={250}

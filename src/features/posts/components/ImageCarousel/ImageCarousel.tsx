@@ -9,11 +9,20 @@ import {
 } from "react-native";
 import { PostImage } from "../PostImage/PostImage";
 
-export const ImageCarousel = ({ images }: any) => {
+interface Props {
+  images: Array<{
+    url: string;
+    width: number;
+    height: number;
+  }>;
+  onPress?: () => void;
+}
+
+export const ImageCarousel = ({ images, onPress }: Props) => {
   const width = useWindowDimensions().width;
 
   const styles = useMemo(
-    () => makeStyles(width, images[0].x, images[0].y),
+    () => makeStyles(width, images[0].width, images[0].height),
     [width]
   );
 
@@ -41,7 +50,7 @@ export const ImageCarousel = ({ images }: any) => {
         snapToInterval={width}
         decelerationRate="fast"
         pagingEnabled
-        keyExtractor={(item) => item.u}
+        keyExtractor={(item) => item.url}
         data={images}
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -49,9 +58,10 @@ export const ImageCarousel = ({ images }: any) => {
           return (
             <View style={styles.container}>
               <PostImage
-                url={item.u}
-                width={images[0].x}
-                height={images[0].y}
+                url={item.url}
+                width={images[0].width}
+                height={images[0].height}
+                onPress={onPress}
               />
             </View>
           );

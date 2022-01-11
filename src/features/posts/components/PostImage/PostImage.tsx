@@ -14,9 +14,17 @@ interface Props {
   width: number;
   height: number;
   url: string;
+  resizeMode?: "cover" | "contain" | "stretch";
+  onPress?: () => void;
 }
 
-export const PostImage = ({ url, width, height }: Props) => {
+export const PostImage = ({
+  url,
+  width,
+  height,
+  resizeMode = "cover",
+  onPress,
+}: Props) => {
   const [isloading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const styles = useMemo(() => makeStyles(width, height), []);
@@ -39,13 +47,13 @@ export const PostImage = ({ url, width, height }: Props) => {
   }
 
   return (
-    <View style={styles.box}>
+    <Pressable style={styles.box} onPress={onPress}>
       <Image
         source={{
           uri: url,
         }}
         style={styles.box}
-        resizeMode="cover"
+        resizeMode={resizeMode}
         testID="PostImage"
         onLoadStart={() => setIsLoading(true)}
         onLoadEnd={() => setIsLoading(false)}
@@ -58,7 +66,7 @@ export const PostImage = ({ url, width, height }: Props) => {
           size="large"
         />
       </View>
-    </View>
+    </Pressable>
   );
 };
 

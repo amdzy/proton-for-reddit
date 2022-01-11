@@ -13,6 +13,7 @@ import {
   FilterScreen,
   FontScreen,
   GeneralScreen,
+  ImageScreen,
   LoginScreen,
   MainScreen,
   NotificationScreen,
@@ -103,6 +104,16 @@ export const RootNavigator = () => {
             title: "",
             headerShadowVisible: false,
             headerStyle: { backgroundColor: theme.background },
+          }}
+        />
+        <Stack.Screen
+          name="Images"
+          component={ImageScreen}
+          options={{
+            title: "",
+            headerTransparent: true,
+            headerShadowVisible: false,
+            animation: "none",
           }}
         />
       </Stack.Navigator>
@@ -202,7 +213,7 @@ const SecondScreen = ({ navigation }: any) => {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text>Second Screen</Text>
-      <Button title="button" onPress={() => navigation.navigate("Search")} />
+      <Button title="button" onPress={() => navigation.navigate("Images")} />
     </View>
   );
 };
