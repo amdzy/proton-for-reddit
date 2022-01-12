@@ -1,7 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Audio, Video as ExpoVideo } from "expo-av";
-import { StyleSheet, View } from "react-native";
+import { Audio, AVPlaybackStatus, Video as ExpoVideo } from "expo-av";
+import { Pressable, StyleSheet, View } from "react-native";
 import { VideoControls } from "./VideoControls";
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
+import { Spinner } from "@/components";
 
 interface Props {
   videoUrl: string;
@@ -21,17 +28,17 @@ export const Video = ({
   const videoRef = useRef<any>(null);
   const [status, setStatus] = useState<any>({});
   const [sound, setSound] = useState(new Audio.Sound());
-  const [soundLoaded, setSoundLoaded] = useState(false);
+  const [soundStatus, setSoundStatus] = useState<AVPlaybackStatus>();
 
   const loadSound = async () => {
     try {
-      if (audioUrl) {
+      if (audioUrl && !soundStatus) {
         await sound.loadAsync(
           { uri: audioUrl },
           { isMuted: mute, isLooping: loop },
           false
         );
-        setSoundLoaded(true);
+        sound.setOnPlaybackStatusUpdate(setSoundStatus);
       }
     } catch (err) {
       console.log(err);
@@ -57,19 +64,28 @@ export const Video = ({
 
   useEffect(() => {
     const playSound = async () => {
-      if (status.isLoaded && audioUrl && soundLoaded && status.isPlaying) {
-        if (status.isPlaying) {
+      if (status.isLoaded && audioUrl && soundStatus?.isLoaded) {
+        if (status.isPlaying && !soundStatus.isPlaying) {
           await sound.playAsync();
+          return;
         }
-        if (!status.isPlaying) {
+        if (!status.isPlaying && soundStatus.isPlaying) {
           await sound.pauseAsync();
+          return;
+        }
+        if (status.isBuffering && !status.isPlaying) {
+          await sound.pauseAsync();
+          return;
         }
       }
     };
     playSound();
-  }, [status.isPlaying]);
+  }, [status]);
 
   const handlePlay = async () => {
+    if (!soundStatus?.isLoaded) {
+      return;
+    }
     await videoRef.current?.playAsync();
   };
 
@@ -81,6 +97,7 @@ export const Video = ({
   };
 
   const handleBackwards = async () => {
+    await handlePause();
     const time =
       status.positionMillis - 5000 > 0 ? status.positionMillis - 5000 : 0;
     await Promise.all([
@@ -97,6 +114,7 @@ export const Video = ({
     await Promise.all([
       audioUrl ? sound.setPositionAsync(time) : null,
       videoRef.current.setPositionAsync(time),
+      audioUrl ? sound.pauseAsync() : null,
     ]);
   };
 
@@ -115,43 +133,64 @@ export const Video = ({
   };
 
   const handleTimeChange = async (time: number) => {
+    await handlePause();
     await Promise.all([
       audioUrl ? sound.setPositionAsync(time) : null,
       videoRef.current.setPositionAsync(time),
     ]);
   };
 
+  const scale = useSharedValue(1);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
+
+  const onPressScale = () => {
+    if (scale.value === 1) {
+      scale.value = withTiming(0, { duration: 300 });
+    }
+    if (scale.value === 0) {
+      scale.value = withTiming(1, { duration: 300 });
+    }
+  };
+
+  if (!status.isLoaded) {
+    <Spinner animating={true} />;
+  }
+
   return (
     <View style={styles.video}>
-      <ExpoVideo
-        ref={videoRef}
-        style={styles.video}
-        source={{
-          uri: videoUrl,
-        }}
-        resizeMode="contain"
-        isLooping={loop}
-        isMuted={mute}
-        shouldPlay={audioUrl ? soundLoaded : true}
-        onPlaybackStatusUpdate={(status) => setStatus(() => status)}
-      />
-      {status.isLoaded && (
-        <VideoControls
-          currentTime={status.positionMillis}
-          duration={status.durationMillis}
-          isMuted={status.isMuted}
-          isPlaying={status.isPlaying}
-          haveAudio={audioUrl !== undefined}
-          showQualityCog={haveQualities}
-          handlePlay={handlePlay}
-          handlePause={handlePause}
-          handleBackwards={handleBackwards}
-          handleForwards={handleForwards}
-          handleMute={handleMute}
-          handleUnMute={handleUnMute}
-          handleTimeChange={handleTimeChange}
+      <Pressable style={styles.video} onPress={onPressScale}>
+        <ExpoVideo
+          ref={videoRef}
+          style={styles.video}
+          source={{
+            uri: videoUrl,
+          }}
+          resizeMode="contain"
+          isLooping={loop}
+          isMuted={mute}
+          shouldPlay={audioUrl ? soundStatus?.isLoaded : true}
+          onPlaybackStatusUpdate={(status) => setStatus(() => status)}
         />
-      )}
+      </Pressable>
+      <VideoControls
+        currentTime={status.positionMillis}
+        duration={status.durationMillis}
+        isMuted={status.isMuted}
+        isPlaying={status.isPlaying}
+        haveAudio={audioUrl !== undefined}
+        showQualityCog={haveQualities}
+        animatedStyle={animatedStyle}
+        handlePlay={handlePlay}
+        handlePause={handlePause}
+        handleBackwards={handleBackwards}
+        handleForwards={handleForwards}
+        handleMute={handleMute}
+        handleUnMute={handleUnMute}
+        handleTimeChange={handleTimeChange}
+      />
     </View>
   );
 };

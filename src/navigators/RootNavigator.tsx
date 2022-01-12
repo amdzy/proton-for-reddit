@@ -103,7 +103,7 @@ export const RootNavigator = () => {
           options={{
             title: "",
             headerShadowVisible: false,
-            headerStyle: { backgroundColor: theme.background },
+            headerTransparent: true,
           }}
         />
         <Stack.Screen

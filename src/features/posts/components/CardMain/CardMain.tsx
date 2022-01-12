@@ -26,6 +26,8 @@ interface Props {
   openLink: () => void;
 }
 
+const regex = new RegExp(/\/DASH(.*)$/, "g");
+
 export const CardMain = ({
   selftext,
   hint,
@@ -151,7 +153,7 @@ export const CardMain = ({
         onPress={() =>
           navigation.navigate("Video", {
             metaUrl: video.dash_url,
-            baseUrl: url,
+            baseUrl: video.fallback_url.replace(regex, ""),
           })
         }
       />
@@ -170,7 +172,7 @@ export const CardMain = ({
           onPress={() =>
             navigation.navigate("Video", {
               metaUrl: video.dash_url,
-              baseUrl: url,
+              baseUrl: video.fallback_url.replace(regex, ""),
             })
           }
         />
@@ -201,7 +203,7 @@ export const CardMain = ({
         onPress={() =>
           navigation.navigate("Video", {
             metaUrl: video.dash_url,
-            baseUrl: url,
+            baseUrl: video.fallback_url.replace(regex, ""),
           })
         }
       />

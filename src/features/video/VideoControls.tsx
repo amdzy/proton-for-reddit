@@ -1,7 +1,9 @@
 import { IconButton } from "@/components";
 import Slider from "@react-native-community/slider";
-import React, { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+import Animated from "react-native-reanimated";
+import { formatMillies } from "./utils";
 
 interface Props {
   currentTime: number;
@@ -10,6 +12,7 @@ interface Props {
   isPlaying: boolean;
   haveAudio: boolean;
   showQualityCog: boolean;
+  animatedStyle: any;
   handlePlay: () => void;
   handlePause: () => void;
   handleBackwards: () => void;
@@ -26,6 +29,7 @@ export const VideoControls = ({
   isPlaying,
   haveAudio,
   showQualityCog,
+  animatedStyle,
   handlePlay,
   handlePause,
   handleBackwards,
@@ -35,27 +39,15 @@ export const VideoControls = ({
   handleTimeChange,
 }: Props) => {
   return (
-    <View
-      style={{
-        position: "absolute",
-        bottom: 0,
-        left: 0,
-        right: 0,
-        backgroundColor: "transparent",
-        flex: 1,
-        paddingHorizontal: 10,
-        zIndex: 10,
-      }}
-    >
+    <Animated.View style={[styles.container, animatedStyle]}>
       <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          padding: 10,
-          flex: 1,
-          justifyContent:
-            haveAudio || showQualityCog ? "space-between" : "space-around",
-        }}
+        style={[
+          styles.rowContainer,
+          {
+            justifyContent:
+              haveAudio || showQualityCog ? "space-between" : "space-around",
+          },
+        ]}
       >
         <IconButton
           icon="skip-backward-outline"
@@ -82,17 +74,10 @@ export const VideoControls = ({
         )}
         {showQualityCog && <IconButton icon="cogs" color="white" />}
       </View>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          padding: 10,
-          flex: 1,
-        }}
-      >
-        <Text style={{ color: "white" }}>{currentTime}</Text>
+      <View style={styles.rowContainer}>
+        <Text style={styles.text}>{formatMillies(currentTime)}</Text>
         <Slider
-          style={{ flex: 1 }}
+          style={styles.slider}
           value={currentTime}
           maximumValue={duration}
           minimumTrackTintColor="white"
@@ -100,8 +85,33 @@ export const VideoControls = ({
           step={500}
           onSlidingComplete={handleTimeChange}
         />
-        <Text style={{ color: "white" }}>{duration}</Text>
+        <Text style={styles.text}>{formatMillies(duration)}</Text>
       </View>
-    </View>
+    </Animated.View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    position: "absolute",
+    bottom: 40,
+    left: 0,
+    right: 0,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    flex: 1,
+    paddingHorizontal: 10,
+    zIndex: 10,
+  },
+  rowContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 10,
+    flex: 1,
+  },
+  slider: {
+    flex: 1,
+  },
+  text: {
+    color: "white",
+  },
+});

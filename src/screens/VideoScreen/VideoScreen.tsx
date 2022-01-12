@@ -9,13 +9,12 @@ export const VideoScreen = ({ route }: any) => {
   const { metaUrl, baseUrl, videoUrl } = route.params;
   const dataSaver = useSettingsStore((state) => state.dataSaver);
   const videoSettings = useSettingsStore((state) => state.videos);
-  const [url, setUrl] = useState("");
 
   const { audioId, videoIds, isLoading } = useFetchVideo(metaUrl);
 
-  if (videoUrl) {
-    return (
-      <SafeAreaView style={styles.cotainer}>
+  return (
+    <SafeAreaView style={styles.cotainer}>
+      {videoUrl && (
         <ExpoVideo
           style={styles.video}
           source={{ uri: videoUrl }}
@@ -25,32 +24,31 @@ export const VideoScreen = ({ route }: any) => {
           isMuted={videoSettings.mute}
           shouldPlay={true}
         />
-      </SafeAreaView>
-    );
-  }
-
-  if (isLoading) {
-    return <Spinner animating={isLoading} />;
-  }
-
-  if (!isLoading) {
-    return (
-      <SafeAreaView style={styles.cotainer}>
+      )}
+      {isLoading && <Spinner animating={isLoading} />}
+      {!videoUrl && !isLoading && (
         <Video
-          videoUrl={`${baseUrl}/${videoIds[0].url}`}
+          videoUrl={
+            dataSaver
+              ? `${baseUrl}/${videoIds[0].url}`
+              : `${baseUrl}/${videoIds[videoIds.length - 1].url}`
+          }
           audioUrl={audioId ? `${baseUrl}/${audioId}` : undefined}
           haveQualities={videoIds.length > 1}
           loop={videoSettings.loop}
           mute={videoSettings.mute}
         />
-      </SafeAreaView>
-    );
-  }
-
-  return null;
+      )}
+    </SafeAreaView>
+  );
 };
 
 const styles = StyleSheet.create({
-  cotainer: { width: "100%", height: "100%", flex: 1 },
+  cotainer: {
+    width: "100%",
+    height: "100%",
+    flex: 1,
+    backgroundColor: "black",
+  },
   video: { width: "100%", height: "100%" },
 });
