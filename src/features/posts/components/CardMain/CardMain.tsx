@@ -111,9 +111,7 @@ export const CardMain = ({
       let img: any;
       const imgArr = galleryData.items.map(({ media_id }, i) => {
         let image = mediaMetadata[media_id].s;
-
         arr.push({ url: image.u, width: image.x, height: image.y });
-
         if (dataSaver) {
           image = mediaMetadata[media_id].p[1] || mediaMetadata[media_id].p[0];
         }
@@ -123,7 +121,6 @@ export const CardMain = ({
         if (i === 0) {
           img = { url: image.u, width: image.x, height: image.y };
         }
-
         return { url: image.u, width: image.x, height: image.y };
       });
       return { imgArr: imgArr, imgSourceArr: arr, singleImage: img };
@@ -147,6 +144,26 @@ export const CardMain = ({
     }
   }
 
+  if (isVideo && media) {
+    const video = media.reddit_video;
+
+    const image = handleImageChoice();
+    return (
+      <ImageWithIcon
+        url={image.url}
+        width={video.width}
+        height={video.height}
+        onPress={() =>
+          navigation.navigate("Video", {
+            metaUrl: video.dash_url,
+            imageUrl: image.url,
+            baseUrl: url,
+          })
+        }
+      />
+    );
+  }
+
   if (hint === "rich:video") {
     if (preview.reddit_video_preview) {
       const video = preview.reddit_video_preview;
@@ -158,8 +175,9 @@ export const CardMain = ({
           height={video.height}
           onPress={() =>
             navigation.navigate("Video", {
-              videoUrl: video.fallback_url,
+              metaUrl: video.dash_url,
               imageUrl: image.url,
+              baseUrl: url,
             })
           }
         />
@@ -189,29 +207,9 @@ export const CardMain = ({
         height={video.height}
         onPress={() =>
           navigation.navigate("Video", {
-            videoUrl: video.fallback_url,
+            metaUrl: video.dash_url,
             imageUrl: image.url,
-          })
-        }
-      />
-    );
-  }
-
-  if (isVideo && media) {
-    const video = media.reddit_video;
-
-    // Fetch the xml for video data
-
-    const image = handleImageChoice();
-    return (
-      <ImageWithIcon
-        url={image.url}
-        width={video.width}
-        height={video.height}
-        onPress={() =>
-          navigation.navigate("Video", {
-            videoUrl: video.fallback_url,
-            imageUrl: image.url,
+            baseUrl: url,
           })
         }
       />
