@@ -1,4 +1,4 @@
-import { Text } from "@/components";
+import { Spinner, Text } from "@/components";
 import { useMemo, useState } from "react";
 import {
   ActivityIndicator,
@@ -59,13 +59,7 @@ export const PostImage = ({
         onLoadEnd={() => setIsLoading(false)}
         onError={() => setIsError(true)}
       />
-      <View style={styles.absoluteBox}>
-        <ActivityIndicator
-          animating={isloading}
-          color={theme.primary}
-          size="large"
-        />
-      </View>
+      <Spinner animating={isloading} />
     </Pressable>
   );
 };
@@ -87,17 +81,7 @@ const makeStyles = (width: number, height: number) =>
       alignItems: "center",
       zIndex: 1000,
     },
-    absoluteBox: {
-      position: "absolute",
-      top: 0,
-      bottom: 0,
-      left: 0,
-      right: 0,
-      width: "100%",
-      height: "100%",
-      justifyContent: "center",
-      alignItems: "center",
-    },
+
     icon: {
       textAlign: "center",
     },

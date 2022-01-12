@@ -6,12 +6,14 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 interface Props extends PressableProps {
   icon: any;
   color?: string;
+  size?: number;
 }
 
 export const IconButton = ({
   icon,
   color,
   style,
+  size = 24,
   onPress,
   ...props
 }: Props) => {
@@ -27,7 +29,7 @@ export const IconButton = ({
       <MaterialCommunityIcons
         name={icon}
         color={color || theme.placeholder}
-        size={24}
+        size={size}
       />
     </Pressable>
   );

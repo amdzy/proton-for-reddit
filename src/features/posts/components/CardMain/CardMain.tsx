@@ -81,12 +81,7 @@ export const CardMain = ({
           url={image.url}
           width={media.width}
           height={media.height}
-          onPress={() =>
-            navigation.navigate("Video", {
-              videoUrl: media.url,
-              imageUrl: image.url,
-            })
-          }
+          onPress={() => navigation.navigate("Video", { videoUrl: media.url })}
         />
       );
     }
@@ -156,7 +151,6 @@ export const CardMain = ({
         onPress={() =>
           navigation.navigate("Video", {
             metaUrl: video.dash_url,
-            imageUrl: image.url,
             baseUrl: url,
           })
         }
@@ -176,7 +170,6 @@ export const CardMain = ({
           onPress={() =>
             navigation.navigate("Video", {
               metaUrl: video.dash_url,
-              imageUrl: image.url,
               baseUrl: url,
             })
           }
@@ -208,7 +201,6 @@ export const CardMain = ({
         onPress={() =>
           navigation.navigate("Video", {
             metaUrl: video.dash_url,
-            imageUrl: image.url,
             baseUrl: url,
           })
         }
