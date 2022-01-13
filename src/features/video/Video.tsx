@@ -38,6 +38,22 @@ export const Video = ({
     transform: [{ scale: scale.value }],
   }));
 
+  const loadVideo = async () => {
+    try {
+      await videoRef.current.loadAsync({ uri: url }, {}, false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const unloadVideo = async () => {
+    try {
+      await videoRef.current.unloadAsync();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const loadSound = async () => {
     try {
       if (audioUrl && !soundStatus) {
@@ -78,14 +94,18 @@ export const Video = ({
         return;
       }
     }
+    if (!status.isLoaded && soundStatus?.isLoaded) {
+      await sound.pauseAsync();
+    }
   };
 
   useEffect(() => {
+    loadVideo();
     loadSound();
     return () => {
       unloadSound();
     };
-  }, [audioUrl]);
+  }, []);
 
   useEffect(() => {
     playSound();
@@ -96,15 +116,15 @@ export const Video = ({
       return;
     }
     await Promise.all([
-      audioUrl ? sound.playAsync() : null,
       videoRef.current?.playAsync(),
+      audioUrl ? sound.playAsync() : null,
     ]);
   };
 
   const handlePause = async () => {
     await Promise.all([
-      audioUrl ? sound.pauseAsync() : null,
       videoRef.current?.pauseAsync(),
+      audioUrl ? sound.pauseAsync() : null,
     ]);
   };
 
@@ -112,8 +132,8 @@ export const Video = ({
     const time =
       status.positionMillis - 5000 > 0 ? status.positionMillis - 5000 : 0;
     await Promise.all([
-      audioUrl ? sound.setPositionAsync(time) : null,
       videoRef.current.setPositionAsync(time),
+      audioUrl ? sound.setPositionAsync(time) : null,
     ]);
   };
 
@@ -123,28 +143,28 @@ export const Video = ({
         ? status.playableDurationMillis
         : status.positionMillis + 5000;
     await Promise.all([
-      audioUrl ? sound.setPositionAsync(time) : null,
       videoRef.current.setPositionAsync(time),
+      audioUrl ? sound.setPositionAsync(time) : null,
     ]);
   };
 
   const handleTimeChange = async (time: number) => {
     await Promise.all([
-      audioUrl ? sound.setPositionAsync(time) : null,
       videoRef.current.setPositionAsync(time),
+      audioUrl ? sound.setPositionAsync(time) : null,
     ]);
   };
   const handleMute = async () => {
     await Promise.all([
-      audioUrl ? sound.setIsMutedAsync(true) : null,
       videoRef.current.setIsMutedAsync(true),
+      audioUrl ? sound.setIsMutedAsync(true) : null,
     ]);
   };
 
   const handleUnMute = async () => {
     await Promise.all([
-      audioUrl ? sound.setIsMutedAsync(false) : null,
       videoRef.current.setIsMutedAsync(false),
+      audioUrl ? sound.setIsMutedAsync(false) : null,
     ]);
   };
 
@@ -158,11 +178,21 @@ export const Video = ({
   };
 
   const changeVideoQuality = async (url: string) => {
-    if (audioUrl && soundStatus?.isLoaded) {
-      await sound.stopAsync();
+    try {
+      if (audioUrl && soundStatus?.isLoaded) {
+        await sound.stopAsync();
+      }
+      closeModal();
+      await videoRef.current.unloadAsync();
+      await videoRef.current.loadAsync(
+        { uri: `${baseUrl}/${url}` },
+        { shouldPlay: true },
+        false
+      );
+      setUrl(`${baseUrl}/${url}`);
+    } catch (err) {
+      console.log(err);
     }
-    setUrl(`${baseUrl}/${url}`);
-    closeModal();
   };
 
   if (!status.isLoaded) {
@@ -176,9 +206,6 @@ export const Video = ({
           <ExpoVideo
             ref={videoRef}
             style={styles.video}
-            source={{
-              uri: url,
-            }}
             resizeMode="contain"
             isLooping={loop}
             isMuted={mute}
@@ -203,6 +230,7 @@ export const Video = ({
           handleTimeChange={handleTimeChange}
           openQualityModal={openModal}
         />
+        {!status.isLoaded && <Spinner animating={true} />}
       </View>
       <VideoQualityModal
         visible={isModalOpen}

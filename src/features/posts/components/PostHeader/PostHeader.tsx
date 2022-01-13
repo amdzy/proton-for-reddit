@@ -1,11 +1,11 @@
 import { Avatar, SubText } from "@/components";
 import { useTheme } from "@/hooks";
-import { useSubIconStore } from "@/stores";
-import { Link } from "@react-navigation/native";
+import { useSettingsStore, useSubIconStore } from "@/stores";
 import React, { useEffect, useMemo } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { fetchIcon } from "../../utils/fetchIcon";
 import { formatDistanceToNowStrict } from "date-fns";
+import { useNavigation } from "@react-navigation/core";
 
 interface Props {
   subName: string;
@@ -18,6 +18,26 @@ export const PostHeader = ({ subName, author, createdAt, sub }: Props) => {
   const theme = useTheme();
   const subIcon = useSubIconStore((state) => state.icons.get(sub));
   const styles = useMemo(() => makeStyles(theme), [theme]);
+  const postSettings = useSettingsStore((state) => state.posts);
+  const navigation = useNavigation<any>();
+
+  const handleAvatarRedirect = () => {
+    navigation.navigate("Sub");
+  };
+
+  const handleSubRedirect = () => {
+    if (!postSettings.tapSub) {
+      return;
+    }
+    navigation.navigate("Sub");
+  };
+
+  const handleuserRedirect = () => {
+    if (!postSettings.tapUser) {
+      return;
+    }
+    navigation.navigate("Comments");
+  };
 
   useEffect(() => {
     if (!subIcon) {
@@ -27,24 +47,28 @@ export const PostHeader = ({ subName, author, createdAt, sub }: Props) => {
 
   return (
     <View style={styles.container}>
-      <Pressable>
-        <Avatar
-          size={26}
-          style={styles.avatar}
-          image={subIcon}
-          showPlaceholder={false}
-        />
-      </Pressable>
+      {postSettings.subIcon && (
+        <Pressable onPress={handleAvatarRedirect}>
+          <Avatar
+            size={26}
+            style={styles.avatar}
+            image={subIcon}
+            showPlaceholder={false}
+          />
+        </Pressable>
+      )}
       <View style={styles.linksContainer}>
-        <Pressable>
+        <Pressable onPress={handleSubRedirect}>
           <Text style={styles.subName}>{subName}</Text>
         </Pressable>
         <View style={styles.subContainer}>
-          <Pressable>
-            <SubText fontSize={12} style={styles.userName}>
-              u/{author}
-            </SubText>
-          </Pressable>
+          {postSettings.author && (
+            <Pressable onPress={handleuserRedirect}>
+              <SubText fontSize={12} style={styles.userName}>
+                u/{author}
+              </SubText>
+            </Pressable>
+          )}
           <SubText fontSize={12}>
             {formatDistanceToNowStrict(createdAt * 1000)} ago
           </SubText>

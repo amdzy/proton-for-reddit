@@ -17,8 +17,8 @@ export const useFetchVideo = (url: string) => {
         setisLoading(false);
         return;
       }
-
       setisLoading(true);
+
       const res = await fetch(url);
       const data = await res.text();
       const parsedData: XmlRes = await parseStringPromise(data);

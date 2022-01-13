@@ -1,12 +1,8 @@
 import React from "react";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useThemeStore } from "@/stores/themeStore";
-import { Link } from "@react-navigation/native";
 import { View } from "react-native";
+import { IconButton, SubText } from "@/components";
 
 export const CardFooter = () => {
-  const chosenTheme = useThemeStore((state) => state.theme);
-  const color = useThemeStore((state) => state.colors[chosenTheme].placeholder);
   return (
     <View
       style={{
@@ -16,17 +12,31 @@ export const CardFooter = () => {
         flexWrap: "nowrap",
       }}
     >
-      <MaterialCommunityIcons name="arrow-up-thick" size={24} color={color} />
-      <MaterialCommunityIcons name="arrow-down-thick" size={24} color={color} />
-      <Link to={{ screen: "Comments" }}>
-        <MaterialCommunityIcons
-          name="comment-outline"
-          size={24}
-          color={color}
-        />
-      </Link>
-      <MaterialCommunityIcons name="star" size={24} color={color} />
-      <MaterialCommunityIcons name="dots-vertical" size={24} color={color} />
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          flex: 0.4,
+        }}
+      >
+        <IconButton icon="arrow-up-thick" />
+        <SubText>34545</SubText>
+        <IconButton icon="arrow-down-thick" />
+      </View>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-around",
+          alignItems: "center",
+          flex: 0.3,
+        }}
+      >
+        <IconButton icon="comment-outline" />
+        <SubText>34545</SubText>
+      </View>
+      <IconButton icon="bookmark-outline" />
+      <IconButton icon="share-variant" />
     </View>
   );
 };

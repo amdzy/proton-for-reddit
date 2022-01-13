@@ -11,6 +11,7 @@ import {
   FlairList,
   PostHeader,
 } from "../components";
+import { useSettingsStore } from "@/stores";
 
 interface Props {
   post: PostType;
@@ -20,6 +21,7 @@ interface Props {
 export const PostCard = ({ post, fullText }: Props) => {
   const theme = useTheme();
   const styles = useMemo(() => makeStyles(theme), [theme]);
+  const postSettings = useSettingsStore((state) => state.posts);
 
   const openLink = () => {
     WebBrowser.openBrowserAsync(post.url);
@@ -45,14 +47,16 @@ export const PostCard = ({ post, fullText }: Props) => {
           (post.post_hint === "rich:video" && post.domain === "youtu.be")
         }
       />
-      <Awards awards={post.all_awardings} />
-      <FlairList
-        tag={post.link_flair_text}
-        bgColor={post.link_flair_background_color}
-        color={post.link_flair_text_color}
-        hint={post.post_hint}
-        isNsfw={post.over_18}
-      />
+      {postSettings.awards && <Awards awards={post.all_awardings} />}
+      {postSettings.flairs && (
+        <FlairList
+          tag={post.link_flair_text}
+          bgColor={post.link_flair_background_color}
+          color={post.link_flair_text_color}
+          hint={post.post_hint}
+          isNsfw={post.over_18}
+        />
+      )}
       <CardMain
         selftext={post.selftext}
         hint={post.post_hint}

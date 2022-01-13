@@ -1,24 +1,15 @@
 import { Checkbox, Divider, ListItem, SettingsHeader } from "@/components";
 import { SortModal } from "@/features/sort";
+import { useModal } from "@/hooks";
 import { useSettingsStore } from "@/stores";
-import React, { useState } from "react";
+import React from "react";
 import { ScrollView } from "react-native";
-import {
-  awards,
-  flairs,
-  markRead,
-  postInfo,
-  visibleButtons,
-} from "./postSettingsData";
+import { awards, flairs, markRead, postInfo } from "./postSettingsData";
 
 export const PostSettingScreen = () => {
   const postSettings = useSettingsStore((state) => state.posts);
+  const { isModalOpen, openModal, closeModal } = useModal();
   const setPostSettings = useSettingsStore((state) => state.setPostSettings);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
 
   return (
     <ScrollView>
@@ -26,7 +17,7 @@ export const PostSettingScreen = () => {
         text="Default sort"
         subText={postSettings.sort}
         icon="text"
-        onPress={() => setIsModalOpen(true)}
+        onPress={openModal}
       />
       <Divider />
       <SettingsHeader text="Post Info" />
@@ -65,21 +56,6 @@ export const PostSettingScreen = () => {
         );
       })}
       <Divider />
-      <SettingsHeader text="Visible buttons" />
-      {visibleButtons.map((x) => {
-        return (
-          <ListItem
-            key={x.type}
-            text={x.text}
-            icon={x.icon}
-            onPress={() => setPostSettings(x.type)}
-            right={
-              <Checkbox checked={postSettings.buttons[x.type]} passThrough />
-            }
-          />
-        );
-      })}
-      <Divider />
       <SettingsHeader text="Mark as read" />
       {markRead.map((x) => {
         return (
@@ -92,7 +68,7 @@ export const PostSettingScreen = () => {
           />
         );
       })}
-      <SortModal visible={isModalOpen} onClose={handleCloseModal} post />
+      <SortModal visible={isModalOpen} onClose={closeModal} post />
     </ScrollView>
   );
 };

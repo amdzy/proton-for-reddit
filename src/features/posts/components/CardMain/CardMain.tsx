@@ -46,6 +46,7 @@ export const CardMain = ({
   const dataSaver = useSettingsStore((state) => state.dataSaver);
   const blurNsfw = useFilterStore((state) => state.posts.blurNsfw);
   const carousel = useSettingsStore((state) => state.card.carousel);
+  const previewText = useSettingsStore((state) => state.card.previewText);
 
   const handleImageChoice = () => {
     let image = preview.images[0].source;
@@ -65,7 +66,7 @@ export const CardMain = ({
     return image;
   };
 
-  if (selftext) {
+  if (selftext && previewText) {
     return <CardText text={selftext} fullText={fullText} />;
   }
 

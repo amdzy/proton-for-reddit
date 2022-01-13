@@ -12,11 +12,6 @@ export const ViewSettingScreen = () => {
       <Divider />
       <SettingsHeader text="Cards" />
       <ListItem
-        text="Show subreddit icon"
-        right={<Checkbox checked={cardSettings.subIcon} />}
-        onPress={() => setCardSettings("subIcon")}
-      />
-      <ListItem
         text="Carousel for multiple image previews"
         right={<Checkbox checked={cardSettings.carousel} />}
         onPress={() => setCardSettings("carousel")}

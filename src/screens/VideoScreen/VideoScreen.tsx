@@ -1,8 +1,7 @@
 import { useFetchVideo, Video } from "@/features/video";
 import { useSettingsStore } from "@/stores";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
-import { Video as ExpoVideo } from "expo-av";
 import { Spinner } from "@/components";
 
 export const VideoScreen = ({ route }: any) => {

@@ -21,18 +21,10 @@ interface StoreProps {
     tapSub: boolean;
     tapUser: boolean;
     awards: boolean;
-    tapAwards: boolean;
     flairs: boolean;
-    flairsColor: boolean;
-    buttons: {
-      read: boolean;
-      share: boolean;
-      comments: boolean;
-      favourite: boolean;
-    };
     markRead: boolean;
     hideRead: boolean;
-    dimImage: boolean;
+    subIcon: boolean;
   };
   comments: {
     sort: string;
@@ -42,11 +34,8 @@ interface StoreProps {
     awards: boolean;
     tapAwards: boolean;
     flairs: boolean;
-    flairsColor: boolean;
   };
   card: {
-    fullHeight: boolean;
-    subIcon: boolean;
     carousel: boolean;
     previewText: boolean;
   };
@@ -104,18 +93,10 @@ export const useSettingsStore = create<StoreProps>((set) => ({
     tapSub: true,
     tapUser: true,
     awards: true,
-    tapAwards: true,
     flairs: true,
-    flairsColor: true,
-    buttons: {
-      read: false,
-      share: true,
-      comments: true,
-      favourite: true,
-    },
     markRead: true,
     hideRead: false,
-    dimImage: false,
+    subIcon: true,
   },
   setPostSort: (value) =>
     set(
@@ -126,9 +107,6 @@ export const useSettingsStore = create<StoreProps>((set) => ({
   setPostSettings: (type) =>
     set(
       produce((state) => {
-        if (state.posts.buttons[type] !== undefined) {
-          state.posts.buttons[type] = !state.posts.buttons[type];
-        }
         state.posts[type] = !state.posts[type];
       })
     ),
@@ -157,8 +135,6 @@ export const useSettingsStore = create<StoreProps>((set) => ({
     ),
 
   card: {
-    fullHeight: true,
-    subIcon: true,
     carousel: true,
     previewText: true,
   },
