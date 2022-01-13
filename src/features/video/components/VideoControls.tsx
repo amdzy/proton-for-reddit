@@ -3,7 +3,7 @@ import Slider from "@react-native-community/slider";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Animated from "react-native-reanimated";
-import { formatMillies } from "./utils";
+import { formatMillies } from "../utils";
 
 interface Props {
   currentTime: number;
@@ -20,6 +20,7 @@ interface Props {
   handleMute: () => void;
   handleUnMute: () => void;
   handleTimeChange: (time: number) => void;
+  openQualityModal: () => void;
 }
 
 export const VideoControls = ({
@@ -37,6 +38,7 @@ export const VideoControls = ({
   handleMute,
   handleUnMute,
   handleTimeChange,
+  openQualityModal,
 }: Props) => {
   return (
     <Animated.View style={[styles.container, animatedStyle]}>
@@ -54,10 +56,9 @@ export const VideoControls = ({
           color="white"
           onPress={handleBackwards}
         />
-        {!isPlaying && (
+        {!isPlaying ? (
           <IconButton icon="play" color="white" onPress={handlePlay} />
-        )}
-        {isPlaying && (
+        ) : (
           <IconButton icon="pause" color="white" onPress={handlePause} />
         )}
         <IconButton
@@ -72,7 +73,9 @@ export const VideoControls = ({
         {isMuted && haveAudio && (
           <IconButton icon="volume-off" color="white" onPress={handleUnMute} />
         )}
-        {showQualityCog && <IconButton icon="cogs" color="white" />}
+        {showQualityCog && (
+          <IconButton icon="cogs" color="white" onPress={openQualityModal} />
+        )}
       </View>
       <View style={styles.rowContainer}>
         <Text style={styles.text}>{formatMillies(currentTime)}</Text>

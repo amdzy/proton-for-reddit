@@ -18,7 +18,7 @@ export const Awards = React.memo(
         {awards.map((award: any) => {
           return (
             <View style={styles.awardContainer} key={award.id}>
-              <Avatar size={16} image={award.resized_static_icons[0].url} />
+              <Avatar size={16} image={award.resized_static_icons[1].url} />
               <Spacer size={6} horizontal />
               <SubText>x{award.count}</SubText>
             </View>

@@ -7,13 +7,11 @@ import shallow from "zustand/shallow";
 
 export const DataScreen = () => {
   const theme = useTheme();
-  const { dataSaver, setDataSaver } = useSettingsStore(
-    (state) => ({
-      dataSaver: state.dataSaver,
-      setDataSaver: state.setDataSaver,
-    }),
-    shallow
-  );
+  const dataSaver = useSettingsStore((state) => state.dataSaver);
+  const setDataSaver = useSettingsStore((state) => state.setDataSaver);
+  const videoDataSaver = useSettingsStore((state) => state.videos.dataSaver);
+  const setVideoSettings = useSettingsStore((state) => state.setVideoSettings);
+
   return (
     <View style={{ flex: 1, backgroundColor: theme.background }}>
       <SettingsHeader text="Data Saver" />
@@ -25,11 +23,13 @@ export const DataScreen = () => {
       />
       <Divider />
       <SettingsHeader text="Videos" />
-      <ListItem text="Autoplay videos" subText="Never" />
-      <ListItem text="Video quality" subText="Prefer lower size" />
+      <ListItem
+        text="Video quality"
+        subText={videoDataSaver ? "Prefer high quality" : "Prefer low quality"}
+        onPress={() => setVideoSettings("dataSaver")}
+        right={<Checkbox checked={videoDataSaver} passThrough />}
+      />
       <Divider />
-      <SettingsHeader text="Images" />
-      <ListItem text="Load Images" subText="Enabled" />
     </View>
   );
 };

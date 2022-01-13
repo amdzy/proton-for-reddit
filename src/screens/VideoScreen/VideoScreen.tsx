@@ -7,36 +7,27 @@ import { Spinner } from "@/components";
 
 export const VideoScreen = ({ route }: any) => {
   const { metaUrl, baseUrl, videoUrl } = route.params;
-  const dataSaver = useSettingsStore((state) => state.dataSaver);
   const videoSettings = useSettingsStore((state) => state.videos);
 
   const { audioId, videoIds, isLoading } = useFetchVideo(metaUrl);
 
   return (
     <SafeAreaView style={styles.cotainer}>
-      {videoUrl && (
-        <ExpoVideo
-          style={styles.video}
-          source={{ uri: videoUrl }}
-          useNativeControls
-          resizeMode="contain"
-          isLooping={videoSettings.loop}
-          isMuted={videoSettings.mute}
-          shouldPlay={true}
-        />
-      )}
       {isLoading && <Spinner animating={isLoading} />}
-      {!videoUrl && !isLoading && (
+      {!isLoading && (
         <Video
           videoUrl={
-            dataSaver
+            videoUrl
+              ? videoUrl
+              : videoSettings.dataSaver
               ? `${baseUrl}/${videoIds[0].url}`
               : `${baseUrl}/${videoIds[videoIds.length - 1].url}`
           }
           audioUrl={audioId ? `${baseUrl}/${audioId}` : undefined}
-          haveQualities={videoIds.length > 1}
           loop={videoSettings.loop}
           mute={videoSettings.mute}
+          qualities={videoIds}
+          baseUrl={baseUrl}
         />
       )}
     </SafeAreaView>

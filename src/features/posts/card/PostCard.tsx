@@ -1,14 +1,16 @@
 import React, { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
-import { CardFooter } from "../components/CardFooter/CardFooter";
-import { PostHeader } from "../components/PostHeader/PostHeader";
-import { CardMain } from "../components/CardMain/CardMain";
-import { FlairList } from "../components/Flair/FlairList";
-import { CardTitle } from "../components/CardTitle/CardTitle";
 import * as WebBrowser from "expo-web-browser";
-import { Awards } from "../components/Awards/Awards";
 import { useTheme } from "@/hooks";
 import { PostType } from "../types";
+import {
+  Awards,
+  CardFooter,
+  CardMain,
+  CardTitle,
+  FlairList,
+  PostHeader,
+} from "../components";
 
 interface Props {
   post: PostType;

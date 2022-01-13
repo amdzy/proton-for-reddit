@@ -2,12 +2,12 @@ import { useFilterStore, useSettingsStore } from "@/stores";
 import { useNavigation } from "@react-navigation/core";
 import React, { useMemo } from "react";
 import { Dimensions } from "react-native";
-import { mediaDTO, PreviewDTO } from "../../types";
 import { CardText } from "../CardText/CardText";
 import { ImageCarousel } from "../ImageCarousel/ImageCarousel";
 import { PostImage } from "../PostImage/PostImage";
 import { ImageWithIcon } from "../ImageWithIcon/ImageWithIcon";
 import { YoutubeImage } from "../YoutubeImage/YoutubeImage";
+import { mediaDTO, PreviewDTO } from "../../types";
 
 interface Props {
   selftext: string;

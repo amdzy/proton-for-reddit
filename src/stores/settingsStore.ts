@@ -13,6 +13,7 @@ interface StoreProps {
   videos: {
     mute: boolean;
     loop: boolean;
+    dataSaver: boolean;
   };
   posts: {
     sort: string;
@@ -87,7 +88,8 @@ export const useSettingsStore = create<StoreProps>((set) => ({
 
   videos: {
     mute: false,
-    loop: false,
+    loop: true,
+    dataSaver: true,
   },
   setVideoSettings: (type) =>
     set(
