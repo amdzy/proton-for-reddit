@@ -37,7 +37,7 @@ export const MainScreen = () => {
         data={query.data.pages}
         keyExtractor={(item) => item.after}
         style={styles.flatlist}
-        onEndReachedThreshold={0.5}
+        onEndReachedThreshold={5}
         onEndReached={() => {
           if (!query.isFetchingNextPage && !query.isFetching) {
             query.fetchNextPage();

@@ -40,15 +40,11 @@ export const Video = ({
 
   const loadVideo = async () => {
     try {
-      await videoRef.current.loadAsync({ uri: url }, {}, false);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const unloadVideo = async () => {
-    try {
-      await videoRef.current.unloadAsync();
+      await videoRef.current.loadAsync(
+        { uri: url },
+        { isMuted: mute, isLooping: loop },
+        false
+      );
     } catch (err) {
       console.log(err);
     }
@@ -115,10 +111,7 @@ export const Video = ({
     if (audioUrl && !soundStatus?.isLoaded) {
       return;
     }
-    await Promise.all([
-      videoRef.current?.playAsync(),
-      audioUrl ? sound.playAsync() : null,
-    ]);
+    await videoRef.current?.playAsync();
   };
 
   const handlePause = async () => {
@@ -186,7 +179,7 @@ export const Video = ({
       await videoRef.current.unloadAsync();
       await videoRef.current.loadAsync(
         { uri: `${baseUrl}/${url}` },
-        { shouldPlay: true },
+        { shouldPlay: true, isMuted: mute, isLooping: loop },
         false
       );
       setUrl(`${baseUrl}/${url}`);
