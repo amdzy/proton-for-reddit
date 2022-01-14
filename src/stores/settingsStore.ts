@@ -1,5 +1,7 @@
 import create from "zustand";
 import produce from "immer";
+import { persist } from "zustand/middleware";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface StoreProps {
   notifications: {
@@ -50,98 +52,106 @@ interface StoreProps {
   setCardSettings: (type: string) => void;
 }
 
-export const useSettingsStore = create<StoreProps>((set) => ({
-  notifications: {
-    enabled: true,
-    interval: {
-      value: 10000,
-      text: "1 Sec",
-    },
-  },
-  setNotifications: () =>
-    set(
-      produce((state) => {
-        state.notifications.enabled = !state.notifications.enabled;
-      })
-    ),
-  setNotificationsInterval: (text, value) =>
-    set(
-      produce((state) => {
-        state.notifications.interval.text = text;
-        state.notifications.interval.value = value;
-      })
-    ),
+export const useSettingsStore = create<StoreProps>(
+  persist(
+    (set, get) => ({
+      notifications: {
+        enabled: true,
+        interval: {
+          value: 10000,
+          text: "1 Sec",
+        },
+      },
+      setNotifications: () =>
+        set(
+          produce((state) => {
+            state.notifications.enabled = !state.notifications.enabled;
+          })
+        ),
+      setNotificationsInterval: (text, value) =>
+        set(
+          produce((state) => {
+            state.notifications.interval.text = text;
+            state.notifications.interval.value = value;
+          })
+        ),
 
-  dataSaver: true,
-  setDataSaver: () => set((state) => ({ dataSaver: !state.dataSaver })),
+      dataSaver: true,
+      setDataSaver: () => set((state) => ({ dataSaver: !state.dataSaver })),
 
-  videos: {
-    mute: false,
-    loop: true,
-    dataSaver: true,
-  },
-  setVideoSettings: (type) =>
-    set(
-      produce((state) => {
-        state.videos[type] = !state.videos[type];
-      })
-    ),
+      videos: {
+        mute: false,
+        loop: true,
+        dataSaver: true,
+      },
+      setVideoSettings: (type) =>
+        set(
+          produce((state) => {
+            state.videos[type] = !state.videos[type];
+          })
+        ),
 
-  posts: {
-    sort: "rising",
-    author: true,
-    tapSub: true,
-    tapUser: true,
-    awards: true,
-    flairs: true,
-    markRead: true,
-    hideRead: false,
-    subIcon: true,
-  },
-  setPostSort: (value) =>
-    set(
-      produce((state) => {
-        state.posts.sort = value;
-      })
-    ),
-  setPostSettings: (type) =>
-    set(
-      produce((state) => {
-        state.posts[type] = !state.posts[type];
-      })
-    ),
+      posts: {
+        sort: "rising",
+        author: true,
+        tapSub: true,
+        tapUser: true,
+        awards: true,
+        flairs: true,
+        markRead: true,
+        hideRead: false,
+        subIcon: true,
+      },
+      setPostSort: (value) =>
+        set(
+          produce((state) => {
+            state.posts.sort = value;
+          })
+        ),
+      setPostSettings: (type) =>
+        set(
+          produce((state) => {
+            state.posts[type] = !state.posts[type];
+          })
+        ),
 
-  comments: {
-    sort: "hot",
-    avatar: false,
-    buttonsVisible: false,
-    highlightName: true,
-    awards: true,
-    tapAwards: true,
-    flairs: true,
-    flairsColor: true,
-  },
-  setCommentSort: (value) =>
-    set(
-      produce((state) => {
-        state.comments.sort = value;
-      })
-    ),
-  setCommentSettings: (type) =>
-    set(
-      produce((state) => {
-        state.comments[type] = !state.comments[type];
-      })
-    ),
+      comments: {
+        sort: "hot",
+        avatar: false,
+        buttonsVisible: false,
+        highlightName: true,
+        awards: true,
+        tapAwards: true,
+        flairs: true,
+        flairsColor: true,
+      },
+      setCommentSort: (value) =>
+        set(
+          produce((state) => {
+            state.comments.sort = value;
+          })
+        ),
+      setCommentSettings: (type) =>
+        set(
+          produce((state) => {
+            state.comments[type] = !state.comments[type];
+          })
+        ),
 
-  card: {
-    carousel: true,
-    previewText: true,
-  },
-  setCardSettings: (type) =>
-    set(
-      produce((state) => {
-        state.card[type] = !state.card[type];
-      })
-    ),
-}));
+      card: {
+        carousel: true,
+        previewText: true,
+      },
+      setCardSettings: (type) =>
+        set(
+          produce((state) => {
+            state.card[type] = !state.card[type];
+          })
+        ),
+    }),
+    {
+      name: "settingsStore",
+      getStorage: () => AsyncStorage,
+    }
+  )
+);
