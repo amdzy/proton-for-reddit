@@ -26,6 +26,7 @@ export const PostCard = ({ post, fullText }: Props) => {
   const openLink = () => {
     WebBrowser.openBrowserAsync(post.url);
   };
+
   return (
     <View style={styles.card}>
       <PostHeader
@@ -71,7 +72,13 @@ export const PostCard = ({ post, fullText }: Props) => {
         fullText={fullText}
         isNsfw={post.over_18}
       />
-      <CardFooter />
+      <CardFooter
+        numLikes={post.ups}
+        numComments={post.num_comments}
+        likes={post.likes}
+        postId={post.id}
+        postName={post.name}
+      />
     </View>
   );
 };

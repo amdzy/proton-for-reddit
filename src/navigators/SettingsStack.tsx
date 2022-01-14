@@ -17,7 +17,7 @@ const Stack = createNativeStackNavigator();
 
 export const SettingsStack = () => {
   return (
-    <Stack.Navigator>
+    <>
       <Stack.Screen name="General" component={GeneralScreen} />
       <Stack.Screen name="Theme" component={ThemeScreen} />
       <Stack.Screen name="Colors" component={ColorScreen} />
@@ -44,6 +44,6 @@ export const SettingsStack = () => {
         component={ViewSettingScreen}
         options={{ title: "Views" }}
       />
-    </Stack.Navigator>
+    </>
   );
 };

@@ -35,7 +35,8 @@ export const SortModal = ({
             <ListItem
               text={x.text}
               icon={x.icon}
-              onPress={() => handleSubmit(x.text)}
+              onPress={() => handleSubmit(x.type)}
+              key={x.type}
             />
           );
         })}

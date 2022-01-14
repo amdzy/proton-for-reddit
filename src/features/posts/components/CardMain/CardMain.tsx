@@ -109,6 +109,14 @@ export const CardMain = ({
       let img: any;
       const imgArr = galleryData.items.map(({ media_id }, i) => {
         let image = mediaMetadata[media_id].s;
+        if (!image && !image.u) {
+          console.log(url);
+          return {
+            url: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.jhKTh9a2doSaATgNF3DxXgHaE8%26pid%3DApi&f=1",
+            width: 1000,
+            height: 2000,
+          };
+        }
         arr.push({ url: image.u, width: image.x, height: image.y });
         if (dataSaver) {
           image = mediaMetadata[media_id].p[1] || mediaMetadata[media_id].p[0];
@@ -127,6 +135,7 @@ export const CardMain = ({
     const handlePress = () => {
       navigation.navigate("Images", { images: imgSourceArr });
     };
+
     if (carousel) {
       return <ImageCarousel images={imgArr} onPress={handlePress} />;
     } else {

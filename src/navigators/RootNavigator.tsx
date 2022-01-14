@@ -2,32 +2,12 @@ import React, { useMemo } from "react";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Button, Pressable, Text, TextInput, View } from "react-native";
-import { MainPageTopTabs } from "./MainPageTopTabs";
-import { Avatar, TabBarIcon } from "@/components";
-import { TabNavigatorButtons } from "./Components/TabNavigatorButtons";
-import {
-  ColorScreen,
-  CommentSettingScreen,
-  DataScreen,
-  FilterScreen,
-  FontScreen,
-  GeneralScreen,
-  ImageScreen,
-  LoginScreen,
-  MainScreen,
-  NotificationScreen,
-  PostSettingScreen,
-  SettingsScreen,
-  SubscriptionsScreen,
-  ThemeScreen,
-  VideoScreen,
-  ViewSettingScreen,
-} from "@/screens";
-import { MessagesPageTopTab } from "./MessagesPageTopTab";
+import { Button, Text, View } from "react-native";
+import { ImageScreen, VideoScreen } from "@/screens";
 import { useTheme } from "@/hooks";
 import { SearchBar } from "@/features/search";
-import { useAuthStore } from "@/stores";
+import { SettingsStack } from "./SettingsStack";
+import { BottomTab } from "./BottomTab";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -54,7 +34,7 @@ export const RootNavigator = () => {
       <Stack.Navigator screenOptions={{ animation: "slide_from_right" }}>
         <Stack.Screen
           name="Main"
-          component={TabNav}
+          component={BottomTab}
           options={{
             headerShown: false,
           }}
@@ -71,32 +51,7 @@ export const RootNavigator = () => {
             headerBackTitleVisible: false,
           }}
         />
-        <Stack.Screen name="General" component={GeneralScreen} />
-        <Stack.Screen name="Theme" component={ThemeScreen} />
-        <Stack.Screen name="Colors" component={ColorScreen} />
-        <Stack.Screen name="Fonts" component={FontScreen} />
-        <Stack.Screen name="Filters" component={FilterScreen} />
-        <Stack.Screen name="Notifications" component={NotificationScreen} />
-        <Stack.Screen
-          name="Data"
-          component={DataScreen}
-          options={{ title: "Data Saver" }}
-        />
-        <Stack.Screen
-          name="PostSettings"
-          component={PostSettingScreen}
-          options={{ title: "Posts" }}
-        />
-        <Stack.Screen
-          name="CommentSettings"
-          component={CommentSettingScreen}
-          options={{ title: "Comments" }}
-        />
-        <Stack.Screen
-          name="ViewSettings"
-          component={ViewSettingScreen}
-          options={{ title: "Views" }}
-        />
+        {SettingsStack()}
         <Stack.Screen
           name="Video"
           component={VideoScreen}
@@ -118,94 +73,6 @@ export const RootNavigator = () => {
         />
       </Stack.Navigator>
     </NavigationContainer>
-  );
-};
-
-const TabNav = () => {
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  return (
-    <Tab.Navigator
-      screenOptions={({ navigation }) => ({
-        tabBarShowLabel: false,
-        headerRight: () => <TabNavigatorButtons navigation={navigation} />,
-        headerRightContainerStyle: {
-          marginRight: 12,
-        },
-        headerLeft: () => (
-          <Pressable onPress={() => navigation.navigate("Profile")}>
-            <Avatar size={30} />
-          </Pressable>
-        ),
-        headerLeftContainerStyle: {
-          marginRight: 12,
-          marginLeft: 12,
-        },
-      })}
-    >
-      <Tab.Screen
-        name="Feed"
-        component={MainScreen}
-        options={{
-          headerShadowVisible: false,
-          title: "Proton",
-          tabBarIcon: ({ color, size }) => (
-            <TabBarIcon color={color} icon={"home"} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Inbox"
-        component={isAuthenticated ? MessagesPageTopTab : LoginScreen}
-        options={{
-          headerShadowVisible: false,
-          tabBarIcon: ({ color, size }) => (
-            <TabBarIcon
-              color={color}
-              icon={"chat-processing-outline"}
-              size={size}
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Subs"
-        component={SubscriptionsScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <TabBarIcon
-              color={color}
-              icon={"format-list-bulleted-type"}
-              size={size}
-            />
-          ),
-          title: "Subscriptions",
-        }}
-      />
-      <Tab.Screen
-        name="Profile"
-        component={isAuthenticated ? SecondScreen : LoginScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <TabBarIcon
-              color={color}
-              icon={"account-circle-outline"}
-              size={size}
-            />
-          ),
-          headerLeft: () => null,
-        }}
-      />
-      <Tab.Screen
-        name="Settings"
-        component={SettingsScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <TabBarIcon color={color} icon={"cog"} size={size} />
-          ),
-          headerLeft: () => null,
-        }}
-      />
-    </Tab.Navigator>
   );
 };
 

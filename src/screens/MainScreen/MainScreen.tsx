@@ -1,34 +1,78 @@
-import { Text } from "@/components";
+import { Spinner } from "@/components";
 import { PostCard } from "@/features/posts";
-import { useGetPosts } from "@/features/posts/api/getPosts";
-import React from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { useGetFeed } from "@/features/posts/api";
+import { useSettingsStore } from "@/stores";
+import React, { useEffect, useState } from "react";
+import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native";
 
 export const MainScreen = () => {
-  const query = useGetPosts();
+  const sort = useSettingsStore((state) => state.posts.sort);
+  const query = useGetFeed(sort);
+  const [refreshing, setIsRefreshing] = useState(false);
+
+  useEffect(() => {
+    if (refreshing) {
+      if (query.isRefetching === false) {
+        setIsRefreshing(false);
+      }
+    }
+  }, [query.isRefetching]);
+
   if (query.isLoading) {
-    return <Text>Loading</Text>;
+    return <Spinner animating={true} />;
   }
+
   if (query.data) {
     return (
-      <View style={styles.container}>
-        <FlatList
-          renderItem={({ item }) => <PostCard post={item.data} />}
-          data={query.data.data.children}
-          keyExtractor={(item) => item.data.id}
-          style={{ width: "100%" }}
-        />
-      </View>
+      <FlatList
+        renderItem={({ item }) => {
+          return (
+            <>
+              {item.children.map((post) => {
+                return <PostCard post={post.data} key={post.data.id} />;
+              })}
+            </>
+          );
+        }}
+        data={query.data.pages}
+        keyExtractor={(item) => item.after}
+        style={styles.flatlist}
+        onEndReachedThreshold={0.5}
+        onEndReached={() => {
+          if (!query.isFetchingNextPage && !query.isFetching) {
+            query.fetchNextPage();
+          }
+        }}
+        ListFooterComponent={() => {
+          if (query.isFetchingNextPage) {
+            return (
+              <View style={styles.spinnerContainer}>
+                <ActivityIndicator animating={true} color="red" size="large" />
+              </View>
+            );
+          }
+          return null;
+        }}
+        showsVerticalScrollIndicator={false}
+        refreshing={refreshing}
+        onRefresh={() => {
+          setIsRefreshing(true);
+          query.refetch();
+        }}
+      />
     );
   }
   return null;
 };
 
 const styles = StyleSheet.create({
-  container: {
+  spinnerContainer: {
     flex: 1,
-    alignItems: "center",
     justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
+  flatlist: {
     width: "100%",
   },
 });

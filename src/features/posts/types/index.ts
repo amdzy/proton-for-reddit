@@ -1,3 +1,12 @@
+export interface PostsApiResponse {
+  after: string;
+  before?: string;
+  dist: number;
+  children: Array<{
+    data: PostType;
+  }>;
+}
+
 export interface PostType {
   approved_at_utc: null | number;
   subreddit: string;

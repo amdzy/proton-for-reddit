@@ -15,11 +15,11 @@ const emojiReg = new RegExp(/:(\w*):/, "g");
 
 export const FlairList = ({ tag, bgColor, color, hint, isNsfw }: Props) => {
   const newHint = hint?.replace(regExp, "").toUpperCase();
-  const newTag = tag?.replace(emojiReg, "").trim();
+  //const newTag = tag?.replace(emojiReg, "").trim();
   return (
     <View style={styles.container}>
       {newHint && <Flair tag={newHint} bgColor={"#FFFFFF"} color={"dark"} />}
-      {newTag && <Flair tag={newTag} bgColor={bgColor} color={color} />}
+      {tag && <Flair tag={tag} bgColor={bgColor} color={color} />}
       {isNsfw && <Flair tag={"NSFW"} bgColor={"#e52d27"} color={"light"} />}
     </View>
   );

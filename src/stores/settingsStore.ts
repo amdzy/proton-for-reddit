@@ -88,7 +88,7 @@ export const useSettingsStore = create<StoreProps>((set) => ({
     ),
 
   posts: {
-    sort: "hot",
+    sort: "rising",
     author: true,
     tapSub: true,
     tapUser: true,

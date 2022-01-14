@@ -1,4 +1,4 @@
-import { InboxScreen, MainScreen } from "@/screens";
+import { InboxScreen } from "@/screens";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import React from "react";
 
