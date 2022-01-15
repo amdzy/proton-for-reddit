@@ -1,14 +1,14 @@
-import { useTheme } from "@/hooks";
-import { useThemeStore } from "@/stores";
-import React, { ReactNode } from "react";
-import { Text, TextProps } from "react-native";
+import React, { ReactNode } from 'react';
+import { Text, TextProps } from 'react-native';
+import { useTheme } from '@/hooks';
+import { useThemeStore } from '@/stores';
 
 interface Props extends TextProps {
   children: ReactNode;
   fontSize?: number;
 }
 
-export const SubText = ({ children, fontSize = 14, ...props }: Props) => {
+export function SubText({ children, fontSize = 14, ...props }: Props) {
   const theme = useTheme();
   const fonts = useThemeStore((state) => state.fonts);
   return (
@@ -16,7 +16,7 @@ export const SubText = ({ children, fontSize = 14, ...props }: Props) => {
       style={[
         {
           color: theme.placeholder,
-          fontSize: fontSize,
+          fontSize,
         },
         props.style,
       ]}
@@ -24,4 +24,4 @@ export const SubText = ({ children, fontSize = 14, ...props }: Props) => {
       {children}
     </Text>
   );
-};
+}

@@ -1,0 +1,41 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true,
+        "node": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "airbnb",
+        "airbnb-typescript",
+        "airbnb/hooks",
+        "plugin:@typescript-eslint/recommended",
+        "prettier"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 13,
+        "sourceType": "module",
+        "project": "./tsconfig.json"
+    },
+    "plugins": [
+        "react",
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "react/require-default-props":[0],
+        "import/extensions": [0],
+        "import/no-extraneous-dependencies": ["off"],
+        "import/prefer-default-export":["off"],
+        "no-use-before-define": "off",
+        "@typescript-eslint/no-use-before-define": ["off"],
+        "react-hooks/exhaustive-deps": "warn",
+        "react/no-unstable-nested-components":"off",
+        "@typescript-eslint/no-shadow":"off",
+        "prefer-destructuring":"warn",
+        "@typescript-eslint/no-explicit-any":"off"
+    }
+}

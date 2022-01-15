@@ -1,7 +1,7 @@
-import { CustomModal, ListItem } from "@/components";
-import { useSettingsStore } from "@/stores";
-import React from "react";
-import { ScrollView } from "react-native";
+import React from 'react';
+import { ScrollView } from 'react-native';
+import { CustomModal, ListItem } from '@/components';
+import { useSettingsStore } from '@/stores';
 
 interface Props {
   visible: boolean;
@@ -10,12 +10,12 @@ interface Props {
   comment?: boolean;
 }
 
-export const SortModal = ({
+export function SortModal({
   visible,
   onClose,
   post = true,
   comment,
-}: Props) => {
+}: Props) {
   const setPostSort = useSettingsStore((state) => state.setPostSort);
   const setCommentSort = useSettingsStore((state) => state.setCommentSort);
   const handleSubmit = (type: string) => {
@@ -30,45 +30,43 @@ export const SortModal = ({
   return (
     <CustomModal visible={visible} onClose={onClose}>
       <ScrollView style={{ paddingBottom: 10 }}>
-        {sortTypes.map((x) => {
-          return (
-            <ListItem
-              text={x.text}
-              icon={x.icon}
-              onPress={() => handleSubmit(x.type)}
-              key={x.type}
-            />
-          );
-        })}
+        {sortTypes.map((x) => (
+          <ListItem
+            text={x.text}
+            icon={x.icon}
+            onPress={() => handleSubmit(x.type)}
+            key={x.type}
+          />
+        ))}
       </ScrollView>
     </CustomModal>
   );
-};
+}
 
 const sortTypes = [
   {
-    text: "Hot",
-    icon: "fire",
-    type: "hot",
+    text: 'Hot',
+    icon: 'fire',
+    type: 'hot',
   },
   {
-    text: "New",
-    icon: "decagram-outline",
-    type: "new",
+    text: 'New',
+    icon: 'decagram-outline',
+    type: 'new',
   },
   {
-    text: "Rising",
-    icon: "trending-up",
-    type: "rising",
+    text: 'Rising',
+    icon: 'trending-up',
+    type: 'rising',
   },
   {
-    text: "Top",
-    icon: "chart-bar",
-    type: "top",
+    text: 'Top',
+    icon: 'chart-bar',
+    type: 'top',
   },
   {
-    text: "Controversial",
-    icon: "swap-vertical",
-    type: "controversial",
+    text: 'Controversial',
+    icon: 'swap-vertical',
+    type: 'controversial',
   },
 ] as const;

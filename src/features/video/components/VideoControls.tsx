@@ -1,9 +1,9 @@
-import { IconButton } from "@/components";
-import Slider from "@react-native-community/slider";
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import Animated from "react-native-reanimated";
-import { formatMillies } from "../utils";
+import Slider from '@react-native-community/slider';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import Animated from 'react-native-reanimated';
+import { IconButton } from '@/components';
+import { formatMillies } from '../utils';
 
 interface Props {
   currentTime: number;
@@ -23,7 +23,7 @@ interface Props {
   openQualityModal: () => void;
 }
 
-export const VideoControls = ({
+export function VideoControls({
   currentTime,
   duration,
   isMuted,
@@ -39,7 +39,7 @@ export const VideoControls = ({
   handleUnMute,
   handleTimeChange,
   openQualityModal,
-}: Props) => {
+}: Props) {
   return (
     <Animated.View style={[styles.container, animatedStyle]}>
       <View
@@ -47,7 +47,7 @@ export const VideoControls = ({
           styles.rowContainer,
           {
             justifyContent:
-              haveAudio || showQualityCog ? "space-between" : "space-around",
+              haveAudio || showQualityCog ? 'space-between' : 'space-around',
           },
         ]}
       >
@@ -92,22 +92,22 @@ export const VideoControls = ({
       </View>
     </Animated.View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
-    position: "absolute",
+    position: 'absolute',
     bottom: 40,
     left: 0,
     right: 0,
-    backgroundColor: "rgba(0,0,0,0.5)",
+    backgroundColor: 'rgba(0,0,0,0.5)',
     flex: 1,
     paddingHorizontal: 10,
     zIndex: 10,
   },
   rowContainer: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     padding: 10,
     flex: 1,
   },
@@ -115,6 +115,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   text: {
-    color: "white",
+    color: 'white',
   },
 });

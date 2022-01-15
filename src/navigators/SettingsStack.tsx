@@ -1,3 +1,5 @@
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React from 'react';
 import {
   ColorScreen,
   CommentSettingScreen,
@@ -9,13 +11,11 @@ import {
   PostSettingScreen,
   ThemeScreen,
   ViewSettingScreen,
-} from "@/screens";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React from "react";
+} from '@/screens';
 
 const Stack = createNativeStackNavigator();
 
-export const SettingsStack = () => {
+export function SettingsStack() {
   return (
     <>
       <Stack.Screen name="General" component={GeneralScreen} />
@@ -27,23 +27,23 @@ export const SettingsStack = () => {
       <Stack.Screen
         name="Data"
         component={DataScreen}
-        options={{ title: "Data Saver" }}
+        options={{ title: 'Data Saver' }}
       />
       <Stack.Screen
         name="PostSettings"
         component={PostSettingScreen}
-        options={{ title: "Posts" }}
+        options={{ title: 'Posts' }}
       />
       <Stack.Screen
         name="CommentSettings"
         component={CommentSettingScreen}
-        options={{ title: "Comments" }}
+        options={{ title: 'Comments' }}
       />
       <Stack.Screen
         name="ViewSettings"
         component={ViewSettingScreen}
-        options={{ title: "Views" }}
+        options={{ title: 'Views' }}
       />
     </>
   );
-};
+}

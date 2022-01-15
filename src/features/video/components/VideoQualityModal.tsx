@@ -1,12 +1,12 @@
+import React from 'react';
+import { FlatList, Pressable, StyleSheet, View } from 'react-native';
 import {
   CustomModal,
   Divider,
   HighlightedText,
   RadioButton,
   Text,
-} from "@/components";
-import React from "react";
-import { FlatList, Pressable, StyleSheet, View } from "react-native";
+} from '@/components';
 
 interface Props {
   visible: boolean;
@@ -16,13 +16,17 @@ interface Props {
   onPress: (url: string) => void;
 }
 
-export const VideoQualityModal = ({
+function seperator() {
+  return <Divider />;
+}
+
+export function VideoQualityModal({
   visible,
   qualities,
   url,
   onClose,
   onPress,
-}: Props) => {
+}: Props) {
   return (
     <CustomModal visible={visible} onClose={onClose}>
       <View style={styles.container}>
@@ -48,21 +52,21 @@ export const VideoQualityModal = ({
               <Text style={styles.text}>{item.quality}p</Text>
             </Pressable>
           )}
-          ItemSeparatorComponent={() => <Divider />}
+          ItemSeparatorComponent={seperator}
         />
       </View>
     </CustomModal>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: { paddingBottom: 8 },
-  highlightedText: { textAlign: "center", fontSize: 16, paddingBottom: 6 },
+  highlightedText: { textAlign: 'center', fontSize: 16, paddingBottom: 6 },
   button: {
     padding: 10,
     paddingHorizontal: 25,
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   text: { fontSize: 16, marginLeft: 16 },
 });

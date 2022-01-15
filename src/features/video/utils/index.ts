@@ -1,1 +1,1 @@
-export * from "./formatMillies";
+export * from './formatMillies';

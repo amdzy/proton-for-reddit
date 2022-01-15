@@ -1,9 +1,9 @@
-import React from "react";
-import { Pressable, Text, View } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import React from 'react';
+import { Pressable, Text, View } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { Avatar, Spacer, Stack } from "@/components";
-import { useThemeStore } from "@/stores/themeStore";
+import { Avatar, Spacer } from '@/components';
+import { useThemeStore } from '@/stores/themeStore';
 
 interface Props {
   text: string;
@@ -11,33 +11,33 @@ interface Props {
   navigation: any;
 }
 
-export const SubListItem = ({ text, image, navigation }: Props) => {
+export function SubListItem({ text, image, navigation }: Props) {
   const chosenTheme = useThemeStore((state) => state.theme);
   const theme = useThemeStore((state) => state.colors[chosenTheme]);
   return (
     <View
       style={{
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        width: "100%",
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: '100%',
         padding: 16,
       }}
     >
       <Pressable
         style={{
-          flexDirection: "row",
-          alignItems: "center",
+          flexDirection: 'row',
+          alignItems: 'center',
           flex: 1,
         }}
-        onPress={() => navigation.navigate("Sub", { subId: text })}
+        onPress={() => navigation.navigate('Sub', { subId: text })}
       >
         <Avatar size={35} image={image} />
         <Text style={{ color: theme.text, marginLeft: 20, fontSize: 18 }}>
           {text}
         </Text>
       </Pressable>
-      <View style={{ flexDirection: "row" }}>
+      <View style={{ flexDirection: 'row' }}>
         <Pressable>
           <MaterialCommunityIcons name="star" size={24} color={theme.primary} />
         </Pressable>
@@ -52,4 +52,4 @@ export const SubListItem = ({ text, image, navigation }: Props) => {
       </View>
     </View>
   );
-};
+}

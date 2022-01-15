@@ -1,13 +1,13 @@
-import { useTheme } from "@/hooks";
-import React from "react";
-import { ActivityIndicator, StyleSheet, View } from "react-native";
+import React from 'react';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { useTheme } from '@/hooks';
 
 interface Props {
   animating: boolean;
-  size?: "large" | "small";
+  size?: 'large' | 'small';
 }
 
-export const Spinner = ({ animating, size = "large" }: Props) => {
+export function Spinner({ animating, size = 'large' }: Props) {
   const theme = useTheme();
   return (
     <View style={styles.absoluteBox}>
@@ -18,18 +18,18 @@ export const Spinner = ({ animating, size = "large" }: Props) => {
       />
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   absoluteBox: {
-    position: "absolute",
+    position: 'absolute',
     top: 0,
     bottom: 0,
     left: 0,
     right: 0,
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

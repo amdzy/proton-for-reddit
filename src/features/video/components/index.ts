@@ -1,2 +1,2 @@
-export * from "./VideoControls";
-export * from "./VideoQualityModal";
+export * from './VideoControls';
+export * from './VideoQualityModal';

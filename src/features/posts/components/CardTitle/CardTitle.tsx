@@ -1,7 +1,7 @@
-import { Header, SubText } from "@/components";
-import React from "react";
-import { StyleSheet, View } from "react-native";
-import { Thumbnail } from "../Thumbnail/Thumbnail";
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Header, SubText } from '@/components';
+import { Thumbnail } from '../Thumbnail/Thumbnail';
 
 interface Props {
   title: string;
@@ -12,14 +12,14 @@ interface Props {
   onPressThumbnail: () => void;
 }
 
-export const CardTitle = ({
+export function CardTitle({
   title,
   thumbnail,
   showThumbnail,
   domain,
   showDomain,
   onPressThumbnail,
-}: Props) => {
+}: Props) {
   return (
     <View style={styles.container} testID="CardTitle">
       <View style={styles.textContainer}>
@@ -31,16 +31,16 @@ export const CardTitle = ({
       )}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "row",
+    flexDirection: 'row',
     padding: 10,
-    width: "100%",
-    justifyContent: "space-between",
-    alignItems: "center",
+    width: '100%',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   textContainer: {
     flex: 1,

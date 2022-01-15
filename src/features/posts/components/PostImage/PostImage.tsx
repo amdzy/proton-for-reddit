@@ -1,30 +1,23 @@
-import { Spinner, Text } from "@/components";
-import { useMemo, useState } from "react";
-import {
-  ActivityIndicator,
-  Image,
-  Pressable,
-  StyleSheet,
-  View,
-} from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useTheme } from "@/hooks";
+import React, { useMemo, useState } from 'react';
+import { Image, Pressable, StyleSheet, View } from 'react-native';
+import { Icon, Spinner, Text } from '@/components';
+import { useTheme } from '@/hooks';
 
 interface Props {
   width: number;
   height: number;
   url: string;
-  resizeMode?: "cover" | "contain" | "stretch";
+  resizeMode?: 'cover' | 'contain' | 'stretch';
   onPress?: () => void;
 }
 
-export const PostImage = ({
+export function PostImage({
   url,
   width,
   height,
-  resizeMode = "cover",
+  resizeMode = 'cover',
   onPress,
-}: Props) => {
+}: Props) {
   const [isloading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const styles = useMemo(() => makeStyles(width, height), []);
@@ -34,8 +27,8 @@ export const PostImage = ({
     return (
       <Pressable style={styles.centeredBox} onPress={() => setIsError(false)}>
         <View>
-          <MaterialCommunityIcons
-            name="information-outline"
+          <Icon
+            icon="information-outline"
             size={24}
             color={theme.text}
             style={styles.icon}
@@ -62,27 +55,27 @@ export const PostImage = ({
       <Spinner animating={isloading} />
     </Pressable>
   );
-};
+}
 
 const makeStyles = (width: number, height: number) =>
   StyleSheet.create({
     box: {
       flex: 1,
-      width: "100%",
+      width: '100%',
       height: undefined,
       aspectRatio: width / height || 1,
     },
     centeredBox: {
       flex: 1,
-      width: "100%",
+      width: '100%',
       height: undefined,
       aspectRatio: width / height || 1,
-      justifyContent: "center",
-      alignItems: "center",
+      justifyContent: 'center',
+      alignItems: 'center',
       zIndex: 1000,
     },
 
     icon: {
-      textAlign: "center",
+      textAlign: 'center',
     },
   });

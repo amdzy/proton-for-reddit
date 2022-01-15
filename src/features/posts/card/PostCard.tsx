@@ -1,8 +1,8 @@
-import React, { useMemo } from "react";
-import { StyleSheet, View } from "react-native";
-import * as WebBrowser from "expo-web-browser";
-import { useTheme } from "@/hooks";
-import { PostType } from "../types";
+import React, { useMemo } from 'react';
+import { StyleSheet, View } from 'react-native';
+import * as WebBrowser from 'expo-web-browser';
+import { useTheme } from '@/hooks';
+import { PostType } from '../types';
 import {
   Awards,
   CardFooter,
@@ -10,15 +10,16 @@ import {
   CardTitle,
   FlairList,
   PostHeader,
-} from "../components";
-import { useSettingsStore } from "@/stores";
+} from '../components';
+import { useSettingsStore } from '@/stores';
+import { ColorsDTO } from '@/stores/types';
 
 interface Props {
   post: PostType;
   fullText?: boolean;
 }
 
-export const PostCard = ({ post, fullText }: Props) => {
+export function PostCard({ post, fullText }: Props) {
   const theme = useTheme();
   const styles = useMemo(() => makeStyles(theme), [theme]);
   const postSettings = useSettingsStore((state) => state.posts);
@@ -39,13 +40,13 @@ export const PostCard = ({ post, fullText }: Props) => {
         title={post.title}
         thumbnail={post.thumbnail}
         showThumbnail={
-          post.post_hint === "link" && post.domain !== "i.imgur.com"
+          post.post_hint === 'link' && post.domain !== 'i.imgur.com'
         }
         onPressThumbnail={openLink}
         domain={post.domain}
         showDomain={
-          (post.post_hint === "link" && post.domain !== "i.imgur.com") ||
-          (post.post_hint === "rich:video" && post.domain === "youtu.be")
+          (post.post_hint === 'link' && post.domain !== 'i.imgur.com') ||
+          (post.post_hint === 'rich:video' && post.domain === 'youtu.be')
         }
       />
       {postSettings.awards && <Awards awards={post.all_awardings} />}
@@ -81,18 +82,18 @@ export const PostCard = ({ post, fullText }: Props) => {
       />
     </View>
   );
-};
+}
 
-const makeStyles = (theme: any) =>
+const makeStyles = (theme: ColorsDTO) =>
   StyleSheet.create({
     card: {
-      width: "100%",
+      width: '100%',
       marginVertical: 6,
       elevation: 2,
       shadowOffset: { width: 1, height: 1 },
       shadowOpacity: 0.1,
       borderRadius: 20,
-      overflow: "hidden",
+      overflow: 'hidden',
       backgroundColor: theme.surface,
       shadowColor: theme.backdrop,
     },

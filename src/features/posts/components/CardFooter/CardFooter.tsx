@@ -1,8 +1,8 @@
-import React from "react";
-import { View } from "react-native";
-import { IconButton, SubText } from "@/components";
-import { useVotePost } from "../../api";
-import { useAuthStore, useToastStore } from "@/stores";
+import React from 'react';
+import { View } from 'react-native';
+import { IconButton, SubText } from '@/components';
+import { useVotePost } from '../../api';
+import { useAuthStore, useToastStore } from '@/stores';
 
 interface Props {
   numComments: number;
@@ -12,14 +12,14 @@ interface Props {
   postName: string;
 }
 
-export const CardFooter = ({
+export function CardFooter({
   numComments,
   numLikes,
   likes,
   postId,
   postName,
-}: Props) => {
-  const voteMutation = useVotePost({ postId: postId });
+}: Props) {
+  const voteMutation = useVotePost({ postId });
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const addToast = useToastStore((state) => state.addToast);
 
@@ -38,17 +38,17 @@ export const CardFooter = ({
   return (
     <View
       style={{
-        flexDirection: "row",
-        justifyContent: "space-around",
+        flexDirection: 'row',
+        justifyContent: 'space-around',
         padding: 12,
-        flexWrap: "nowrap",
+        flexWrap: 'nowrap',
       }}
     >
       <View
         style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
           flex: 0.4,
         }}
       >
@@ -74,9 +74,9 @@ export const CardFooter = ({
       </View>
       <View
         style={{
-          flexDirection: "row",
-          justifyContent: "space-around",
-          alignItems: "center",
+          flexDirection: 'row',
+          justifyContent: 'space-around',
+          alignItems: 'center',
           flex: 0.3,
         }}
       >
@@ -87,4 +87,4 @@ export const CardFooter = ({
       <IconButton icon="share-variant" />
     </View>
   );
-};
+}

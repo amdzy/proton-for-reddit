@@ -1,33 +1,35 @@
-import { useThemeStore } from "@/stores";
-import { fireEvent, render } from "@testing-library/react-native";
-import { ThemeButton } from "../..";
+import React from 'react';
 
-describe("ThemeButton component", () => {
-  it("renders", () => {
+import { fireEvent, render } from '@testing-library/react-native';
+import { useThemeStore } from '@/stores';
+import { ThemeButton } from '../..';
+
+describe('ThemeButton component', () => {
+  it('renders', () => {
     const { getByTestId } = render(<ThemeButton theme="dark" active={false} />);
-    expect(getByTestId("ThemeButton")).not.toBe(null);
+    expect(getByTestId('ThemeButton')).not.toBe(null);
   });
 
-  it("renders with correct background color", () => {
+  it('renders with correct background color', () => {
     const { getByTestId } = render(<ThemeButton theme="dark" active={false} />);
     const theme = useThemeStore.getState().colors.dark;
-    expect(getByTestId("ThemeButton")).toHaveStyle({
+    expect(getByTestId('ThemeButton')).toHaveStyle({
       backgroundColor: theme.background,
     });
   });
 
-  it("Have border when active", () => {
-    const { getByTestId } = render(<ThemeButton theme="dark" active={true} />);
+  it('Have border when active', () => {
+    const { getByTestId } = render(<ThemeButton theme="dark" active />);
     const theme = useThemeStore.getState().colors.dark;
-    expect(getByTestId("ThemeButton")).toHaveStyle({
+    expect(getByTestId('ThemeButton')).toHaveStyle({
       borderColor: theme.primary,
     });
   });
 
-  it("Change theme on press", () => {
-    const { getByTestId } = render(<ThemeButton theme="light" active={true} />);
-    fireEvent.press(getByTestId("ThemeButton"));
-    const theme = useThemeStore.getState().theme;
-    expect(theme).toBe("light");
+  it('Change theme on press', () => {
+    const { getByTestId } = render(<ThemeButton theme="light" active />);
+    fireEvent.press(getByTestId('ThemeButton'));
+    const { theme } = useThemeStore.getState();
+    expect(theme).toBe('light');
   });
 });

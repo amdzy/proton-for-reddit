@@ -1,19 +1,19 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 
-import ImageViewer from "react-native-image-zoom-viewer";
+import ImageViewer from 'react-native-image-zoom-viewer';
 
-export const ImageScreen = ({ route, navigation }: any) => {
+export function ImageScreen({ route, navigation }: any) {
   const { images } = route.params;
   return (
     <View style={styles.container}>
       <ImageViewer
         imageUrls={images}
         saveToLocalByLongPress={false}
-        enablePreload={true}
+        enablePreload
         style={styles.viewer}
-        useNativeDriver={true}
-        enableSwipeDown={true}
+        useNativeDriver
+        enableSwipeDown
         swipeDownThreshold={100}
         onSwipeDown={() => {
           navigation.goBack();
@@ -21,14 +21,14 @@ export const ImageScreen = ({ route, navigation }: any) => {
       />
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: "100%",
-    height: "100%",
-    backgroundColor: "black",
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'black',
   },
-  viewer: { flex: 1, width: "100%" },
+  viewer: { flex: 1, width: '100%' },
 });

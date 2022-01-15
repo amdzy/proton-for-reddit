@@ -1,12 +1,16 @@
-import { Checkbox, Divider, ListItem, SettingsHeader } from "@/components";
-import { SortModal } from "@/features/sort";
-import { useModal } from "@/hooks";
-import { useSettingsStore } from "@/stores";
-import React from "react";
-import { ScrollView } from "react-native";
-import { awards, flairs, markRead, postInfo } from "./postSettingsData";
+import React from 'react';
+import { ScrollView } from 'react-native';
+import {
+  Checkbox, Divider, ListItem, SettingsHeader,
+} from '@/components';
+import { SortModal } from '@/features/sort';
+import { useModal } from '@/hooks';
+import { useSettingsStore } from '@/stores';
+import {
+  awards, flairs, markRead, postInfo,
+} from './postSettingsData';
 
-export const PostSettingScreen = () => {
+export function PostSettingScreen() {
   const postSettings = useSettingsStore((state) => state.posts);
   const { isModalOpen, openModal, closeModal } = useModal();
   const setPostSettings = useSettingsStore((state) => state.setPostSettings);
@@ -21,54 +25,46 @@ export const PostSettingScreen = () => {
       />
       <Divider />
       <SettingsHeader text="Post Info" />
-      {postInfo.map((x) => {
-        return (
-          <ListItem
-            key={x.type}
-            text={x.text}
-            onPress={() => setPostSettings(x.type)}
-            right={<Checkbox checked={postSettings[x.type]} passThrough />}
-          />
-        );
-      })}
+      {postInfo.map((x) => (
+        <ListItem
+          key={x.type}
+          text={x.text}
+          onPress={() => setPostSettings(x.type)}
+          right={<Checkbox checked={postSettings[x.type]} passThrough />}
+        />
+      ))}
       <Divider />
       <SettingsHeader text="Awards" />
-      {awards.map((x) => {
-        return (
-          <ListItem
-            key={x.type}
-            text={x.text}
-            onPress={() => setPostSettings(x.type)}
-            right={<Checkbox checked={postSettings[x.type]} passThrough />}
-          />
-        );
-      })}
+      {awards.map((x) => (
+        <ListItem
+          key={x.type}
+          text={x.text}
+          onPress={() => setPostSettings(x.type)}
+          right={<Checkbox checked={postSettings[x.type]} passThrough />}
+        />
+      ))}
       <Divider />
       <SettingsHeader text="Flairs" />
-      {flairs.map((x) => {
-        return (
-          <ListItem
-            key={x.type}
-            text={x.text}
-            onPress={() => setPostSettings(x.type)}
-            right={<Checkbox checked={postSettings[x.type]} passThrough />}
-          />
-        );
-      })}
+      {flairs.map((x) => (
+        <ListItem
+          key={x.type}
+          text={x.text}
+          onPress={() => setPostSettings(x.type)}
+          right={<Checkbox checked={postSettings[x.type]} passThrough />}
+        />
+      ))}
       <Divider />
       <SettingsHeader text="Mark as read" />
-      {markRead.map((x) => {
-        return (
-          <ListItem
-            key={x.type}
-            text={x.text}
-            subText={x.subText}
-            onPress={() => setPostSettings(x.type)}
-            right={<Checkbox checked={postSettings[x.type]} passThrough />}
-          />
-        );
-      })}
+      {markRead.map((x) => (
+        <ListItem
+          key={x.type}
+          text={x.text}
+          subText={x.subText}
+          onPress={() => setPostSettings(x.type)}
+          right={<Checkbox checked={postSettings[x.type]} passThrough />}
+        />
+      ))}
       <SortModal visible={isModalOpen} onClose={closeModal} post />
     </ScrollView>
   );
-};
+}

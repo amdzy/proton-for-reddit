@@ -1,1 +1,1 @@
-export * from "./useFetchVideo";
+export * from './useFetchVideo';

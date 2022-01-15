@@ -1,36 +1,36 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Audio, AVPlaybackStatus, Video as ExpoVideo } from "expo-av";
-import { Pressable, StyleSheet, View } from "react-native";
+import React, { useEffect, useRef, useState } from 'react';
+import { Audio, AVPlaybackStatus, Video as ExpoVideo } from 'expo-av';
+import { Pressable, StyleSheet, View } from 'react-native';
 import {
   useAnimatedStyle,
   useSharedValue,
   withTiming,
-} from "react-native-reanimated";
-import { Spinner } from "@/components";
-import { useModal } from "@/hooks";
-import { VideoControls, VideoQualityModal } from "./components";
+} from 'react-native-reanimated';
+import { Spinner } from '@/components';
+import { useModal } from '@/hooks';
+import { VideoControls, VideoQualityModal } from './components';
 
 interface Props {
   videoUrl: string;
   audioUrl?: string;
   loop: boolean;
   mute: boolean;
-  qualities: any;
+  qualities: Array<{ quality: string; url: string }>;
   baseUrl: string;
 }
 
-export const Video = ({
+export function Video({
   videoUrl,
   audioUrl,
   loop,
   mute,
   qualities,
   baseUrl,
-}: Props) => {
+}: Props) {
   const [url, setUrl] = useState(videoUrl);
   const videoRef = useRef<any>(null);
   const [status, setStatus] = useState<any>({});
-  const [sound, setSound] = useState(new Audio.Sound());
+  const [sound] = useState(new Audio.Sound());
   const [soundStatus, setSoundStatus] = useState<AVPlaybackStatus>();
   const { isModalOpen, openModal, closeModal } = useModal();
   const scale = useSharedValue(1);
@@ -170,7 +170,7 @@ export const Video = ({
     }
   };
 
-  const changeVideoQuality = async (url: string) => {
+  const changeVideoQuality = async (newUrl: string) => {
     try {
       if (audioUrl && soundStatus?.isLoaded) {
         await sound.stopAsync();
@@ -178,18 +178,18 @@ export const Video = ({
       closeModal();
       await videoRef.current.unloadAsync();
       await videoRef.current.loadAsync(
-        { uri: `${baseUrl}/${url}` },
+        { uri: `${baseUrl}/${newUrl}` },
         { shouldPlay: true, isMuted: mute, isLooping: loop },
         false
       );
-      setUrl(`${baseUrl}/${url}`);
+      setUrl(`${baseUrl}/${newUrl}`);
     } catch (err) {
       console.log(err);
     }
   };
 
   if (!status.isLoaded) {
-    <Spinner animating={true} />;
+    <Spinner animating />;
   }
 
   return (
@@ -203,7 +203,7 @@ export const Video = ({
             isLooping={loop}
             isMuted={mute}
             shouldPlay={audioUrl ? soundStatus?.isLoaded : true}
-            onPlaybackStatusUpdate={(status) => setStatus(() => status)}
+            onPlaybackStatusUpdate={setStatus}
           />
         </Pressable>
         <VideoControls
@@ -223,7 +223,7 @@ export const Video = ({
           handleTimeChange={handleTimeChange}
           openQualityModal={openModal}
         />
-        {!status.isLoaded && <Spinner animating={true} />}
+        {!status.isLoaded && <Spinner animating />}
       </View>
       <VideoQualityModal
         visible={isModalOpen}
@@ -234,8 +234,8 @@ export const Video = ({
       />
     </>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  video: { width: "100%", height: "100%", flex: 1 },
+  video: { width: '100%', height: '100%', flex: 1 },
 });

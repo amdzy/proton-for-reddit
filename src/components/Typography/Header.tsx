@@ -1,13 +1,13 @@
-import { useTheme } from "@/hooks";
-import { useThemeStore } from "@/stores";
-import React, { ReactNode } from "react";
-import { Text, TextProps } from "react-native";
+import React, { ReactNode } from 'react';
+import { Text, TextProps } from 'react-native';
+import { useTheme } from '@/hooks';
+import { useThemeStore } from '@/stores';
 
 interface Props extends TextProps {
   children: ReactNode;
 }
 
-export const Header = ({ children, ...props }: Props) => {
+export function Header({ children, style }: Props) {
   const theme = useTheme();
   const fonts = useThemeStore((state) => state.fonts);
   return (
@@ -18,10 +18,10 @@ export const Header = ({ children, ...props }: Props) => {
           fontSize: fonts.fontSize.header,
           lineHeight: 22,
         },
-        props.style,
+        style,
       ]}
     >
       {children}
     </Text>
   );
-};
+}

@@ -1,14 +1,15 @@
-import React, { ReactNode } from "react";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import React, { ReactNode } from 'react';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import {
   Pressable,
   PressableProps,
   StyleSheet,
   Text,
   View,
-} from "react-native";
-import { Spacer } from "../Spacer/Spacer";
-import { useTheme } from "@/hooks";
+} from 'react-native';
+import { Spacer } from '../Spacer/Spacer';
+import { useTheme } from '@/hooks';
+import { Icon } from '../Icon/Icon';
 
 interface Props extends PressableProps {
   text: string;
@@ -18,32 +19,27 @@ interface Props extends PressableProps {
   left?: ReactNode;
 }
 
-export const ListItem = ({
+export function ListItem({
   text,
   subText,
   icon,
   right,
   left,
   disabled,
-  ...props
-}: Props) => {
+  onPress,
+}: Props) {
   const theme = useTheme();
   return (
     <Pressable
       style={styles.button}
       android_ripple={{ color: theme.placeholder }}
       disabled={disabled}
-      {...props}
+      onPress={onPress}
       testID="listItem"
     >
       <View style={styles.leftContainer}>
         {icon && (
-          <MaterialCommunityIcons
-            name={icon}
-            size={24}
-            color={theme.placeholder}
-            testID="icon"
-          />
+          <Icon icon={icon} size={24} color={theme.placeholder} testID="icon" />
         )}
         {left && left}
         <Spacer size={icon || left ? 35 : 58} horizontal />
@@ -71,18 +67,18 @@ export const ListItem = ({
       {right && right}
     </Pressable>
   );
-};
+}
 
 const styles = StyleSheet.create({
   button: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     padding: 18,
-    justifyContent: "space-between",
+    justifyContent: 'space-between',
   },
   leftContainer: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     flex: 1,
   },
 });

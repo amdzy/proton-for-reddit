@@ -1,6 +1,6 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
-import { Flair } from "./Flair";
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Flair } from './Flair';
 
 interface Props {
   tag: string | undefined;
@@ -10,25 +10,25 @@ interface Props {
   isNsfw: boolean;
 }
 
-const regExp = new RegExp(/rich:|hosted:/, "g");
-const emojiReg = new RegExp(/:(\w*):/, "g");
+const regExp = /rich:|hosted:/g;
+// const emojiReg = /:(\w*):/g;
 
-export const FlairList = ({ tag, bgColor, color, hint, isNsfw }: Props) => {
-  const newHint = hint?.replace(regExp, "").toUpperCase();
-  //const newTag = tag?.replace(emojiReg, "").trim();
+export function FlairList({ tag, bgColor, color, hint, isNsfw }: Props) {
+  const newHint = hint?.replace(regExp, '').toUpperCase();
+  // const newTag = tag?.replace(emojiReg, "").trim();
   return (
     <View style={styles.container}>
-      {newHint && <Flair tag={newHint} bgColor={"#FFFFFF"} color={"dark"} />}
+      {newHint && <Flair tag={newHint} bgColor="#FFFFFF" color="dark" />}
       {tag && <Flair tag={tag} bgColor={bgColor} color={color} />}
-      {isNsfw && <Flair tag={"NSFW"} bgColor={"#e52d27"} color={"light"} />}
+      {isNsfw && <Flair tag="NSFW" bgColor="#e52d27" color="light" />}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    flexWrap: "wrap",
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     padding: 10,
     paddingTop: 0,
   },

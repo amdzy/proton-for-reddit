@@ -28,13 +28,13 @@ export interface PostType {
   hide_score: boolean;
   name: string;
   quarantine: boolean;
-  link_flair_text_color: "dark" | "light";
+  link_flair_text_color: 'dark' | 'light';
   upvote_ratio: number;
   author_flair_background_color: null | string;
   subreddit_type: string;
   ups: number;
   total_awards_received: number;
-  media_embed: {};
+  media_embed: any;
   thumbnail_width: null | number;
   author_flair_template_id: null | string;
   is_original_content: boolean;
@@ -43,7 +43,7 @@ export interface PostType {
   is_reddit_media_domain: boolean;
   is_meta: boolean;
   category: null;
-  secure_media_embed: {};
+  secure_media_embed: any;
   link_flair_text: string;
   can_mod_post: boolean;
   score: number;
@@ -115,10 +115,10 @@ export interface PostType {
   subreddit_subscribers: number;
   created_utc: number;
   num_crossposts: number;
-  media: null | mediaDTO;
+  media: null | MediaDto;
   is_video: boolean;
   is_gallery: boolean;
-  media_metadata: {};
+  media_metadata: any;
   gallery_data: {
     items: Array<{
       media_id: string;
@@ -179,7 +179,7 @@ export interface PreviewDTO {
   reddit_video_preview?: Video;
 }
 
-export interface mediaDTO {
+export interface MediaDto {
   oembed: Oembed;
   reddit_video: Video;
 }

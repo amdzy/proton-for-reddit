@@ -1,7 +1,9 @@
-import { fireEvent, render } from "@testing-library/react-native";
-import { CustomizeColorButton } from "../CustomizeColorButton";
+import React from 'react';
 
-describe("CustomizeColorButton component", () => {
+import { fireEvent, render } from '@testing-library/react-native';
+import { CustomizeColorButton } from '../CustomizeColorButton';
+
+describe('CustomizeColorButton component', () => {
   let handlePress: jest.Mock;
   let getByTestId: any;
   let getByText: any;
@@ -18,22 +20,22 @@ describe("CustomizeColorButton component", () => {
     );
   });
 
-  it("renders", () => {
-    expect(getByTestId("CustomizeColorButton")).not.toBe(null);
+  it('renders', () => {
+    expect(getByTestId('CustomizeColorButton')).not.toBe(null);
   });
 
-  it("renders preview circle with correct color", () => {
-    expect(getByTestId("previewCircle")).toHaveStyle({
-      backgroundColor: "#000000",
+  it('renders preview circle with correct color', () => {
+    expect(getByTestId('previewCircle')).toHaveStyle({
+      backgroundColor: '#000000',
     });
   });
 
-  it("renders with correct text", () => {
-    expect(getByText("button")).not.toBe(null);
+  it('renders with correct text', () => {
+    expect(getByText('button')).not.toBe(null);
   });
 
-  it("handle press", () => {
-    fireEvent.press(getByTestId("CustomizeColorButton"));
-    expect(handlePress).toHaveBeenCalled;
+  it('handle press', () => {
+    fireEvent.press(getByTestId('CustomizeColorButton'));
+    expect(handlePress).toHaveBeenCalled();
   });
 });

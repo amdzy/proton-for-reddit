@@ -1,9 +1,11 @@
-import { Checkbox, Divider, ListItem, SettingsHeader } from "@/components";
-import { useSettingsStore } from "@/stores";
-import React from "react";
-import { ScrollView } from "react-native";
+import React from 'react';
+import { ScrollView } from 'react-native';
+import {
+  Checkbox, Divider, ListItem, SettingsHeader,
+} from '@/components';
+import { useSettingsStore } from '@/stores';
 
-export const ViewSettingScreen = () => {
+export function ViewSettingScreen() {
   const cardSettings = useSettingsStore((state) => state.card);
   const setCardSettings = useSettingsStore((state) => state.setCardSettings);
   return (
@@ -14,13 +16,13 @@ export const ViewSettingScreen = () => {
       <ListItem
         text="Carousel for multiple image previews"
         right={<Checkbox checked={cardSettings.carousel} />}
-        onPress={() => setCardSettings("carousel")}
+        onPress={() => setCardSettings('carousel')}
       />
       <ListItem
         text="Preview text from text posts"
         right={<Checkbox checked={cardSettings.previewText} />}
-        onPress={() => setCardSettings("previewText")}
+        onPress={() => setCardSettings('previewText')}
       />
     </ScrollView>
   );
-};
+}

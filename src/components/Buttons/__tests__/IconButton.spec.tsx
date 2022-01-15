@@ -1,8 +1,8 @@
-import React from "react";
-import { fireEvent, render } from "@testing-library/react-native";
-import { IconButton } from "../IconButton";
+import React from 'react';
+import { fireEvent, render } from '@testing-library/react-native';
+import { IconButton } from '../IconButton';
 
-describe("IconButton component", () => {
+describe('IconButton component', () => {
   let handleClick: () => void;
   let getByTestId: any;
 
@@ -13,12 +13,12 @@ describe("IconButton component", () => {
     ));
   });
 
-  it("renders", () => {
-    expect(getByTestId("iconButton")).not.toBe(null);
+  it('renders', () => {
+    expect(getByTestId('iconButton')).not.toBe(null);
   });
 
-  it("calls the onpress handler", () => {
-    fireEvent.press(getByTestId("iconButton"));
-    expect(handleClick).toBeCalled;
+  it('calls the onpress handler', () => {
+    fireEvent.press(getByTestId('iconButton'));
+    expect(handleClick).toBeCalled();
   });
 });

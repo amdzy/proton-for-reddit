@@ -1,9 +1,9 @@
-import { useSettingsStore } from "..";
+import { useSettingsStore } from '..';
 
-describe("Settings store", () => {
-  it("Change notification settings", () => {
+describe('Settings store', () => {
+  it('Change notification settings', () => {
     const notification = useSettingsStore.getState().notifications.enabled;
-    const setNotifications = useSettingsStore.getState().setNotifications;
+    const { setNotifications } = useSettingsStore.getState();
 
     setNotifications();
     expect(useSettingsStore.getState().notifications.enabled).toBe(
@@ -11,94 +11,86 @@ describe("Settings store", () => {
     );
   });
 
-  it("Change notification interval", () => {
+  it('Change notification interval', () => {
     const setInterval = useSettingsStore.getState().setNotificationsInterval;
 
-    setInterval("1 Min", 1000);
+    setInterval('1 Min', 1000);
 
     expect(useSettingsStore.getState().notifications.interval).toEqual({
       value: 1000,
-      text: "1 Min",
+      text: '1 Min',
     });
   });
 
-  it("Change data-saver settings", () => {
-    const dataSaver = useSettingsStore.getState().dataSaver;
-    const setDataSaver = useSettingsStore.getState().setDataSaver;
+  it('Change data-saver settings', () => {
+    const { dataSaver } = useSettingsStore.getState();
+    const { setDataSaver } = useSettingsStore.getState();
 
     setDataSaver();
     expect(useSettingsStore.getState().dataSaver).toBe(!dataSaver);
   });
 
-  it("Change video settings", () => {
-    const videos = useSettingsStore.getState().videos;
-    const setVideoSettings = useSettingsStore.getState().setVideoSettings;
+  it('Change video settings', () => {
+    const { videos } = useSettingsStore.getState();
+    const { setVideoSettings } = useSettingsStore.getState();
 
-    setVideoSettings("mute");
+    setVideoSettings('mute');
     expect(useSettingsStore.getState().videos.mute).toBe(!videos.mute);
 
-    setVideoSettings("loop");
+    setVideoSettings('loop');
     expect(useSettingsStore.getState().videos.loop).toBe(!videos.loop);
   });
 
-  it("Change post sort", () => {
-    const setPostSort = useSettingsStore.getState().setPostSort;
+  it('Change post sort', () => {
+    const { setPostSort } = useSettingsStore.getState();
 
-    setPostSort("new");
-    expect(useSettingsStore.getState().posts.sort).toBe("new");
+    setPostSort('new');
+    expect(useSettingsStore.getState().posts.sort).toBe('new');
   });
 
-  it("Change post settings", () => {
+  it('Change post settings', () => {
     const settings = useSettingsStore.getState().posts;
-    const setPostSettings = useSettingsStore.getState().setPostSettings;
+    const { setPostSettings } = useSettingsStore.getState();
 
-    setPostSettings("author");
+    setPostSettings('author');
     expect(useSettingsStore.getState().posts.author).toBe(!settings.author);
 
-    setPostSettings("flairs");
+    setPostSettings('flairs');
     expect(useSettingsStore.getState().posts.flairs).toBe(!settings.flairs);
 
-    setPostSettings("hideRead");
+    setPostSettings('hideRead');
     expect(useSettingsStore.getState().posts.hideRead).toBe(!settings.hideRead);
-
-    setPostSettings("share");
-    expect(useSettingsStore.getState().posts.buttons.share).toBe(
-      !settings.buttons.share
-    );
   });
 
-  it("Change comment sort", () => {
-    const setCommentSort = useSettingsStore.getState().setCommentSort;
+  it('Change comment sort', () => {
+    const { setCommentSort } = useSettingsStore.getState();
 
-    setCommentSort("new");
-    expect(useSettingsStore.getState().comments.sort).toBe("new");
+    setCommentSort('new');
+    expect(useSettingsStore.getState().comments.sort).toBe('new');
   });
 
-  it("Change comment settings", () => {
+  it('Change comment settings', () => {
     const settings = useSettingsStore.getState().comments;
-    const setCommentSettings = useSettingsStore.getState().setCommentSettings;
+    const { setCommentSettings } = useSettingsStore.getState();
 
-    setCommentSettings("avatar");
+    setCommentSettings('avatar');
     expect(useSettingsStore.getState().comments.avatar).toBe(!settings.avatar);
 
-    setCommentSettings("awards");
+    setCommentSettings('awards');
     expect(useSettingsStore.getState().comments.awards).toBe(!settings.awards);
 
-    setCommentSettings("flairs");
+    setCommentSettings('flairs');
     expect(useSettingsStore.getState().comments.flairs).toBe(!settings.flairs);
   });
 
-  it("Change card settings", () => {
+  it('Change card settings', () => {
     const settings = useSettingsStore.getState().card;
-    const setCardSettings = useSettingsStore.getState().setCardSettings;
+    const { setCardSettings } = useSettingsStore.getState();
 
-    setCardSettings("carousel");
+    setCardSettings('carousel');
     expect(useSettingsStore.getState().card.carousel).toBe(!settings.carousel);
 
-    setCardSettings("subIcon");
-    expect(useSettingsStore.getState().card.subIcon).toBe(!settings.subIcon);
-
-    setCardSettings("previewText");
+    setCardSettings('previewText');
     expect(useSettingsStore.getState().card.previewText).toBe(
       !settings.previewText
     );

@@ -1,12 +1,12 @@
-import { axios } from "@/lib/axios";
-import { useInfiniteQuery } from "react-query";
-import { PostsApiResponse, PostType } from "../types";
+import { useInfiniteQuery } from 'react-query';
+import { axios } from '@/lib/axios';
+import { PostsApiResponse } from '../types';
 
 const fetchPosts = async ({
   pageParam,
   queryKey,
 }: any): Promise<PostsApiResponse> => {
-  const [_key, sort] = queryKey;
+  const [Key, sort] = queryKey;
   const res = await axios({
     url: `/${sort}`,
     params: {
@@ -17,8 +17,7 @@ const fetchPosts = async ({
   return res.data;
 };
 
-export const useGetFeed = (sort: string) => {
-  return useInfiniteQuery(["feed", sort], fetchPosts, {
-    getNextPageParam: (lastPage, pages) => lastPage.after,
+export const useGetFeed = (sort: string) =>
+  useInfiniteQuery(['feed', sort], fetchPosts, {
+    getNextPageParam: (lastPage) => lastPage.after,
   });
-};

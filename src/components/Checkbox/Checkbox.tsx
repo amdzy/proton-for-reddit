@@ -1,7 +1,7 @@
-import React from "react";
-import { Pressable, StyleSheet } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useTheme } from "@/hooks";
+import React from 'react';
+import { Pressable, StyleSheet } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useTheme } from '@/hooks';
 
 interface Props {
   checked?: boolean;
@@ -9,11 +9,11 @@ interface Props {
   onValueChange?: () => void;
 }
 
-export const Checkbox = ({
+export function Checkbox({
   checked,
   passThrough = false,
   onValueChange,
-}: Props) => {
+}: Props) {
   const theme = useTheme();
   return (
     <Pressable
@@ -21,11 +21,11 @@ export const Checkbox = ({
         styles.checkboxBase,
         {
           borderColor: checked ? theme.primary : theme.placeholder,
-          backgroundColor: checked ? theme.accent : "transparent",
+          backgroundColor: checked ? theme.accent : 'transparent',
         },
       ]}
       onPress={onValueChange}
-      pointerEvents={passThrough ? "none" : "auto"}
+      pointerEvents={passThrough ? 'none' : 'auto'}
       testID="checkbox"
     >
       {checked && (
@@ -33,14 +33,14 @@ export const Checkbox = ({
       )}
     </Pressable>
   );
-};
+}
 
 const styles = StyleSheet.create({
   checkboxBase: {
     width: 20,
     height: 20,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 4,
     borderWidth: 2,
   },

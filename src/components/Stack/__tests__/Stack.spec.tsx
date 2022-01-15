@@ -1,9 +1,9 @@
-import React from "react";
-import { render } from "@testing-library/react-native";
-import { Stack } from "../Stack";
-import { Text } from "react-native";
+import React from 'react';
+import { render } from '@testing-library/react-native';
+import { Text } from 'react-native';
+import { Stack } from '../Stack';
 
-describe("Stack component", () => {
+describe('Stack component', () => {
   let Component = (
     <Stack space={1}>
       <Text>Children</Text>
@@ -11,18 +11,18 @@ describe("Stack component", () => {
     </Stack>
   );
 
-  it("renders", () => {
+  it('renders', () => {
     const { getByTestId } = render(Component);
-    expect(getByTestId("stack")).not.toBe(null);
+    expect(getByTestId('stack')).not.toBe(null);
   });
 
-  it("renders children & spacers", () => {
+  it('renders children & spacers', () => {
     const { getAllByTestId, getAllByText } = render(Component);
-    expect(getAllByTestId("spacer")).toHaveLength(2);
-    expect(getAllByText("Children")).toHaveLength(2);
+    expect(getAllByTestId('spacer')).toHaveLength(2);
+    expect(getAllByText('Children')).toHaveLength(2);
   });
 
-  it("renders Childrens Vertically", () => {
+  it('renders Childrens Vertically', () => {
     Component = (
       <Stack space={1} direction="row">
         <Text>Children</Text>
@@ -30,10 +30,10 @@ describe("Stack component", () => {
       </Stack>
     );
     const { getByTestId } = render(Component);
-    expect(getByTestId("stack")).toHaveStyle({ flexDirection: "row" });
+    expect(getByTestId('stack')).toHaveStyle({ flexDirection: 'row' });
   });
 
-  it("renders without spacer when space is 0", () => {
+  it('renders without spacer when space is 0', () => {
     Component = (
       <Stack>
         <Text>Children</Text>
@@ -41,6 +41,6 @@ describe("Stack component", () => {
       </Stack>
     );
     const { queryAllByTestId } = render(Component);
-    expect(queryAllByTestId("spacer")).toHaveLength(0);
+    expect(queryAllByTestId('spacer')).toHaveLength(0);
   });
 });

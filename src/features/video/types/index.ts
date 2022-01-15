@@ -16,75 +16,32 @@ interface XmlRes {
         AdaptationSet: [
           (
             | {
-                $: {
-                  contentType: "audio";
-                  group: string;
-                  mimeType: string;
-                  segmentAlignment: string;
-                  startWithSAP: string;
-                  subsegmentAlignment: string;
-                  subsegmentStartsWithSAP: string;
-                };
-                Representation: [
-                  {
-                    $: {
-                      audioSamplingRate: string;
-                      bandwidth: string;
-                      codecs: string;
-                      id: string;
-                      height: string;
-                    };
-                    AudioChannelConfiguration: [
-                      {
-                        $: {
-                          schemeIdUri: string;
-                          value: string;
-                        };
-                      }
-                    ];
-                    BaseURL: [string];
-                    SegmentBase: [
-                      {
-                        $: {
-                          indexRange: string;
-                          indexRangeExact: string;
-                          timescale: string;
-                        };
-                        Initialization: [
-                          {
-                            $: {
-                              range: string;
-                            };
-                          }
-                        ];
-                      }
-                    ];
-                  }
-                ];
-              }
-            | {
-                $: {
-                  contentType: "video";
-                  group: string;
-                  maxFrameRate: string;
-                  maxHeight: string;
-                  maxWidth: string;
-                  mimeType: string;
-                  segmentAlignment: string;
-                  startWithSAP: string;
-                  subsegmentAlignment: string;
-                  subsegmentStartsWithSAP: string;
-                };
-                Representation: Array<{
+              $: {
+                contentType: 'audio';
+                group: string;
+                mimeType: string;
+                segmentAlignment: string;
+                startWithSAP: string;
+                subsegmentAlignment: string;
+                subsegmentStartsWithSAP: string;
+              };
+              Representation: [
+                {
                   $: {
+                    audioSamplingRate: string;
                     bandwidth: string;
                     codecs: string;
-                    frameRate: string;
-                    height: string;
                     id: string;
-                    scanType: string;
-                    width: string;
+                    height: string;
                   };
+                  AudioChannelConfiguration: [
+                    {
+                      $: {
+                        schemeIdUri: string;
+                        value: string;
+                      };
+                    },
+                  ];
                   BaseURL: [string];
                   SegmentBase: [
                     {
@@ -98,12 +55,55 @@ interface XmlRes {
                           $: {
                             range: string;
                           };
-                        }
+                        },
                       ];
-                    }
+                    },
                   ];
-                }>;
-              }
+                },
+              ];
+            }
+            | {
+              $: {
+                contentType: 'video';
+                group: string;
+                maxFrameRate: string;
+                maxHeight: string;
+                maxWidth: string;
+                mimeType: string;
+                segmentAlignment: string;
+                startWithSAP: string;
+                subsegmentAlignment: string;
+                subsegmentStartsWithSAP: string;
+              };
+              Representation: Array<{
+                $: {
+                  bandwidth: string;
+                  codecs: string;
+                  frameRate: string;
+                  height: string;
+                  id: string;
+                  scanType: string;
+                  width: string;
+                };
+                BaseURL: [string];
+                SegmentBase: [
+                  {
+                    $: {
+                      indexRange: string;
+                      indexRangeExact: string;
+                      timescale: string;
+                    };
+                    Initialization: [
+                      {
+                        $: {
+                          range: string;
+                        };
+                      },
+                    ];
+                  },
+                ];
+              }>;
+            }
           ),
           {
             $: {
@@ -141,14 +141,14 @@ interface XmlRes {
                       $: {
                         range: string;
                       };
-                    }
+                    },
                   ];
-                }
+                },
               ];
             }>;
-          }
+          },
         ];
-      }
+      },
     ];
   };
 }

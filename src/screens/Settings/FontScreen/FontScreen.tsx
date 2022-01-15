@@ -1,10 +1,10 @@
-import { ListItem, SettingsHeader } from "@/components";
-import { useTheme } from "@/hooks";
-import { useThemeStore } from "@/stores/themeStore";
-import React from "react";
-import { ScrollView, Text, View } from "react-native";
+import React from 'react';
+import { ScrollView, View } from 'react-native';
+import { ListItem, SettingsHeader } from '@/components';
+import { useTheme } from '@/hooks';
+import { useThemeStore } from '@/stores/themeStore';
 
-export const FontScreen = () => {
+export function FontScreen() {
   const theme = useTheme();
   const changeFontSize = useThemeStore((state) => state.changeFontSize);
   const changeFontFamily = useThemeStore((state) => state.changeFontFamily);
@@ -22,4 +22,4 @@ export const FontScreen = () => {
       </View>
     </ScrollView>
   );
-};
+}

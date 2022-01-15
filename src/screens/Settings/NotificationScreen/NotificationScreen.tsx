@@ -1,15 +1,17 @@
-import { Checkbox, CustomModal, ListItem, RadioButton } from "@/components";
-import { useTheme } from "@/hooks";
-import { useSettingsStore } from "@/stores";
-import React, { useState } from "react";
-import { FlatList, View } from "react-native";
+import React, { useState } from 'react';
+import { FlatList, View } from 'react-native';
+import {
+  Checkbox, CustomModal, ListItem, RadioButton,
+} from '@/components';
+import { useTheme } from '@/hooks';
+import { useSettingsStore } from '@/stores';
 
-export const NotificationScreen = () => {
+export function NotificationScreen() {
   const theme = useTheme();
   const notifications = useSettingsStore((state) => state.notifications);
   const setNotifications = useSettingsStore((state) => state.setNotifications);
   const setInterval = useSettingsStore(
-    (state) => state.setNotificationsInterval
+    (state) => state.setNotificationsInterval,
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -42,59 +44,57 @@ export const NotificationScreen = () => {
           style={{ paddingBottom: 10 }}
           keyExtractor={(item) => item.text}
           data={intervals}
-          renderItem={({ item }) => {
-            return (
-              <ListItem
-                text={item.text}
-                onPress={() => {
-                  handleSubmit(item.text, item.value);
-                }}
-                left={
-                  <RadioButton
-                    checked={notifications.interval.text === item.text}
-                    passThrough
-                  />
-                }
-              />
-            );
-          }}
+          renderItem={({ item }) => (
+            <ListItem
+              text={item.text}
+              onPress={() => {
+                handleSubmit(item.text, item.value);
+              }}
+              left={(
+                <RadioButton
+                  checked={notifications.interval.text === item.text}
+                  passThrough
+                />
+                )}
+            />
+          )}
         />
       </CustomModal>
     </View>
   );
-};
+}
 
 const intervals = [
   {
-    text: "15 Minute",
+    text: '15 Minute',
     value: 3123,
   },
   {
-    text: "30 Minute",
+    text: '30 Minute',
     value: 3123,
   },
   {
-    text: "1 Hour",
+    text: '1 Hour',
     value: 3123,
   },
   {
-    text: "2 Hour",
+    text: '2 Hour',
     value: 3123,
   },
   {
-    text: "4 Hour",
+    text: '4 Hour',
     value: 3123,
   },
   {
-    text: "8 Hour",
+    text: '8 Hour',
     value: 3123,
   },
   {
-    text: "12 Hour",
+    text: '12 Hour',
     value: 3123,
   },
   {
-    text: "24 Hour",
+    text: '24 Hour',
     value: 3123,
   },
 ];

@@ -1,25 +1,25 @@
-import React from "react";
-import { Text, View } from "react-native";
-import useRedditAuth from "@/hooks/useRedditAuth";
-import { Button } from "@/components";
+import React from 'react';
+import { Text, View } from 'react-native';
+import useRedditAuth from '@/hooks/useRedditAuth';
+import { Button } from '@/components';
 
-export const LoginScreen = ({ navigation }: any) => {
+export function LoginScreen({ navigation }: any) {
   const { authRequest, isAuthenticated, authenticateAsync } = useRedditAuth();
 
   if (isAuthenticated) {
-    navigation.navigate("Main");
+    navigation.navigate('Main');
   }
 
   return (
     <View
       style={{
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
+        justifyContent: 'center',
+        alignItems: 'center',
       }}
     >
-      <Text style={{ color: "white", fontSize: 16 }}>
-        Looks like you haven't logged in yet
+      <Text style={{ color: 'white', fontSize: 16 }}>
+        Looks like you haven&apost logged in yet
       </Text>
       <Button
         disabled={!authRequest}
@@ -27,8 +27,8 @@ export const LoginScreen = ({ navigation }: any) => {
         onPress={() => {
           authenticateAsync();
         }}
-        style={{ width: "100%", alignItems: "center", padding: 20 }}
+        style={{ width: '100%', alignItems: 'center', padding: 20 }}
       />
     </View>
   );
-};
+}

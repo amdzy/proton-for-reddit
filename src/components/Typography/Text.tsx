@@ -1,13 +1,13 @@
-import { useTheme } from "@/hooks";
-import { useThemeStore } from "@/stores";
-import React, { ReactNode } from "react";
-import { Text as ReactText, TextProps } from "react-native";
+import React, { ReactNode } from 'react';
+import { Text as ReactText, TextProps } from 'react-native';
+import { useTheme } from '@/hooks';
+import { useThemeStore } from '@/stores';
 
 interface Props extends TextProps {
   children: ReactNode;
 }
 
-export const Text = ({ children, ...props }: Props) => {
+export function Text({ children, ...props }: Props) {
   const theme = useTheme();
   const fonts = useThemeStore((state) => state.fonts);
   return (
@@ -23,4 +23,4 @@ export const Text = ({ children, ...props }: Props) => {
       {children}
     </ReactText>
   );
-};
+}

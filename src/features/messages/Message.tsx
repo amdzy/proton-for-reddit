@@ -1,10 +1,10 @@
-import React from "react";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Text, View } from "react-native";
-import { useThemeStore } from "@/stores/themeStore";
-import { Stack } from "@/components";
+import React from 'react';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Text, View } from 'react-native';
+import { useThemeStore } from '@/stores/themeStore';
+import { Stack } from '@/components';
 
-export const Message = () => {
+export function Message() {
   const chosenTheme = useThemeStore((state) => state.theme);
   const theme = useThemeStore((state) => state.colors[chosenTheme]);
   return (
@@ -19,7 +19,7 @@ export const Message = () => {
         direction="row"
         space={8}
         spaceHorizontal
-        style={{ alignItems: "center" }}
+        style={{ alignItems: 'center' }}
       >
         <MaterialCommunityIcons name="email" size={18} color={theme.text} />
         <Text style={{ color: theme.text, fontSize: 14 }}>message header</Text>
@@ -45,4 +45,4 @@ export const Message = () => {
       </View>
     </View>
   );
-};
+}

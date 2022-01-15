@@ -1,13 +1,13 @@
-import React from "react";
-import { View } from "react-native";
+import React from 'react';
+import { View } from 'react-native';
 
 interface Props {
   horizontal?: boolean;
   size: number;
 }
 
-export const Spacer = ({ horizontal = false, size }: Props) => {
-  const defaultValue = "auto";
+export function Spacer({ horizontal = false, size }: Props) {
+  const defaultValue = 'auto';
 
   if (size === 0) {
     return null;
@@ -22,4 +22,4 @@ export const Spacer = ({ horizontal = false, size }: Props) => {
       testID="spacer"
     />
   );
-};
+}

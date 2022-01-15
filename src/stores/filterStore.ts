@@ -1,7 +1,8 @@
-import create from "zustand";
-import produce from "immer";
-import { persist } from "zustand/middleware";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+/* eslint-disable no-param-reassign */
+import create from 'zustand';
+import produce from 'immer';
+import { persist } from 'zustand/middleware';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface StoreProps {
   posts: {
@@ -60,7 +61,7 @@ export const useFilterStore = create<StoreProps>(
         ),
     }),
     {
-      name: "filterStore",
+      name: 'filterStore',
       getStorage: () => AsyncStorage,
     }
   )

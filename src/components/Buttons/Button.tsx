@@ -1,22 +1,24 @@
-import { useTheme } from "@/hooks";
-import React from "react";
-import { Pressable, PressableProps, Text } from "react-native";
+import React from 'react';
+import { Pressable, PressableProps, Text, ViewStyle } from 'react-native';
+import { useTheme } from '@/hooks';
 
 interface Props extends PressableProps {
   text: string;
+  style?: ViewStyle;
 }
 
-export const Button = ({ text, ...props }: Props) => {
+export function Button({ text, disabled, onPress, style }: Props) {
   const theme = useTheme();
 
   return (
     <Pressable
-      style={{ padding: 10 }}
-      {...props}
+      style={{ padding: 10, ...style }}
+      onPress={onPress}
+      disabled={disabled}
       android_ripple={{ color: theme.placeholder }}
       testID="button"
     >
       <Text style={{ color: theme.primary }}>{text}</Text>
     </Pressable>
   );
-};
+}

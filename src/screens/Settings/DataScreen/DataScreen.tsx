@@ -1,11 +1,10 @@
-import { Checkbox, Divider, ListItem, SettingsHeader } from "@/components";
-import { useTheme } from "@/hooks";
-import { useSettingsStore } from "@/stores";
-import React from "react";
-import { View } from "react-native";
-import shallow from "zustand/shallow";
+import React from 'react';
+import { View } from 'react-native';
+import { Checkbox, Divider, ListItem, SettingsHeader } from '@/components';
+import { useTheme } from '@/hooks';
+import { useSettingsStore } from '@/stores';
 
-export const DataScreen = () => {
+export function DataScreen() {
   const theme = useTheme();
   const dataSaver = useSettingsStore((state) => state.dataSaver);
   const setDataSaver = useSettingsStore((state) => state.setDataSaver);
@@ -25,11 +24,11 @@ export const DataScreen = () => {
       <SettingsHeader text="Videos" />
       <ListItem
         text="Video quality"
-        subText={videoDataSaver ? "Prefer high quality" : "Prefer low quality"}
-        onPress={() => setVideoSettings("dataSaver")}
+        subText={videoDataSaver ? 'Prefer high quality' : 'Prefer low quality'}
+        onPress={() => setVideoSettings('dataSaver')}
         right={<Checkbox checked={videoDataSaver} passThrough />}
       />
       <Divider />
     </View>
   );
-};
+}

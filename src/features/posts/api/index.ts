@@ -1,2 +1,2 @@
-export * from "./getFeed";
-export * from "./votePost";
+export * from './getFeed';
+export * from './votePost';

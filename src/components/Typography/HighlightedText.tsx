@@ -1,7 +1,7 @@
-import { useTheme } from "@/hooks";
-import { useThemeStore } from "@/stores";
-import React, { ReactNode } from "react";
-import { Text, TextStyle } from "react-native";
+import React, { ReactNode } from 'react';
+import { Text, TextStyle } from 'react-native';
+import { useTheme } from '@/hooks';
+import { useThemeStore } from '@/stores';
 
 interface Props {
   children: ReactNode;
@@ -9,7 +9,7 @@ interface Props {
   style?: TextStyle;
 }
 
-export const HighlightedText = ({ children, fontSize = 14, style }: Props) => {
+export function HighlightedText({ children, fontSize = 14, style }: Props) {
   const theme = useTheme();
   const fonts = useThemeStore((state) => state.fonts);
   return (
@@ -17,7 +17,7 @@ export const HighlightedText = ({ children, fontSize = 14, style }: Props) => {
       style={[
         {
           color: theme.highlight,
-          fontSize: fontSize,
+          fontSize,
         },
         style,
       ]}
@@ -25,4 +25,4 @@ export const HighlightedText = ({ children, fontSize = 14, style }: Props) => {
       {children}
     </Text>
   );
-};
+}

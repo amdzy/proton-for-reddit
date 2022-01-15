@@ -1,39 +1,37 @@
-import React, { ReactNode } from "react";
-import { View, ViewStyle } from "react-native";
-import { Spacer } from "../Spacer/Spacer";
+import React, { ReactNode } from 'react';
+import { View, ViewStyle } from 'react-native';
+import { Spacer } from '../Spacer/Spacer';
 
 interface Props {
   children: ReactNode;
   space?: number;
-  direction?: "row" | "column" | "row-reverse" | "column-reverse";
+  direction?: 'row' | 'column' | 'row-reverse' | 'column-reverse';
   spaceHorizontal?: boolean;
   style?: ViewStyle;
 }
 
-export const Stack = ({
+export function Stack({
   children,
   space = 0,
-  direction = "column",
+  direction = 'column',
   spaceHorizontal = false,
   style,
-}: Props) => {
+}: Props) {
   return (
     <View
       style={{
         flexDirection: direction,
-        flexWrap: "wrap",
+        flexWrap: 'wrap',
         ...style,
       }}
       testID="stack"
     >
-      {React.Children.map(children, (child) => {
-        return (
-          <>
-            {child}
-            <Spacer size={space} horizontal={spaceHorizontal} />
-          </>
-        );
-      })}
+      {React.Children.map(children, (child) => (
+        <>
+          {child}
+          <Spacer size={space} horizontal={spaceHorizontal} />
+        </>
+      ))}
     </View>
   );
-};
+}

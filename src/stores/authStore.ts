@@ -1,6 +1,6 @@
-import create from "zustand";
-import { persist } from "zustand/middleware";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import create from 'zustand';
+import { persist } from 'zustand/middleware';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface Store {
   token: string | null;
@@ -24,7 +24,7 @@ export const useAuthStore = create<Store>(
       isAuthenticated: false,
 
       setToken: (token) =>
-        set((state) => ({
+        set(() => ({
           token: token.accessToken,
           refreshToken: token.refreshToken,
           expiresIn: token.expiresIn,
@@ -56,7 +56,7 @@ export const useAuthStore = create<Store>(
         })),
     }),
     {
-      name: "authStore",
+      name: 'authStore',
       getStorage: () => AsyncStorage,
     }
   )

@@ -1,11 +1,11 @@
-import { Spinner } from "@/components";
-import { PostCard } from "@/features/posts";
-import { useGetFeed } from "@/features/posts/api";
-import { useSettingsStore } from "@/stores";
-import React, { useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native";
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
+import { Spinner } from '@/components';
+import { PostCard } from '@/features/posts';
+import { useGetFeed } from '@/features/posts/api';
+import { useSettingsStore } from '@/stores';
 
-export const MainScreen = () => {
+export function MainScreen() {
   const sort = useSettingsStore((state) => state.posts.sort);
   const query = useGetFeed(sort);
   const [refreshing, setIsRefreshing] = useState(false);
@@ -16,24 +16,22 @@ export const MainScreen = () => {
         setIsRefreshing(false);
       }
     }
-  }, [query.isRefetching]);
+  }, [query.isRefetching, refreshing]);
 
   if (query.isLoading) {
-    return <Spinner animating={true} />;
+    return <Spinner animating />;
   }
 
   if (query.data) {
     return (
       <FlatList
-        renderItem={({ item }) => {
-          return (
-            <>
-              {item.children.map((post) => {
-                return <PostCard post={post.data} key={post.data.id} />;
-              })}
-            </>
-          );
-        }}
+        renderItem={({ item }) => (
+          <>
+            {item.children.map((post) => (
+              <PostCard post={post.data} key={post.data.id} />
+            ))}
+          </>
+        )}
         data={query.data.pages}
         keyExtractor={(item) => item.after}
         style={styles.flatlist}
@@ -47,7 +45,7 @@ export const MainScreen = () => {
           if (query.isFetchingNextPage) {
             return (
               <View style={styles.spinnerContainer}>
-                <ActivityIndicator animating={true} color="red" size="large" />
+                <ActivityIndicator animating color="red" size="large" />
               </View>
             );
           }
@@ -63,16 +61,16 @@ export const MainScreen = () => {
     );
   }
   return null;
-};
+}
 
 const styles = StyleSheet.create({
   spinnerContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: 20,
   },
   flatlist: {
-    width: "100%",
+    width: '100%',
   },
 });

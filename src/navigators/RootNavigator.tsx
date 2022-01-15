@@ -1,22 +1,22 @@
-import React, { useMemo } from "react";
-import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Button, Text, View } from "react-native";
-import { ImageScreen, VideoScreen } from "@/screens";
-import { useTheme } from "@/hooks";
-import { SearchBar } from "@/features/search";
-import { SettingsStack } from "./SettingsStack";
-import { BottomTab } from "./BottomTab";
+import React, { useMemo } from 'react';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Button, Text, View } from 'react-native';
+import { ImageScreen, VideoScreen } from '@/screens';
+import { useTheme } from '@/hooks';
+import { SearchBar } from '@/features/search';
+import { SettingsStack } from './SettingsStack';
+import { BottomTab } from './BottomTab';
 
 const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
 
-export const RootNavigator = () => {
+const search = () => <SearchBar />;
+
+export function RootNavigator() {
   const theme = useTheme();
 
-  const myTheme = useMemo(() => {
-    return {
+  const myTheme = useMemo(
+    () => ({
       ...DefaultTheme,
       colors: {
         ...DefaultTheme.colors,
@@ -26,12 +26,13 @@ export const RootNavigator = () => {
         text: theme.text,
         border: theme.surface,
       },
-    };
-  }, [theme]);
+    }),
+    [theme]
+  );
 
   return (
     <NavigationContainer theme={myTheme}>
-      <Stack.Navigator screenOptions={{ animation: "slide_from_right" }}>
+      <Stack.Navigator screenOptions={{ animation: 'slide_from_right' }}>
         <Stack.Screen
           name="Main"
           component={BottomTab}
@@ -45,9 +46,7 @@ export const RootNavigator = () => {
           name="Search"
           component={SecondScreen}
           options={{
-            headerTitle: () => {
-              return <SearchBar />;
-            },
+            headerTitle: search,
             headerBackTitleVisible: false,
           }}
         />
@@ -56,7 +55,7 @@ export const RootNavigator = () => {
           name="Video"
           component={VideoScreen}
           options={{
-            title: "",
+            title: '',
             headerShadowVisible: false,
             headerTransparent: true,
           }}
@@ -65,22 +64,22 @@ export const RootNavigator = () => {
           name="Images"
           component={ImageScreen}
           options={{
-            title: "",
+            title: '',
             headerTransparent: true,
             headerShadowVisible: false,
-            animation: "none",
+            animation: 'none',
           }}
         />
       </Stack.Navigator>
     </NavigationContainer>
   );
-};
+}
 
-const SecondScreen = ({ navigation }: any) => {
+function SecondScreen({ navigation }: any) {
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Second Screen</Text>
-      <Button title="button" onPress={() => navigation.navigate("Images")} />
+      <Button title="button" onPress={() => navigation.navigate('Images')} />
     </View>
   );
-};
+}

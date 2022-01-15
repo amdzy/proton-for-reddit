@@ -1,7 +1,8 @@
-import { render } from "@testing-library/react-native";
-import { FilterListItem } from "../FiltersListItem";
+import React from 'react';
+import { render } from '@testing-library/react-native';
+import { FilterListItem } from '../FiltersListItem';
 
-describe("FilterListItem component", () => {
+describe('FilterListItem component', () => {
   let handleClick: jest.Mock;
   let getByText: any;
 
@@ -13,7 +14,7 @@ describe("FilterListItem component", () => {
     );
   });
 
-  it("renders with text", () => {
-    expect(getByText("listItem")).not.toBe(null);
+  it('renders with text', () => {
+    expect(getByText('listItem')).not.toBe(null);
   });
 });

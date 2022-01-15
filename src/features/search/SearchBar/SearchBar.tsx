@@ -1,11 +1,11 @@
-import { IconButton } from "@/components";
-import { useTheme } from "@/hooks";
-import React, { useEffect, useRef, useState } from "react";
-import { StyleSheet, TextInput, View } from "react-native";
+import React, { useEffect, useRef, useState } from 'react';
+import { StyleSheet, TextInput, View } from 'react-native';
+import { IconButton } from '@/components';
+import { useTheme } from '@/hooks';
 
-export const SearchBar = () => {
+export function SearchBar() {
   const theme = useTheme();
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
   const inputRef = useRef<TextInput>(null!);
 
   useEffect(() => {
@@ -24,28 +24,28 @@ export const SearchBar = () => {
         placeholderTextColor={theme.text}
         autoCapitalize="none"
         value={value}
-        onChangeText={(value) => setValue(value)}
+        onChangeText={setValue}
         ref={inputRef}
       />
       {value.length > 0 && (
         <IconButton
           icon="close"
           style={styles.icon}
-          onPress={() => setValue("")}
+          onPress={() => setValue('')}
         />
       )}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginLeft: -20,
-    alignItems: "center",
-    justifyContent: "space-between",
+    alignItems: 'center',
+    justifyContent: 'space-between',
     flex: 1,
-    maxWidth: "100%",
+    maxWidth: '100%',
   },
   icon: { flex: 1, flexShrink: 1 },
 });

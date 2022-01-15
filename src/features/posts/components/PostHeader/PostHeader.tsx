@@ -1,11 +1,12 @@
-import { Avatar, SubText } from "@/components";
-import { useTheme } from "@/hooks";
-import { useSettingsStore, useSubIconStore } from "@/stores";
-import React, { useEffect, useMemo } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
-import { fetchIcon } from "../../utils/fetchIcon";
-import { formatDistanceToNowStrict } from "date-fns";
-import { useNavigation } from "@react-navigation/core";
+import React, { useEffect, useMemo } from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { formatDistanceToNowStrict } from 'date-fns';
+import { useNavigation } from '@react-navigation/core';
+import { Avatar, SubText } from '@/components';
+import { useTheme } from '@/hooks';
+import { useSettingsStore, useSubIconStore } from '@/stores';
+import { fetchIcon } from '../../utils/fetchIcon';
+import { ColorsDTO } from '@/stores/types';
 
 interface Props {
   subName: string;
@@ -14,7 +15,7 @@ interface Props {
   sub: string;
 }
 
-export const PostHeader = ({ subName, author, createdAt, sub }: Props) => {
+export function PostHeader({ subName, author, createdAt, sub }: Props) {
   const theme = useTheme();
   const subIcon = useSubIconStore((state) => state.icons.get(sub));
   const styles = useMemo(() => makeStyles(theme), [theme]);
@@ -22,21 +23,21 @@ export const PostHeader = ({ subName, author, createdAt, sub }: Props) => {
   const navigation = useNavigation<any>();
 
   const handleAvatarRedirect = () => {
-    navigation.navigate("Sub");
+    navigation.navigate('Sub');
   };
 
   const handleSubRedirect = () => {
     if (!postSettings.tapSub) {
       return;
     }
-    navigation.navigate("Sub");
+    navigation.navigate('Sub');
   };
 
   const handleuserRedirect = () => {
     if (!postSettings.tapUser) {
       return;
     }
-    navigation.navigate("Comments");
+    navigation.navigate('Comments');
   };
 
   useEffect(() => {
@@ -65,7 +66,8 @@ export const PostHeader = ({ subName, author, createdAt, sub }: Props) => {
           {postSettings.author && (
             <Pressable onPress={handleuserRedirect}>
               <SubText fontSize={12} style={styles.userName}>
-                u/{author}
+                u/
+                {author}
               </SubText>
             </Pressable>
           )}
@@ -76,13 +78,13 @@ export const PostHeader = ({ subName, author, createdAt, sub }: Props) => {
       </View>
     </View>
   );
-};
+}
 
-const makeStyles = (theme: any) =>
+const makeStyles = (theme: ColorsDTO) =>
   StyleSheet.create({
     container: {
-      flexDirection: "row",
-      alignItems: "center",
+      flexDirection: 'row',
+      alignItems: 'center',
       padding: 10,
       flex: 1,
       paddingBottom: 4,
@@ -93,5 +95,5 @@ const makeStyles = (theme: any) =>
     subName: { color: theme.highlight, marginRight: 8 },
     userName: { marginRight: 8 },
     linksContainer: { flex: 1, marginLeft: 6 },
-    subContainer: { flex: 1, flexDirection: "row", alignItems: "center" },
+    subContainer: { flex: 1, flexDirection: 'row', alignItems: 'center' },
   });

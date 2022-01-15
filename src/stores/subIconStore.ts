@@ -1,4 +1,4 @@
-import create from "zustand";
+import create from 'zustand';
 
 interface StoreState {
   icons: Map<string, string>;
@@ -7,8 +7,7 @@ interface StoreState {
 
 export const useSubIconStore = create<StoreState>((set) => ({
   icons: new Map(),
-  addIcon: (sub, icon) =>
-    set((state) => ({
-      icons: state.icons.set(sub, icon),
-    })),
+  addIcon: (sub, icon) => set((state) => ({
+    icons: state.icons.set(sub, icon),
+  })),
 }));

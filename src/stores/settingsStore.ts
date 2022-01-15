@@ -1,7 +1,8 @@
-import create from "zustand";
-import produce from "immer";
-import { persist } from "zustand/middleware";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+/* eslint-disable no-param-reassign */
+import create from 'zustand';
+import produce from 'immer';
+import { persist } from 'zustand/middleware';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface StoreProps {
   notifications: {
@@ -59,7 +60,7 @@ export const useSettingsStore = create<StoreProps>(
         enabled: true,
         interval: {
           value: 10000,
-          text: "1 Sec",
+          text: '1 Sec',
         },
       },
       setNotifications: () =>
@@ -92,7 +93,7 @@ export const useSettingsStore = create<StoreProps>(
         ),
 
       posts: {
-        sort: "rising",
+        sort: 'rising',
         author: true,
         tapSub: true,
         tapUser: true,
@@ -116,7 +117,7 @@ export const useSettingsStore = create<StoreProps>(
         ),
 
       comments: {
-        sort: "hot",
+        sort: 'hot',
         avatar: false,
         buttonsVisible: false,
         highlightName: true,
@@ -150,7 +151,7 @@ export const useSettingsStore = create<StoreProps>(
         ),
     }),
     {
-      name: "settingsStore",
+      name: 'settingsStore',
       getStorage: () => AsyncStorage,
     }
   )

@@ -1,6 +1,8 @@
-import { useTheme } from "@/hooks";
-import React, { ReactNode } from "react";
-import { View, Modal, StyleSheet, Pressable } from "react-native";
+import React, { ReactNode } from 'react';
+import {
+  View, Modal, StyleSheet, Pressable,
+} from 'react-native';
+import { useTheme } from '@/hooks';
 
 interface Props {
   visible: boolean;
@@ -8,12 +10,12 @@ interface Props {
   children: ReactNode;
 }
 
-export const CustomModal = ({ visible, onClose, children }: Props) => {
+export function CustomModal({ visible, onClose, children }: Props) {
   const theme = useTheme();
   return (
     <Modal
       animationType="fade"
-      transparent={true}
+      transparent
       visible={visible}
       onRequestClose={onClose}
       testID="modal"
@@ -24,34 +26,34 @@ export const CustomModal = ({ visible, onClose, children }: Props) => {
         </View>
         <Pressable
           style={{
-            backgroundColor: "rgba(0,0,0,0.4)",
-            width: "100%",
-            height: "100%",
+            backgroundColor: 'rgba(0,0,0,0.4)',
+            width: '100%',
+            height: '100%',
             zIndex: 1,
-            position: "absolute",
+            position: 'absolute',
           }}
           onPress={onClose}
           testID="closeModal"
-        ></Pressable>
+        />
       </View>
     </Modal>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   modalView: {
-    width: "80%",
+    width: '80%',
     maxWidth: 400,
     margin: 20,
     borderRadius: 20,
     paddingTop: 20,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -59,7 +61,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-    maxHeight: "80%",
+    maxHeight: '80%',
     zIndex: 2,
   },
 });

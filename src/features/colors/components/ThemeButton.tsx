@@ -1,20 +1,20 @@
-import { useThemeStore } from "@/stores/themeStore";
-import { ColorsDTO, ThemeName } from "@/stores/types";
-import React, { useMemo } from "react";
+import React, { useMemo } from 'react';
 import {
   Pressable,
   PressableProps,
   StyleSheet,
   Text,
   View,
-} from "react-native";
+} from 'react-native';
+import { useThemeStore } from '@/stores/themeStore';
+import { ColorsDTO, ThemeName } from '@/stores/types';
 
 interface Props extends PressableProps {
   theme: ThemeName;
   active: boolean;
 }
 
-export const ThemeButton = ({ theme, active, ...props }: Props) => {
+export function ThemeButton({ theme, active, disabled }: Props) {
   const setTheme = useThemeStore((state) => state.setTheme);
   const colors = useThemeStore((state) => state.colors[theme]);
   const styles = useMemo(() => makeStyles(colors, active), [colors, active]);
@@ -23,7 +23,7 @@ export const ThemeButton = ({ theme, active, ...props }: Props) => {
     <Pressable
       style={styles.container}
       onPress={() => setTheme(theme)}
-      {...props}
+      disabled={disabled}
       testID="ThemeButton"
     >
       <View style={styles.box} />
@@ -31,7 +31,7 @@ export const ThemeButton = ({ theme, active, ...props }: Props) => {
       <Text style={styles.text}>{theme}</Text>
     </Pressable>
   );
-};
+}
 
 const makeStyles = (colors: ColorsDTO, active: boolean) =>
   StyleSheet.create({
@@ -45,14 +45,14 @@ const makeStyles = (colors: ColorsDTO, active: boolean) =>
       backgroundColor: colors.background,
     },
     box: {
-      width: "100%",
+      width: '100%',
       height: 20,
       marginBottom: 6,
       backgroundColor: colors.surface,
     },
     text: {
-      textAlign: "center",
-      textTransform: "capitalize",
+      textAlign: 'center',
+      textTransform: 'capitalize',
       color: colors.text,
     },
   });

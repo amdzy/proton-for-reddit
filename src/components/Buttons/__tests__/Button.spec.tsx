@@ -1,8 +1,8 @@
-import React from "react";
-import { fireEvent, render } from "@testing-library/react-native";
-import { Button } from "../Button";
+import React from 'react';
+import { fireEvent, render } from '@testing-library/react-native';
+import { Button } from '../Button';
 
-describe("Button component", () => {
+describe('Button component', () => {
   let handleClick: () => void;
   let getByText: any;
 
@@ -11,12 +11,12 @@ describe("Button component", () => {
     ({ getByText } = render(<Button text="button" onPress={handleClick} />));
   });
 
-  it("renders", () => {
-    expect(getByText("button")).not.toBe(null);
+  it('renders', () => {
+    expect(getByText('button')).not.toBe(null);
   });
 
-  it("calls the onpress handler", () => {
-    fireEvent.press(getByText("button"));
-    expect(handleClick).toBeCalled;
+  it('calls the onpress handler', () => {
+    fireEvent.press(getByText('button'));
+    expect(handleClick).toBeCalled();
   });
 });

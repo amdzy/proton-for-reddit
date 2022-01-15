@@ -1,36 +1,32 @@
-import { useTheme } from "@/hooks";
-import React from "react";
-import { Pressable, PressableProps } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import React from 'react';
+import { Pressable, PressableProps } from 'react-native';
+import { useTheme } from '@/hooks';
+import { Icon } from '../Icon/Icon';
 
 interface Props extends PressableProps {
-  icon: any;
+  icon: string;
   color?: string;
   size?: number;
 }
 
-export const IconButton = ({
+export function IconButton({
   icon,
   color,
   style,
   size = 24,
   onPress,
-  ...props
-}: Props) => {
+  disabled,
+}: Props) {
   const theme = useTheme();
   return (
     <Pressable
       android_ripple={{ color: theme.placeholder, borderless: true }}
       onPress={onPress}
       style={style}
-      {...props}
+      disabled={disabled}
       testID="iconButton"
     >
-      <MaterialCommunityIcons
-        name={icon}
-        color={color || theme.placeholder}
-        size={size}
-      />
+      <Icon icon={icon} color={color || theme.placeholder} size={size} />
     </Pressable>
   );
-};
+}

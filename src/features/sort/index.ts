@@ -1,1 +1,1 @@
-export * from "./SortModal";
+export * from './SortModal';

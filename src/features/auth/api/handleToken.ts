@@ -1,12 +1,12 @@
-import { useAuthStore } from "@/stores";
-import { loginAnon } from "../api/loginAnon";
-import { refreshToken } from "./refreshToken";
-import { isTokenFresh } from "../utils/isTokenFresh";
+import { useAuthStore } from '@/stores';
+import { loginAnon } from './loginAnon';
+import { refreshToken } from './refreshToken';
+import { isTokenFresh } from '../utils/isTokenFresh';
 
 export const handleToken = async () => {
-  const token = useAuthStore.getState().token;
-  const expiresIn = useAuthStore.getState().expiresIn;
-  const issuedAt = useAuthStore.getState().issuedAt;
+  const { token } = useAuthStore.getState();
+  const { expiresIn } = useAuthStore.getState();
+  const { issuedAt } = useAuthStore.getState();
   const refresh = useAuthStore.getState().refreshToken;
   try {
     if (refresh && expiresIn && issuedAt) {
@@ -21,9 +21,8 @@ export const handleToken = async () => {
 
     if (!isTokenFresh(expiresIn, issuedAt)) {
       await loginAnon();
-      return;
     }
   } catch (err) {
-    return;
+    console.log(err);
   }
 };

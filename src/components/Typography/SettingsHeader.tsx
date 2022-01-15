@@ -1,13 +1,13 @@
-import { useTheme } from "@/hooks";
-import React from "react";
-import { Text, TextStyle } from "react-native";
+import React from 'react';
+import { Text, TextStyle } from 'react-native';
+import { useTheme } from '@/hooks';
 
 interface Props {
   text: string;
   style?: TextStyle;
 }
 
-export const SettingsHeader = ({ text, style }: Props) => {
+export function SettingsHeader({ text, style }: Props) {
   const theme = useTheme();
   return (
     <Text
@@ -22,4 +22,4 @@ export const SettingsHeader = ({ text, style }: Props) => {
       {text}
     </Text>
   );
-};
+}

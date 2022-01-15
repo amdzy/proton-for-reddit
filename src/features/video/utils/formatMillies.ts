@@ -1,4 +1,4 @@
-import { millisecondsToSeconds, millisecondsToMinutes } from "date-fns";
+import { millisecondsToSeconds, millisecondsToMinutes } from 'date-fns';
 
 export const formatMillies = (millies: number): string => {
   let seconds: number | string = millisecondsToSeconds(millies) % 60 || 0;

@@ -1,2 +1,2 @@
-export * from "./Flair";
-export * from "./FlairList";
+export * from './Flair';
+export * from './FlairList';

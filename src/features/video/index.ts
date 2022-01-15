@@ -1,2 +1,2 @@
-export * from "./hooks/useFetchVideo";
-export * from "./Video";
+export * from './hooks/useFetchVideo';
+export * from './Video';

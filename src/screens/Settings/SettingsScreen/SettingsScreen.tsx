@@ -1,8 +1,8 @@
-import React from "react";
-import { FlatList } from "react-native";
-import { ListItem } from "@/components";
+import React from 'react';
+import { FlatList } from 'react-native';
+import { ListItem } from '@/components';
 
-export const SettingsScreen = ({ navigation }: any) => {
+export function SettingsScreen({ navigation }: any) {
   return (
     <FlatList
       keyExtractor={(item) => item.name}
@@ -17,32 +17,32 @@ export const SettingsScreen = ({ navigation }: any) => {
       style={{ flex: 1 }}
     />
   );
-};
+}
 
 const settings = [
   {
-    name: "General",
-    icon: "cog",
-    screen: "General",
+    name: 'General',
+    icon: 'cog',
+    screen: 'General',
   },
   {
-    name: "Theme",
-    icon: "palette",
-    screen: "Theme",
+    name: 'Theme',
+    icon: 'palette',
+    screen: 'Theme',
   },
   {
-    name: "Content Filter",
-    icon: "filter-variant",
-    screen: "Filters",
+    name: 'Content Filter',
+    icon: 'filter-variant',
+    screen: 'Filters',
   },
   {
-    name: "Notification",
-    icon: "bell-ring-outline",
-    screen: "Notifications",
+    name: 'Notification',
+    icon: 'bell-ring-outline',
+    screen: 'Notifications',
   },
   {
-    name: "Data Usage",
-    icon: "chart-bell-curve-cumulative",
-    screen: "Data",
+    name: 'Data Usage',
+    icon: 'chart-bell-curve-cumulative',
+    screen: 'Data',
   },
 ];

@@ -1,12 +1,12 @@
-import { useAuthStore } from "..";
+import { useAuthStore } from '..';
 
-describe("Auth store", () => {
-  it("Add token", () => {
-    const setToken = useAuthStore.getState().setToken;
+describe('Auth store', () => {
+  it('Add token', () => {
+    const { setToken } = useAuthStore.getState();
 
     const newToken = {
-      accessToken: "accesstoken",
-      refreshToken: "refreshtoken",
+      accessToken: 'accesstoken',
+      refreshToken: 'refreshtoken',
       expiresIn: 3600,
     };
     setToken(newToken);
@@ -19,8 +19,8 @@ describe("Auth store", () => {
     });
   });
 
-  it("Clear token", () => {
-    const clearToken = useAuthStore.getState().clearToken;
+  it('Clear token', () => {
+    const { clearToken } = useAuthStore.getState();
 
     clearToken();
 
@@ -34,10 +34,10 @@ describe("Auth store", () => {
     });
   });
 
-  it("Refresh token", () => {
+  it('Refresh token', () => {
     const refreshToken = useAuthStore.getState().setTokenRefresh;
     const newToken = {
-      accessToken: "accesstoken",
+      accessToken: 'accesstoken',
       expiresIn: 3600,
     };
     refreshToken(newToken);
@@ -47,12 +47,12 @@ describe("Auth store", () => {
     expect(token).toMatchObject(newToken);
   });
 
-  it("set Token anon", () => {
-    const setTokenAnon = useAuthStore.getState().setTokenAnon;
+  it('set Token anon', () => {
+    const { setTokenAnon } = useAuthStore.getState();
 
     const newToken = {
-      access_token: "accesstoken",
-      refresh_token: "refreshtoken",
+      access_token: 'accesstoken',
+      refresh_token: 'refreshtoken',
       expires_in: 3600,
     };
     setTokenAnon(newToken);
@@ -60,7 +60,7 @@ describe("Auth store", () => {
     const token = getItems();
 
     expect(token).toMatchObject({
-      accessToken: "accesstoken",
+      accessToken: 'accesstoken',
       refreshToken: null,
       expiresIn: 3600,
       isAuthenticated: false,

@@ -1,19 +1,19 @@
-import { useFilterStore, useSettingsStore } from "@/stores";
-import { useNavigation } from "@react-navigation/core";
-import React, { useMemo } from "react";
-import { Dimensions } from "react-native";
-import { CardText } from "../CardText/CardText";
-import { ImageCarousel } from "../ImageCarousel/ImageCarousel";
-import { PostImage } from "../PostImage/PostImage";
-import { ImageWithIcon } from "../ImageWithIcon/ImageWithIcon";
-import { YoutubeImage } from "../YoutubeImage/YoutubeImage";
-import { mediaDTO, PreviewDTO } from "../../types";
+import { useNavigation } from '@react-navigation/core';
+import React, { useMemo } from 'react';
+import { Dimensions } from 'react-native';
+import { useFilterStore, useSettingsStore } from '@/stores';
+import { CardText } from '../CardText/CardText';
+import { ImageCarousel } from '../ImageCarousel/ImageCarousel';
+import { PostImage } from '../PostImage/PostImage';
+import { ImageWithIcon } from '../ImageWithIcon/ImageWithIcon';
+import { YoutubeImage } from '../YoutubeImage/YoutubeImage';
+import { MediaDto, PreviewDTO } from '../../types';
 
 interface Props {
   selftext: string;
   hint?: string;
   preview: PreviewDTO;
-  media: mediaDTO | null;
+  media: MediaDto | null;
   isGallery: boolean;
   mediaMetadata: any;
   galleryData: {
@@ -26,9 +26,9 @@ interface Props {
   openLink: () => void;
 }
 
-const regex = new RegExp(/\/DASH(.*)$/, "g");
+const regex = /\/DASH(.*)$/g;
 
-export const CardMain = ({
+export function CardMain({
   selftext,
   hint,
   preview,
@@ -41,7 +41,7 @@ export const CardMain = ({
   fullText,
   isNsfw,
   openLink,
-}: Props) => {
+}: Props) {
   const navigation = useNavigation<any>();
   const dataSaver = useSettingsStore((state) => state.dataSaver);
   const blurNsfw = useFilterStore((state) => state.posts.blurNsfw);
@@ -70,7 +70,7 @@ export const CardMain = ({
     return <CardText text={selftext} fullText={fullText} />;
   }
 
-  if (hint === "image") {
+  if (hint === 'image') {
     const image = handleImageChoice();
     if (preview.images[0].variants.mp4) {
       let media = preview.images[0].variants.mp4.source;
@@ -84,7 +84,7 @@ export const CardMain = ({
           url={image.url}
           width={media.width}
           height={media.height}
-          onPress={() => navigation.navigate("Video", { videoUrl: media.url })}
+          onPress={() => navigation.navigate('Video', { videoUrl: media.url })}
         />
       );
     }
@@ -95,7 +95,7 @@ export const CardMain = ({
         width={image.width}
         height={image.height}
         onPress={() => {
-          navigation.navigate("Images", {
+          navigation.navigate('Images', {
             images: [preview.images[0].source],
           });
         }}
@@ -109,14 +109,6 @@ export const CardMain = ({
       let img: any;
       const imgArr = galleryData.items.map(({ media_id }, i) => {
         let image = mediaMetadata[media_id].s;
-        if (!image && !image.u) {
-          console.log(url);
-          return {
-            url: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.jhKTh9a2doSaATgNF3DxXgHaE8%26pid%3DApi&f=1",
-            width: 1000,
-            height: 2000,
-          };
-        }
         arr.push({ url: image.u, width: image.x, height: image.y });
         if (dataSaver) {
           image = mediaMetadata[media_id].p[1] || mediaMetadata[media_id].p[0];
@@ -129,26 +121,25 @@ export const CardMain = ({
         }
         return { url: image.u, width: image.x, height: image.y };
       });
-      return { imgArr: imgArr, imgSourceArr: arr, singleImage: img };
+      return { imgArr, imgSourceArr: arr, singleImage: img };
     }, []);
 
     const handlePress = () => {
-      navigation.navigate("Images", { images: imgSourceArr });
+      navigation.navigate('Images', { images: imgSourceArr });
     };
 
     if (carousel) {
       return <ImageCarousel images={imgArr} onPress={handlePress} />;
-    } else {
-      return (
-        <ImageWithIcon
-          url={singleImage.url}
-          width={singleImage.width}
-          height={singleImage.height}
-          icon="image-multiple-outline"
-          onPress={handlePress}
-        />
-      );
     }
+    return (
+      <ImageWithIcon
+        url={singleImage.url}
+        width={singleImage.width}
+        height={singleImage.height}
+        icon="image-multiple-outline"
+        onPress={handlePress}
+      />
+    );
   }
 
   if (isVideo && media) {
@@ -161,16 +152,16 @@ export const CardMain = ({
         width={video.width}
         height={video.height}
         onPress={() =>
-          navigation.navigate("Video", {
+          navigation.navigate('Video', {
             metaUrl: video.dash_url,
-            baseUrl: video.fallback_url.replace(regex, ""),
+            baseUrl: video.fallback_url.replace(regex, ''),
           })
         }
       />
     );
   }
 
-  if (hint === "rich:video") {
+  if (hint === 'rich:video') {
     if (preview.reddit_video_preview) {
       const video = preview.reddit_video_preview;
       const image = handleImageChoice();
@@ -180,9 +171,9 @@ export const CardMain = ({
           width={video.width}
           height={video.height}
           onPress={() =>
-            navigation.navigate("Video", {
+            navigation.navigate('Video', {
               metaUrl: video.dash_url,
-              baseUrl: video.fallback_url.replace(regex, ""),
+              baseUrl: video.fallback_url.replace(regex, ''),
             })
           }
         />
@@ -202,7 +193,7 @@ export const CardMain = ({
     }
   }
 
-  if (hint === "link" && preview.reddit_video_preview) {
+  if (hint === 'link' && preview.reddit_video_preview) {
     const video = preview.reddit_video_preview;
     const image = handleImageChoice();
     return (
@@ -211,23 +202,23 @@ export const CardMain = ({
         width={video.width}
         height={video.height}
         onPress={() =>
-          navigation.navigate("Video", {
+          navigation.navigate('Video', {
             metaUrl: video.dash_url,
-            baseUrl: video.fallback_url.replace(regex, ""),
+            baseUrl: video.fallback_url.replace(regex, ''),
           })
         }
       />
     );
   }
 
-  if (url.slice(-3) === "mp4") {
+  if (url.slice(-3) === 'mp4') {
     return (
       <ImageWithIcon
-        url={""}
-        width={Dimensions.get("screen").width}
+        url=""
+        width={Dimensions.get('screen').width}
         height={250}
         onPress={() =>
-          navigation.navigate("Video", {
+          navigation.navigate('Video', {
             videoUrl: url,
           })
         }
@@ -236,4 +227,4 @@ export const CardMain = ({
   }
 
   return null;
-};
+}

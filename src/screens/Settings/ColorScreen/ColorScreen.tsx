@@ -1,18 +1,18 @@
-import { Divider, SettingsHeader } from "@/components";
+import React, { useMemo, useState } from 'react';
+import { FlatList, ScrollView, View } from 'react-native';
+import { Divider, SettingsHeader } from '@/components';
 import {
   ColorPicker,
   CustomizeColorButton,
   ThemeButton,
-} from "@/features/colors";
-import { useTheme } from "@/hooks";
-import { useThemeStore } from "@/stores/themeStore";
-import { ColorsDTO, ThemeName } from "@/stores/types";
-import React, { useMemo, useState } from "react";
-import { FlatList, ScrollView, View } from "react-native";
+} from '@/features/colors';
+import { useTheme } from '@/hooks';
+import { useThemeStore } from '@/stores/themeStore';
+import { ColorsDTO, ThemeName } from '@/stores/types';
 
-type colors = keyof ColorsDTO;
+type Colors = keyof ColorsDTO;
 
-export const ColorScreen = () => {
+export function ColorScreen() {
   const chosenTheme = useThemeStore((state) => state.theme);
   const theme = useTheme();
   const changeColor = useThemeStore((state) => state.changeColor);
@@ -20,17 +20,17 @@ export const ColorScreen = () => {
     useThemeStore((state) => state.colors)
   ) as ThemeName[];
   const colors = useMemo(
-    () => Object.keys(theme).filter((x) => x !== "statusBar") as colors[],
+    () => Object.keys(theme).filter((x) => x !== 'statusBar') as Colors[],
     [theme]
   );
 
   const [isModalShown, setIsModalShown] = useState(false);
-  const [color, setColor] = useState("");
-  const [type, setType] = useState<keyof ColorsDTO>("primary");
+  const [color, setColor] = useState('');
+  const [type, setType] = useState<keyof ColorsDTO>('primary');
 
-  const handleOpenModal = (color: string, type: keyof ColorsDTO) => {
-    setColor(color);
-    setType(type);
+  const handleOpenModal = (value: string, key: keyof ColorsDTO) => {
+    setColor(value);
+    setType(key);
     setIsModalShown(true);
   };
 
@@ -62,18 +62,16 @@ export const ColorScreen = () => {
         style={{ padding: 16, paddingBottom: 0 }}
       />
 
-      {colors.map((item) => {
-        return (
-          <View key={item}>
-            <CustomizeColorButton
-              text={item}
-              color={theme[item]}
-              onPress={() => handleOpenModal(theme[item], item)}
-            />
-            <Divider />
-          </View>
-        );
-      })}
+      {colors.map((item) => (
+        <View key={item}>
+          <CustomizeColorButton
+            text={item}
+            color={theme[item]}
+            onPress={() => handleOpenModal(theme[item], item)}
+          />
+          <Divider />
+        </View>
+      ))}
 
       <ColorPicker
         isOpen={isModalShown}
@@ -83,4 +81,4 @@ export const ColorScreen = () => {
       />
     </ScrollView>
   );
-};
+}
