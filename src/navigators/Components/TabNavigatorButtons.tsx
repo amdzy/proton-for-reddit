@@ -1,27 +1,31 @@
 import React from 'react';
-import { Pressable, View } from 'react-native';
-import { Icon } from '@/components';
+import { View } from 'react-native';
+import { IconButton } from '@/components';
 import { useThemeStore } from '@/stores/themeStore';
+import { FeedSortModal } from '@/features/sort';
+import { useModal } from '@/hooks';
 
 export function TabNavigatorButtons({ navigation }: any) {
   const theme = useThemeStore((state) => state.theme);
   const color = useThemeStore((state) => state.colors[theme].text);
+  const { isModalOpen, openModal, closeModal } = useModal();
   return (
-    <View style={{ flexDirection: 'row' }}>
-      <Pressable onPress={() => navigation.navigate('Search')}>
-        <Icon
+    <>
+      <View style={{ flexDirection: 'row' }}>
+        <IconButton
           color={color}
           icon="magnify"
-          size={24}
           style={{ marginRight: 16 }}
+          onPress={() => navigation.navigate('Search')}
         />
-      </Pressable>
-      <Icon
-        color={color}
-        icon="dots-vertical"
-        size={24}
-        style={{ marginRight: 12 }}
-      />
-    </View>
+        <IconButton
+          color={color}
+          icon="sort-variant"
+          style={{ marginRight: 16 }}
+          onPress={openModal}
+        />
+      </View>
+      <FeedSortModal visible={isModalOpen} onClose={closeModal} />
+    </>
   );
 }

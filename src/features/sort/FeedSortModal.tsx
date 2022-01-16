@@ -6,20 +6,12 @@ import { useSettingsStore } from '@/stores';
 interface Props {
   visible: boolean;
   onClose: () => void;
-  post?: boolean;
-  comment?: boolean;
 }
 
-export function SortModal({ visible, onClose, post = true, comment }: Props) {
+export function FeedSortModal({ visible, onClose }: Props) {
   const setPostSort = useSettingsStore((state) => state.setPostSort);
-  const setCommentSort = useSettingsStore((state) => state.setCommentSort);
   const handleSubmit = (type: string) => {
-    if (post) {
-      setPostSort(type, 'sort');
-    }
-    if (comment) {
-      setCommentSort(type);
-    }
+    setPostSort(type, 'feedSort');
     onClose();
   };
   return (
@@ -39,6 +31,11 @@ export function SortModal({ visible, onClose, post = true, comment }: Props) {
 }
 
 const sortTypes = [
+  {
+    text: 'Best',
+    icon: 'rocket-launch-outline',
+    type: 'best',
+  },
   {
     text: 'Hot',
     icon: 'fire',

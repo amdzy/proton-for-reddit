@@ -19,6 +19,7 @@ interface StoreProps {
     dataSaver: boolean;
   };
   posts: {
+    feedSort: string;
     sort: string;
     author: boolean;
     tapSub: boolean;
@@ -46,7 +47,7 @@ interface StoreProps {
   setNotificationsInterval: (text: string, value: number) => void;
   setDataSaver: () => void;
   setVideoSettings: (type: string) => void;
-  setPostSort: (val: string) => void;
+  setPostSort: (val: string, type: 'sort' | 'feedSort') => void;
   setPostSettings: (type: string) => void;
   setCommentSort: (val: string) => void;
   setCommentSettings: (type: string) => void;
@@ -93,7 +94,8 @@ export const useSettingsStore = create<StoreProps>(
         ),
 
       posts: {
-        sort: 'rising',
+        feedSort: 'top',
+        sort: 'top',
         author: true,
         tapSub: true,
         tapUser: true,
@@ -103,10 +105,10 @@ export const useSettingsStore = create<StoreProps>(
         hideRead: false,
         subIcon: true,
       },
-      setPostSort: (value) =>
+      setPostSort: (value, type) =>
         set(
           produce((state) => {
-            state.posts.sort = value;
+            state.posts[type] = value;
           })
         ),
       setPostSettings: (type) =>

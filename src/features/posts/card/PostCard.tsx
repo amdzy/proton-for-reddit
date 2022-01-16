@@ -66,7 +66,6 @@ export function PostCard({ post, fullText }: Props) {
         media={post.media}
         isGallery={post.is_gallery}
         mediaMetadata={post.media_metadata}
-        galleryData={post.gallery_data}
         isVideo={post.is_video}
         url={post.url}
         openLink={openLink}

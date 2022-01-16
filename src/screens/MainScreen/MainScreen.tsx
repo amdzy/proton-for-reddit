@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
 import { Spinner } from '@/components';
 import { PostCard } from '@/features/posts';
@@ -6,7 +6,8 @@ import { useGetFeed } from '@/features/posts/api';
 import { useSettingsStore } from '@/stores';
 
 export function MainScreen() {
-  const sort = useSettingsStore((state) => state.posts.sort);
+  const flatlistRef = useRef<any>();
+  const sort = useSettingsStore((state) => state.posts.feedSort);
   const query = useGetFeed(sort);
   const [refreshing, setIsRefreshing] = useState(false);
 
@@ -18,6 +19,16 @@ export function MainScreen() {
     }
   }, [query.isRefetching, refreshing]);
 
+  useEffect(() => {
+    if (flatlistRef.current) {
+      flatlistRef.current.scrollToIndex({
+        index: 0,
+        animated: true,
+        viewPosition: 0,
+      });
+    }
+  }, [sort]);
+
   if (query.isLoading) {
     return <Spinner animating />;
   }
@@ -25,6 +36,7 @@ export function MainScreen() {
   if (query.data) {
     return (
       <FlatList
+        ref={flatlistRef}
         renderItem={({ item }) => (
           <>
             {item.children.map((post) => (

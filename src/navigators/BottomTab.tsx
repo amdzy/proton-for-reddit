@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Button, Pressable, Text, View } from 'react-native';
-import { Avatar, Icon } from '@/components';
+import { Button, Pressable, View } from 'react-native';
+import { Avatar, Icon, SubText, Text } from '@/components';
 import { TabNavigatorButtons } from './Components/TabNavigatorButtons';
 import {
   LoginScreen,
@@ -10,17 +10,17 @@ import {
   SubscriptionsScreen,
 } from '@/screens';
 import { MessagesPageTopTab } from './MessagesPageTopTab';
-import { useAuthStore } from '@/stores';
+import { useAuthStore, useSettingsStore } from '@/stores';
 
 const Tab = createBottomTabNavigator();
 
 export function BottomTab() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const sort = useSettingsStore((state) => state.posts.feedSort);
   return (
     <Tab.Navigator
       screenOptions={({ navigation }) => ({
         tabBarShowLabel: false,
-        headerRight: () => <TabNavigatorButtons navigation={navigation} />,
         headerRightContainerStyle: {
           marginRight: 12,
         },
@@ -38,13 +38,19 @@ export function BottomTab() {
       <Tab.Screen
         name="Feed"
         component={MainScreen}
-        options={{
+        options={({ navigation }) => ({
           headerShadowVisible: false,
-          title: 'Proton',
           tabBarIcon: ({ color, size }) => (
             <Icon color={color} icon="home" size={size} />
           ),
-        }}
+          headerRight: () => <TabNavigatorButtons navigation={navigation} />,
+          headerTitle: () => (
+            <View>
+              <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Proton</Text>
+              <SubText style={{ textTransform: 'capitalize' }}>{sort}</SubText>
+            </View>
+          ),
+        })}
       />
       <Tab.Screen
         name="Inbox"

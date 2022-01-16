@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/core';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Dimensions } from 'react-native';
 import { useFilterStore, useSettingsStore } from '@/stores';
 import { CardText } from '../CardText/CardText';
@@ -16,9 +16,6 @@ interface Props {
   media: MediaDto | null;
   isGallery: boolean;
   mediaMetadata: any;
-  galleryData: {
-    items: Array<{ media_id: string }>;
-  };
   isVideo: boolean;
   url: string;
   fullText?: boolean;
@@ -35,7 +32,6 @@ export function CardMain({
   media,
   isGallery,
   mediaMetadata,
-  galleryData,
   isVideo,
   url,
   fullText,
@@ -104,25 +100,26 @@ export function CardMain({
   }
 
   if (isGallery) {
-    const { imgArr, imgSourceArr, singleImage } = useMemo(() => {
-      const arr: any = [];
-      let img: any;
-      const imgArr = galleryData.items.map(({ media_id }, i) => {
-        let image = mediaMetadata[media_id].s;
-        arr.push({ url: image.u, width: image.x, height: image.y });
-        if (dataSaver) {
-          image = mediaMetadata[media_id].p[1] || mediaMetadata[media_id].p[0];
-        }
-        if (isNsfw && blurNsfw) {
-          image = mediaMetadata[media_id].o[0];
-        }
-        if (i === 0) {
-          img = { url: image.u, width: image.x, height: image.y };
-        }
-        return { url: image.u, width: image.x, height: image.y };
-      });
-      return { imgArr, imgSourceArr: arr, singleImage: img };
-    }, []);
+    const imgSourceArr: any = [];
+    const gallery = Object.values(mediaMetadata);
+    const singleImage = {
+      url: gallery[0].s.u,
+      width: gallery[0].s.x,
+      height: gallery[0].s.y,
+    };
+
+    const imgArr = gallery.map((item) => {
+      let image = item.s;
+      imgSourceArr.push({ url: image.u, width: image.x, height: image.y });
+      if (dataSaver) {
+        image = item.p[1] || item.p[0];
+      }
+      if (isNsfw && blurNsfw) {
+        // eslint-disable-next-line prefer-destructuring
+        image = item.o[0];
+      }
+      return { url: image.u, width: image.x, height: image.y };
+    });
 
     const handlePress = () => {
       navigation.navigate('Images', { images: imgSourceArr });
