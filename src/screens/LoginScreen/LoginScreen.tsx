@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import useRedditAuth from '@/hooks/useRedditAuth';
 import { Button } from '@/components';
+import { useRedditAuth } from '@/hooks';
 
 export function LoginScreen({ navigation }: any) {
   const { authRequest, isAuthenticated, authenticateAsync } = useRedditAuth();

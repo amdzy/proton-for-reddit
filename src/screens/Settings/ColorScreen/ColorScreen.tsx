@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { FlatList, ScrollView, View } from 'react-native';
 import { Divider, SettingsHeader } from '@/components';
 import {
@@ -6,7 +6,7 @@ import {
   CustomizeColorButton,
   ThemeButton,
 } from '@/features/colors';
-import { useTheme } from '@/hooks';
+import { useModal, useTheme } from '@/hooks';
 import { useThemeStore } from '@/stores/themeStore';
 import { ColorsDTO, ThemeName } from '@/stores/types';
 
@@ -19,34 +19,29 @@ export function ColorScreen() {
   const themes = Object.keys(
     useThemeStore((state) => state.colors)
   ) as ThemeName[];
-  const colors = useMemo(
-    () => Object.keys(theme).filter((x) => x !== 'statusBar') as Colors[],
-    [theme]
-  );
+  const colors = Object.keys(theme).filter(
+    (x) => x !== 'statusBar'
+  ) as Colors[];
 
-  const [isModalShown, setIsModalShown] = useState(false);
+  const { isModalOpen, openModal, closeModal } = useModal();
   const [color, setColor] = useState('');
   const [type, setType] = useState<keyof ColorsDTO>('primary');
 
   const handleOpenModal = (value: string, key: keyof ColorsDTO) => {
     setColor(value);
     setType(key);
-    setIsModalShown(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalShown(false);
+    openModal();
   };
 
   const handleColorSubmit = (value: string) => {
     changeColor(type, value);
-    setIsModalShown(false);
+    closeModal();
   };
 
   return (
     <ScrollView style={{ flex: 1, backgroundColor: theme.background }}>
-      <SettingsHeader text="Themes" />
-      <View style={{ marginBottom: 18, padding: 16 }}>
+      <SettingsHeader text="App theme" />
+      <View style={{ marginBottom: 18, paddingVertical: 8 }}>
         <FlatList
           keyExtractor={(item) => item}
           data={themes}
@@ -74,8 +69,8 @@ export function ColorScreen() {
       ))}
 
       <ColorPicker
-        isOpen={isModalShown}
-        onClose={handleCloseModal}
+        isOpen={isModalOpen}
+        onClose={closeModal}
         color={color}
         onSubmit={handleColorSubmit}
       />

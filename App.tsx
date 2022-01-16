@@ -10,7 +10,7 @@ export default function App() {
   const theme = useTheme();
   const [isHydrated, setIsHydrated] = useState<boolean>(
     // @ts-ignore
-    useThemeStore.persist.hasHydrated(),
+    useThemeStore.persist.hasHydrated()
   );
 
   if (!isHydrated) {
@@ -20,7 +20,7 @@ export default function App() {
     });
     return null;
   }
-
+  useThemeStore.persist.clearStorage();
   return (
     <QueryClientProvider client={queryClient}>
       <StatusBar style={theme.statusBar} translucent />
