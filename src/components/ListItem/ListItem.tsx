@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import {
   Pressable,
   PressableProps,
@@ -10,6 +9,7 @@ import {
 import { Spacer } from '../Spacer/Spacer';
 import { useTheme } from '@/hooks';
 import { Icon } from '../Icon/Icon';
+import { SubText } from '../Typography/SubText';
 
 interface Props extends PressableProps {
   text: string;
@@ -52,16 +52,7 @@ export function ListItem({
           >
             {text}
           </Text>
-          {subText && (
-            <Text
-              style={{
-                color: theme.placeholder,
-                fontSize: 15,
-              }}
-            >
-              {subText}
-            </Text>
-          )}
+          {subText && <SubText fontSize={15}>{subText}</SubText>}
         </View>
       </View>
       {right && right}

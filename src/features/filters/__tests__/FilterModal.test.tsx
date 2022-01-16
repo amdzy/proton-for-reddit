@@ -4,12 +4,12 @@ import { useFilterStore } from '@/stores';
 import { FilterModal } from '..';
 
 describe('FilterModal component', () => {
-  let handleClose: () => void;
+  let handleClose: jest.Mock;
   let getByTestId: any;
   let getByText: any;
 
   beforeEach(() => {
-    handleClose = () => {};
+    handleClose = jest.fn();
     ({ getByTestId, getByText } = render(
       <FilterModal type="flairs" onClose={handleClose} visible />
     ));

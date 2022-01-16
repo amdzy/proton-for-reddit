@@ -20,7 +20,10 @@ export function ThemeButton({ theme, active, disabled }: Props) {
       disabled={disabled}
       testID="ThemeButton"
     >
-      <View style={[styles.container, active && styles.activeContainer]}>
+      <View
+        style={[styles.container, active && styles.activeContainer]}
+        testID="boxes"
+      >
         <View style={{ paddingVertical: 6, paddingHorizontal: 10 }}>
           <View style={styles.topBox} />
           <Divider />

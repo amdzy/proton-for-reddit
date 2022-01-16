@@ -1,7 +1,5 @@
 import React, { ReactNode } from 'react';
-import {
-  View, Modal, StyleSheet, Pressable,
-} from 'react-native';
+import { View, Modal, StyleSheet, Pressable } from 'react-native';
 import { useTheme } from '@/hooks';
 
 interface Props {
@@ -25,13 +23,7 @@ export function CustomModal({ visible, onClose, children }: Props) {
           {children}
         </View>
         <Pressable
-          style={{
-            backgroundColor: 'rgba(0,0,0,0.4)',
-            width: '100%',
-            height: '100%',
-            zIndex: 1,
-            position: 'absolute',
-          }}
+          style={styles.backgroundCover}
           onPress={onClose}
           testID="closeModal"
         />
@@ -63,5 +55,12 @@ const styles = StyleSheet.create({
     elevation: 5,
     maxHeight: '80%',
     zIndex: 2,
+  },
+  backgroundCover: {
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    width: '100%',
+    height: '100%',
+    zIndex: 1,
+    position: 'absolute',
   },
 });

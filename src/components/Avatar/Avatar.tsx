@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, ImageStyle, View } from 'react-native';
+import { Image, ImageStyle, StyleSheet, View } from 'react-native';
 
 interface Props {
   image: string | undefined;
@@ -14,35 +14,31 @@ const base64 =
 
 export function Avatar({ image, size, style, showPlaceholder = true }: Props) {
   let newImage = image;
+  const styles = makeStyle(size);
+
   if (!image && showPlaceholder) {
     newImage = base64;
   }
 
   if (!image && !showPlaceholder) {
-    return (
-      <View
-        style={{
-          width: size,
-          height: size,
-          borderRadius: size / 2,
-          ...style,
-        }}
-        testID="avatar"
-      />
-    );
+    return <View style={[styles.avatar, style]} testID="avatar" />;
   }
   return (
     <Image
       source={{ uri: newImage }}
       width={size}
       height={size}
-      style={{
-        width: size,
-        height: size,
-        borderRadius: size / 2,
-        ...style,
-      }}
+      style={[styles.avatar, style]}
       testID="avatar"
     />
   );
 }
+
+const makeStyle = (size: number) =>
+  StyleSheet.create({
+    avatar: {
+      width: size,
+      height: size,
+      borderRadius: size / 2,
+    },
+  });

@@ -13,7 +13,7 @@ describe('ThemeButton component', () => {
   it('renders with correct background color', () => {
     const { getByTestId } = render(<ThemeButton theme="dark" active={false} />);
     const theme = useThemeStore.getState().colors.dark;
-    expect(getByTestId('ThemeButton')).toHaveStyle({
+    expect(getByTestId('boxes')).toHaveStyle({
       backgroundColor: theme.background,
     });
   });
@@ -21,7 +21,7 @@ describe('ThemeButton component', () => {
   it('Have border when active', () => {
     const { getByTestId } = render(<ThemeButton theme="dark" active />);
     const theme = useThemeStore.getState().colors.dark;
-    expect(getByTestId('ThemeButton')).toHaveStyle({
+    expect(getByTestId('boxes')).toHaveStyle({
       borderColor: theme.primary,
     });
   });

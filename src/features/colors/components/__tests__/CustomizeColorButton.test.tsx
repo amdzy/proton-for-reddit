@@ -9,15 +9,14 @@ describe('CustomizeColorButton component', () => {
   let getByText: any;
 
   beforeEach(() => {
-    handlePress = jest.fn()(
-      ({ getByTestId, getByText } = render(
-        <CustomizeColorButton
-          text="button"
-          color="#000000"
-          onPress={handlePress}
-        />
-      ))
-    );
+    handlePress = jest.fn();
+    ({ getByTestId, getByText } = render(
+      <CustomizeColorButton
+        text="button"
+        color="#000000"
+        onPress={handlePress}
+      />
+    ));
   });
 
   it('renders', () => {
@@ -36,6 +35,6 @@ describe('CustomizeColorButton component', () => {
 
   it('handle press', () => {
     fireEvent.press(getByTestId('CustomizeColorButton'));
-    expect(handlePress).toHaveBeenCalled();
+    expect(handlePress).toBeCalled();
   });
 });

@@ -11,16 +11,15 @@ describe('ColorPicker component', () => {
 
   beforeEach(() => {
     handleSubmit = jest.fn();
-    handleClose = jest.fn()(
-      ({ getByTestId, getByText } = render(
-        <ColorPicker
-          onClose={handleClose}
-          onSubmit={handleSubmit}
-          color={color}
-          isOpen
-        />
-      ))
-    );
+    handleClose = jest.fn();
+    ({ getByTestId, getByText } = render(
+      <ColorPicker
+        onClose={handleClose}
+        onSubmit={handleSubmit}
+        color={color}
+        isOpen
+      />
+    ));
   });
 
   it('renders', () => {

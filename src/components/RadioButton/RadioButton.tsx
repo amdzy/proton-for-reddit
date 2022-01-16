@@ -1,6 +1,7 @@
 import React from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 import { useTheme } from '@/hooks';
+import { ColorsDTO } from '@/stores/types';
 
 interface Props {
   checked?: boolean;
@@ -14,15 +15,10 @@ export function RadioButton({
   onValueChange,
 }: Props) {
   const theme = useTheme();
+  const styles = makeStyle(theme, checked);
   return (
     <Pressable
-      style={[
-        styles.checkboxBase,
-        {
-          borderColor: checked ? theme.primary : theme.placeholder,
-          backgroundColor: checked ? theme.primary : 'transparent',
-        },
-      ]}
+      style={styles.checkboxBase}
       onPress={onValueChange}
       pointerEvents={passThrough ? 'none' : 'auto'}
       testID="radiobutton"
@@ -30,13 +26,16 @@ export function RadioButton({
   );
 }
 
-const styles = StyleSheet.create({
-  checkboxBase: {
-    width: 18,
-    height: 18,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
-    borderWidth: 2,
-  },
-});
+const makeStyle = (theme: ColorsDTO, checked?: boolean) =>
+  StyleSheet.create({
+    checkboxBase: {
+      width: 18,
+      height: 18,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 10,
+      borderWidth: 2,
+      borderColor: checked ? theme.primary : theme.placeholder,
+      backgroundColor: checked ? theme.primary : 'transparent',
+    },
+  });
