@@ -44,7 +44,7 @@ export function PostHeader({ subName, author, createdAt, sub }: Props) {
     if (!subIcon) {
       fetchIcon(sub);
     }
-  }, [subIcon]);
+  }, [subIcon, sub]);
 
   return (
     <View style={styles.container}>

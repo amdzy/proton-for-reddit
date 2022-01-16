@@ -9,11 +9,9 @@ interface Props {
   onPress?: () => void;
 }
 
-export function YoutubeImage({
-  url, width, height, onPress,
-}: Props) {
+export function YoutubeImage({ url, width, height, onPress }: Props) {
   return (
-    <Pressable onPress={onPress}>
+    <Pressable onPress={onPress} testID="YoutubeImage">
       <PostImage url={url} width={width} height={height} />
       <Text style={styles.text}>Youtube</Text>
     </Pressable>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { PostImage } from '../PostImage/PostImage';
+import { Icon } from '@/components';
 
 interface Props {
   url: string;
@@ -19,10 +19,10 @@ export function ImageWithIcon({
   onPress,
 }: Props) {
   return (
-    <View>
+    <View testID="ImageWithIcon">
       <PostImage url={url} width={width} height={height} onPress={onPress} />
       <View style={styles.icon} pointerEvents="none">
-        <MaterialCommunityIcons name={icon} size={45} color="black" />
+        <Icon icon={icon} size={35} color="black" />
       </View>
     </View>
   );
@@ -31,10 +31,10 @@ export function ImageWithIcon({
 const styles = StyleSheet.create({
   icon: {
     position: 'absolute',
-    top: 20,
-    left: 20,
+    top: 10,
+    left: 10,
     borderRadius: 30,
-    padding: 8,
+    padding: 6,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
