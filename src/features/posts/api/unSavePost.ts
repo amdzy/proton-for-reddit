@@ -36,6 +36,7 @@ export const useUnSavePost = ({ config }: UseUnSavePostOptions) => {
       });
     },
     onSuccess: () => {
+      queryClient.invalidateQueries();
       addToast({
         type: 'success',
         text: 'Post Unsaved',

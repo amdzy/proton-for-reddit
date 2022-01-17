@@ -37,6 +37,7 @@ export const useVotePost = ({ config }: UseVotePostOptions) => {
       });
     },
     onSuccess: () => {
+      queryClient.invalidateQueries();
       addToast({
         type: 'success',
         text: 'Vote Recorded',

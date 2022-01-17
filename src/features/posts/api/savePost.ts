@@ -36,6 +36,7 @@ export const useSavePost = ({ config }: UseSavePostOptions) => {
       });
     },
     onSuccess: () => {
+      queryClient.invalidateQueries();
       addToast({
         type: 'success',
         text: 'Post Saved',

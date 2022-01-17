@@ -24,7 +24,7 @@ export type QueryConfig<FetcherFnType extends (...args: any) => any> =
 
 export type MutationConfig<FetcherFnType extends (...args: any) => any> =
   UseMutationOptions<
-  PromiseValue<ReturnType<FetcherFnType>>,
-  AxiosError,
-  Parameters<FetcherFnType>[0]
+    PromiseValue<ReturnType<FetcherFnType>>,
+    AxiosError,
+    Parameters<FetcherFnType>[0]
   >;

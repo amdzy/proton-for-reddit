@@ -2,6 +2,7 @@ import React from 'react';
 import { ScrollView } from 'react-native';
 import { CustomModal, ListItem } from '@/components';
 import { useSettingsStore } from '@/stores';
+import { queryClient } from '@/lib/react-query';
 
 interface Props {
   visible: boolean;
@@ -16,6 +17,7 @@ export function FeedSortModal({ visible, onClose }: Props) {
       onClose();
       return;
     }
+    queryClient.removeQueries(['feed', sort]);
     setPostSort(type, 'feedSort');
     onClose();
   };
