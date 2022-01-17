@@ -4,6 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import { IconButton, SubText } from '@/components';
 import { useSavePost, useUnSavePost, useVotePost } from '../../api';
 import { useAuthStore, useToastStore } from '@/stores';
+import { useTheme } from '@/hooks';
 
 interface Props {
   numComments: number;
@@ -22,6 +23,7 @@ export function CardFooter({
   saved,
   openLink,
 }: Props) {
+  const theme = useTheme();
   const voteMutation = useVotePost({});
   const saveMutation = useSavePost({});
   const unSaveMutation = useUnSavePost({});
@@ -85,7 +87,7 @@ export function CardFooter({
         {isLiked === true ? (
           <IconButton
             icon="arrow-up-thick"
-            color="orange"
+            color={theme.upvote}
             onPress={() => handleActions('REMOVE_VOTE')}
           />
         ) : (
@@ -98,7 +100,7 @@ export function CardFooter({
         {isLiked === false ? (
           <IconButton
             icon="arrow-down-thick"
-            color="purple"
+            color={theme.downvote}
             onPress={() => handleActions('REMOVE_VOTE')}
           />
         ) : (

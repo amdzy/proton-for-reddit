@@ -8,6 +8,9 @@ export interface ColorsDTO {
   backdrop: string;
   text: string;
   placeholder: string;
+  upvote: string;
+  downvote: string;
+  error: string;
   statusBar: 'dark' | 'light';
 }
 

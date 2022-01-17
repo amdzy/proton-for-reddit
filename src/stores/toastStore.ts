@@ -15,10 +15,12 @@ interface StoreState {
 
 export const useToastStore = create<StoreState>((set) => ({
   toasts: [],
-  addToast: (toast) => set((state) => ({
-    toasts: [...state.toasts, { id: nanoid(), ...toast }],
-  })),
-  dismissToast: (id) => set((state) => ({
-    toasts: state.toasts.filter((toast) => toast.id !== id),
-  })),
+  addToast: (toast) =>
+    set((state) => ({
+      toasts: [...state.toasts, { id: nanoid(), ...toast }],
+    })),
+  dismissToast: (id) =>
+    set((state) => ({
+      toasts: state.toasts.filter((toast) => toast.id !== id),
+    })),
 }));

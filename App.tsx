@@ -5,6 +5,7 @@ import { useTheme } from '@/hooks';
 import { queryClient } from '@/lib/react-query';
 import { RootNavigator } from '@/navigators';
 import { useSettingsStore } from '@/stores';
+import { Toasts } from '@/features/toast';
 
 export default function App() {
   const theme = useTheme();
@@ -24,6 +25,7 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <StatusBar style={theme.statusBar} translucent />
       <RootNavigator />
+      <Toasts />
     </QueryClientProvider>
   );
 }

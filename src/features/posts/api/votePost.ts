@@ -30,14 +30,14 @@ export const useVotePost = ({ config }: UseVotePostOptions) => {
     onMutate: async () => {
       await queryClient.cancelQueries();
     },
-    onError: (err: any) => {
+    onError: () => {
       addToast({
         type: 'error',
-        text: err,
+        text: 'Failed to vote, try again',
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries();
+      queryClient.refetchQueries({ active: true });
       addToast({
         type: 'success',
         text: 'Vote Recorded',

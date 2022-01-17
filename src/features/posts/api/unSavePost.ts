@@ -29,14 +29,14 @@ export const useUnSavePost = ({ config }: UseUnSavePostOptions) => {
     onMutate: async () => {
       await queryClient.cancelQueries();
     },
-    onError: (err: any) => {
+    onError: () => {
       addToast({
         type: 'error',
-        text: err,
+        text: 'Failed to unsave post, try again',
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries();
+      queryClient.refetchQueries({ active: true });
       addToast({
         type: 'success',
         text: 'Post Unsaved',
