@@ -22,7 +22,7 @@ export function ImageWithIcon({
     <View testID="ImageWithIcon">
       <PostImage url={url} width={width} height={height} onPress={onPress} />
       <View style={styles.icon} pointerEvents="none">
-        <Icon icon={icon} size={35} color="black" />
+        <Icon icon={icon} size={25} color="black" />
       </View>
     </View>
   );

@@ -16,10 +16,10 @@ import { ColorsDTO } from '@/stores/types';
 
 interface Props {
   post: PostType;
-  fullText?: boolean;
+  page?: string;
 }
 
-export function PostCard({ post, fullText }: Props) {
+export function PostCard({ post, page }: Props) {
   const theme = useTheme();
   const styles = useMemo(() => makeStyles(theme), [theme]);
   const postSettings = useSettingsStore((state) => state.posts);
@@ -69,7 +69,7 @@ export function PostCard({ post, fullText }: Props) {
         isVideo={post.is_video}
         url={post.url}
         openLink={openLink}
-        fullText={fullText}
+        fullText={page === undefined}
         isNsfw={post.over_18}
       />
       <CardFooter
@@ -78,6 +78,7 @@ export function PostCard({ post, fullText }: Props) {
         likes={post.likes}
         postId={post.id}
         postName={post.name}
+        page={page}
       />
     </View>
   );

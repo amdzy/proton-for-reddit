@@ -19,15 +19,15 @@ export function MainScreen() {
     }
   }, [query.isRefetching, refreshing]);
 
-  useEffect(() => {
-    if (flatlistRef.current) {
-      flatlistRef.current.scrollToIndex({
-        index: 0,
-        animated: true,
-        viewPosition: 0,
-      });
-    }
-  }, [sort]);
+  // useEffect(() => {
+  //   if (flatlistRef.current) {
+  //     flatlistRef.current.scrollToIndex({
+  //       index: 0,
+  //       animated: true,
+  //       viewPosition: 0,
+  //     });
+  //   }
+  // }, [sort]);
 
   if (query.isLoading) {
     return <Spinner animating />;
@@ -40,14 +40,14 @@ export function MainScreen() {
         renderItem={({ item }) => (
           <>
             {item.children.map((post) => (
-              <PostCard post={post.data} key={post.data.id} />
+              <PostCard post={post.data} page="feed" key={post.data.id} />
             ))}
           </>
         )}
         data={query.data.pages}
-        keyExtractor={(item) => item.after}
+        keyExtractor={(item, index) => item.after + item.before + index}
         style={styles.flatlist}
-        onEndReachedThreshold={5}
+        onEndReachedThreshold={10}
         onEndReached={() => {
           if (!query.isFetchingNextPage && !query.isFetching) {
             query.fetchNextPage();

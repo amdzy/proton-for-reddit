@@ -3,7 +3,6 @@ import { useMutation } from 'react-query';
 import { axios } from '@/lib/axios';
 import { MutationConfig, queryClient } from '@/lib/react-query';
 import { useSettingsStore, useToastStore } from '@/stores';
-import { PostsApiResponse } from '../types';
 
 interface VotePostProps {
   id: string;
@@ -14,47 +13,29 @@ const votePost = ({ id, dist }: VotePostProps) => Promise.resolve();
 
 interface UseCreateCommentOptions {
   postId: string;
+  page?: string;
   config?: MutationConfig<typeof votePost>;
 }
 
-export const useVotePost = ({ config, postId }: UseCreateCommentOptions) => {
+export const useVotePost = ({
+  config,
+  postId,
+  page,
+}: UseCreateCommentOptions) => {
   const addToast = useToastStore((state) => state.addToast);
-  const sort = useSettingsStore((state) => state.posts.sort);
+  const sort = useSettingsStore((state) => state.posts.feedSort);
 
   return useMutation({
     onMutate: async (data) => {
       await queryClient.cancelQueries();
-
-      const previousData = queryClient.getQueryData<{
-        pages: Array<PostsApiResponse>;
-      }>(['feed', sort]);
-
-      const newPosts = previousData?.pages.map((page) =>
-        page.children.map((post) => {
-          if (post.data.id === postId) {
-            post.data = {
-              ...post.data,
-              likes: data.dist === 1 ? true : data.dist === 0 ? null : false,
-            };
-          }
-          return post;
-        })
-      );
-
-      queryClient.setQueryData(['feed', sort], {
-        ...previousData,
-        data: {
-          ...previousData?.pages,
-          children: newPosts,
-        },
-      });
     },
     onError: (_, __, context: any) => {
       if (context?.previousData) {
-        console.log('error');
+        queryClient.setQueryData([page, sort], context.previousComments);
       }
     },
     onSuccess: () => {
+      // queryClient.refetchQueries([page, sort]);
       addToast({
         type: 'success',
         text: 'Vote Recorded',

@@ -66,14 +66,20 @@ export function CardMain({
     return <CardText text={selftext} fullText={fullText} />;
   }
 
-  if (hint === 'image') {
+  if (hint === 'image' && !isGallery) {
     const image = handleImageChoice();
+
+    if (!image.url) {
+      return null;
+    }
+
     if (preview.images[0].variants.mp4) {
       let media = preview.images[0].variants.mp4.source;
       if (dataSaver) {
         media =
           preview.images[0].variants.mp4.resolutions[1] ||
-          preview.images[0].variants.mp4.resolutions[0];
+          preview.images[0].variants.mp4.resolutions[0] ||
+          preview.images[0].variants.mp4.source;
       }
       return (
         <ImageWithIcon
@@ -101,15 +107,21 @@ export function CardMain({
 
   if (isGallery) {
     const imgSourceArr: any = [];
-    const gallery = Object.values(mediaMetadata);
+    const gallery = Object.values(mediaMetadata) as any;
+    if (!gallery[0].s) {
+      console.log(gallery);
+      return null;
+    }
+
     const singleImage = {
       url: gallery[0].s.u,
       width: gallery[0].s.x,
       height: gallery[0].s.y,
     };
 
-    const imgArr = gallery.map((item) => {
+    const imgArr = gallery.map((item: any) => {
       let image = item.s;
+
       imgSourceArr.push({ url: image.u, width: image.x, height: image.y });
       if (dataSaver) {
         image = item.p[1] || item.p[0];
@@ -143,6 +155,11 @@ export function CardMain({
     const video = media.reddit_video;
 
     const image = handleImageChoice();
+
+    if (!image.url || !video.dash_url) {
+      return null;
+    }
+
     return (
       <ImageWithIcon
         url={image.url}

@@ -20,7 +20,7 @@ export function PostImage({
 }: Props) {
   const [isloading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const styles = useMemo(() => makeStyles(width, height), []);
+  const styles = useMemo(() => makeStyles(width, height), [width, height]);
   const theme = useTheme();
 
   if (isError) {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
 import { IconButton, SubText } from '@/components';
 import { useVotePost } from '../../api';
@@ -10,6 +10,7 @@ interface Props {
   likes: boolean | null;
   postId: string;
   postName: string;
+  page?: string;
 }
 
 export function CardFooter({
@@ -18,20 +19,25 @@ export function CardFooter({
   likes,
   postId,
   postName,
+  page,
 }: Props) {
-  const voteMutation = useVotePost({ postId });
+  const voteMutation = useVotePost({ postId, page });
+  const [isLiked, setIsLiked] = useState(likes);
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const addToast = useToastStore((state) => state.addToast);
 
   const handleUpVote = () => {
+    setIsLiked(true);
     voteMutation.mutate({ id: postName, dist: 1 });
   };
 
   const handleDownVote = () => {
+    setIsLiked(false);
     voteMutation.mutate({ id: postName, dist: -1 });
   };
 
   const handleRemoveVote = () => {
+    setIsLiked(null);
     voteMutation.mutate({ id: postName, dist: 0 });
   };
 
@@ -52,7 +58,7 @@ export function CardFooter({
           flex: 0.4,
         }}
       >
-        {likes === true ? (
+        {isLiked === true ? (
           <IconButton
             icon="arrow-up-thick"
             color="orange"
@@ -62,7 +68,7 @@ export function CardFooter({
           <IconButton icon="arrow-up-thick" onPress={handleUpVote} />
         )}
         <SubText>{numLikes}</SubText>
-        {likes === false ? (
+        {isLiked === false ? (
           <IconButton
             icon="arrow-down-thick"
             color="purple"

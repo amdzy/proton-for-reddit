@@ -4,23 +4,22 @@ import { QueryClientProvider } from 'react-query';
 import { useTheme } from '@/hooks';
 import { queryClient } from '@/lib/react-query';
 import { RootNavigator } from '@/navigators';
-import { useThemeStore } from '@/stores';
+import { useSettingsStore } from '@/stores';
 
 export default function App() {
   const theme = useTheme();
   const [isHydrated, setIsHydrated] = useState<boolean>(
     // @ts-ignore
-    useThemeStore.persist.hasHydrated()
+    useSettingsStore.persist.hasHydrated()
   );
 
   if (!isHydrated) {
     // @ts-ignore
-    useThemeStore.persist.onFinishHydration(() => {
+    useSettingsStore.persist.onFinishHydration(() => {
       setIsHydrated(true);
     });
     return null;
   }
-  useThemeStore.persist.clearStorage();
   return (
     <QueryClientProvider client={queryClient}>
       <StatusBar style={theme.statusBar} translucent />

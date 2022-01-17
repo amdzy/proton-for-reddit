@@ -9,8 +9,13 @@ interface Props {
 }
 
 export function FeedSortModal({ visible, onClose }: Props) {
+  const sort = useSettingsStore((state) => state.posts.feedSort);
   const setPostSort = useSettingsStore((state) => state.setPostSort);
   const handleSubmit = (type: string) => {
+    if (sort === type) {
+      onClose();
+      return;
+    }
     setPostSort(type, 'feedSort');
     onClose();
   };
