@@ -54,7 +54,7 @@ export function PostHeader({ subName, author, createdAt, sub }: Props) {
             size={26}
             style={styles.avatar}
             image={subIcon}
-            showPlaceholder={false}
+            showPlaceholder
           />
         </Pressable>
       )}

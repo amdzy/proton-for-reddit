@@ -1,41 +1,42 @@
-/* eslint-disable no-param-reassign */
 import { useMutation } from 'react-query';
 import { axios } from '@/lib/axios';
 import { MutationConfig, queryClient } from '@/lib/react-query';
-import { useSettingsStore, useToastStore } from '@/stores';
+import { useToastStore } from '@/stores';
 
 interface VotePostProps {
   id: string;
   dist: number;
 }
 
-const votePost = ({ id, dist }: VotePostProps) => Promise.resolve();
+const votePost = async ({ id, dist }: VotePostProps) => {
+  const res = (await axios.post('/api/vote', {
+    dir: dist,
+    id,
+  })) as any;
+  if (res.json && res.json.errors) {
+    throw new Error('Failed to vote, try again');
+  }
+  return res;
+};
 
-interface UseCreateCommentOptions {
-  postId: string;
-  page?: string;
+interface UseVotePostOptions {
   config?: MutationConfig<typeof votePost>;
 }
 
-export const useVotePost = ({
-  config,
-  postId,
-  page,
-}: UseCreateCommentOptions) => {
+export const useVotePost = ({ config }: UseVotePostOptions) => {
   const addToast = useToastStore((state) => state.addToast);
-  const sort = useSettingsStore((state) => state.posts.feedSort);
 
   return useMutation({
-    onMutate: async (data) => {
+    onMutate: async () => {
       await queryClient.cancelQueries();
     },
-    onError: (_, __, context: any) => {
-      if (context?.previousData) {
-        queryClient.setQueryData([page, sort], context.previousComments);
-      }
+    onError: (err: any) => {
+      addToast({
+        type: 'error',
+        text: err,
+      });
     },
     onSuccess: () => {
-      // queryClient.refetchQueries([page, sort]);
       addToast({
         type: 'success',
         text: 'Vote Recorded',
@@ -45,3 +46,24 @@ export const useVotePost = ({
     mutationFn: votePost,
   });
 };
+
+// const previousData = queryClient.getQueryData<{
+//   pages: Array<PostsApiResponse>;
+// }>([page, sort]);
+
+// const newData = previousData?.pages.map((page) => {
+//   page.children.map((post) => {
+//     if (post.data.name === data.id) {
+//       post.data.likes = true;
+//     }
+//     return post;
+//   });
+//   return page;
+// });
+
+// queryClient.setQueryData([page, sort], {
+//   ...previousData,
+//   pages: newData,
+// });
+
+// return { previousData: { ...previousData } };

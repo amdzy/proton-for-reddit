@@ -28,6 +28,10 @@ export function PostCard({ post, page }: Props) {
     WebBrowser.openBrowserAsync(post.url);
   };
 
+  const openRedditLink = () => {
+    WebBrowser.openBrowserAsync(`https://www.reddit.com${post.permalink}`);
+  };
+
   return (
     <View style={styles.card}>
       <PostHeader
@@ -76,9 +80,9 @@ export function PostCard({ post, page }: Props) {
         numLikes={post.ups}
         numComments={post.num_comments}
         likes={post.likes}
-        postId={post.id}
+        saved={post.saved}
         postName={post.name}
-        page={page}
+        openLink={openRedditLink}
       />
     </View>
   );

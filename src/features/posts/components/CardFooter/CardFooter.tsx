@@ -1,96 +1,151 @@
-import React, { useState } from 'react';
-import { View } from 'react-native';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useCallback, useEffect, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { IconButton, SubText } from '@/components';
-import { useVotePost } from '../../api';
+import { useSavePost, useUnSavePost, useVotePost } from '../../api';
 import { useAuthStore, useToastStore } from '@/stores';
 
 interface Props {
   numComments: number;
   numLikes: number;
   likes: boolean | null;
-  postId: string;
   postName: string;
-  page?: string;
+  saved: boolean;
+  openLink: () => void;
 }
 
 export function CardFooter({
   numComments,
   numLikes,
   likes,
-  postId,
   postName,
-  page,
+  saved,
+  openLink,
 }: Props) {
-  const voteMutation = useVotePost({ postId, page });
+  const voteMutation = useVotePost({});
+  const saveMutation = useSavePost({});
+  const unSaveMutation = useUnSavePost({});
   const [isLiked, setIsLiked] = useState(likes);
+  const [isSaved, setIsSaved] = useState(saved);
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const addToast = useToastStore((state) => state.addToast);
 
-  const handleUpVote = () => {
-    setIsLiked(true);
-    voteMutation.mutate({ id: postName, dist: 1 });
-  };
+  const handleActions = useCallback((type: string) => {
+    if (!isAuthenticated) {
+      addToast({
+        text: 'Login First',
+        type: 'error',
+      });
+      return;
+    }
+    switch (type) {
+      case 'UPVOTE': {
+        setIsLiked(true);
+        voteMutation.mutate({ id: postName, dist: 1 });
+        break;
+      }
+      case 'DOWNVOTE': {
+        setIsLiked(false);
+        voteMutation.mutate({ id: postName, dist: -1 });
+        break;
+      }
+      case 'REMOVE_VOTE': {
+        setIsLiked(null);
+        voteMutation.mutate({ id: postName, dist: 0 });
+        break;
+      }
+      case 'SAVE': {
+        setIsSaved(true);
+        saveMutation.mutate({ id: postName });
+        break;
+      }
+      case 'UNSAVE': {
+        setIsSaved(false);
+        unSaveMutation.mutate({ id: postName });
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+  }, []);
 
-  const handleDownVote = () => {
-    setIsLiked(false);
-    voteMutation.mutate({ id: postName, dist: -1 });
-  };
-
-  const handleRemoveVote = () => {
-    setIsLiked(null);
-    voteMutation.mutate({ id: postName, dist: 0 });
-  };
+  useEffect(() => {
+    if (voteMutation.isError) {
+      setIsLiked(likes);
+    }
+    if (saveMutation.isError || unSaveMutation.isError) {
+      setIsSaved(saved);
+    }
+  }, [voteMutation.isError, saveMutation.isError, unSaveMutation.isError]);
 
   return (
-    <View
-      style={{
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        padding: 12,
-        flexWrap: 'nowrap',
-      }}
-    >
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flex: 0.4,
-        }}
-      >
+    <View style={styles.container}>
+      <View style={styles.voteContainer}>
         {isLiked === true ? (
           <IconButton
             icon="arrow-up-thick"
             color="orange"
-            onPress={handleRemoveVote}
+            onPress={() => handleActions('REMOVE_VOTE')}
           />
         ) : (
-          <IconButton icon="arrow-up-thick" onPress={handleUpVote} />
+          <IconButton
+            icon="arrow-up-thick"
+            onPress={() => handleActions('UPVOTE')}
+          />
         )}
         <SubText>{numLikes}</SubText>
         {isLiked === false ? (
           <IconButton
             icon="arrow-down-thick"
             color="purple"
-            onPress={handleRemoveVote}
+            onPress={() => handleActions('REMOVE_VOTE')}
           />
         ) : (
-          <IconButton icon="arrow-down-thick" onPress={handleDownVote} />
+          <IconButton
+            icon="arrow-down-thick"
+            onPress={() => handleActions('DOWNVOTE')}
+          />
         )}
       </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-          alignItems: 'center',
-          flex: 0.3,
-        }}
-      >
+      <View style={styles.commentContainer}>
         <IconButton icon="comment-outline" />
         <SubText>{numComments}</SubText>
       </View>
-      <IconButton icon="bookmark-outline" />
-      <IconButton icon="share-variant" />
+      {isSaved ? (
+        <IconButton
+          icon="bookmark"
+          color="gold"
+          onPress={() => handleActions('UNSAVE')}
+        />
+      ) : (
+        <IconButton
+          icon="bookmark-outline"
+          onPress={() => handleActions('SAVE')}
+        />
+      )}
+      <IconButton icon="logout-variant" onPress={openLink} />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 12,
+    flexWrap: 'nowrap',
+  },
+  voteContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    flex: 0.4,
+  },
+  commentContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    flex: 0.3,
+  },
+});
