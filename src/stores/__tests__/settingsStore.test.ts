@@ -44,8 +44,15 @@ describe('Settings store', () => {
   it('Change post sort', () => {
     const { setPostSort } = useSettingsStore.getState();
 
-    setPostSort('new');
+    setPostSort('new', 'sort');
     expect(useSettingsStore.getState().posts.sort).toBe('new');
+  });
+
+  it('Change feed posts sort', () => {
+    const { setPostSort } = useSettingsStore.getState();
+
+    setPostSort('new', 'feedSort');
+    expect(useSettingsStore.getState().posts.feedSort).toBe('new');
   });
 
   it('Change post settings', () => {

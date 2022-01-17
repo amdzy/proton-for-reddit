@@ -9,10 +9,10 @@ interface VotePostProps {
 }
 
 const votePost = async ({ id, dist }: VotePostProps) => {
-  const res = (await axios.post('/api/vote', {
+  const res = await axios.post('/api/vote', {
     dir: dist,
     id,
-  })) as any;
+  });
   if (res.json && res.json.errors) {
     throw new Error('Failed to vote, try again');
   }
@@ -36,12 +36,12 @@ export const useVotePost = ({ config }: UseVotePostOptions) => {
         text: 'Failed to vote, try again',
       });
     },
-    onSuccess: () => {
-      queryClient.refetchQueries({ active: true });
+    onSuccess: async () => {
       addToast({
         type: 'success',
         text: 'Vote Recorded',
       });
+      await queryClient.refetchQueries({ active: true });
     },
     ...config,
     mutationFn: votePost,

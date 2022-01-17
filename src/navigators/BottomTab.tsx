@@ -9,7 +9,6 @@ import {
   SettingsScreen,
   SubscriptionsScreen,
 } from '@/screens';
-import { MessagesPageTopTab } from './MessagesPageTopTab';
 import { useAuthStore, useSettingsStore } from '@/stores';
 
 const Tab = createBottomTabNavigator();
@@ -54,7 +53,7 @@ export function BottomTab() {
       />
       <Tab.Screen
         name="Inbox"
-        component={isAuthenticated ? MessagesPageTopTab : LoginScreen}
+        component={isAuthenticated ? SecondScreen : LoginScreen}
         options={{
           headerShadowVisible: false,
           tabBarIcon: ({ color, size }) => (

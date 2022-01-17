@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { IconButton, SubText } from '@/components';
+import { Icon, IconButton, SubText } from '@/components';
 import { useSavePost, useUnSavePost, useVotePost } from '../../api';
 import { useAuthStore, useToastStore } from '@/stores';
 import { useTheme } from '@/hooks';
@@ -111,7 +111,7 @@ export function CardFooter({
         )}
       </View>
       <View style={styles.commentContainer}>
-        <IconButton icon="comment-outline" />
+        <Icon icon="comment-outline" color={theme.placeholder} size={24} />
         <SubText>{numComments}</SubText>
       </View>
       {isSaved ? (

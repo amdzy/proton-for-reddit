@@ -6,13 +6,15 @@ import {
 } from 'expo-auth-session';
 import * as WebBrowser from 'expo-web-browser';
 import { useAuthStore, useToastStore } from '@/stores';
-import { CLIENT_ID, discovery, REDIRECT_URI } from '@/features/auth';
+import { axios } from '@/lib/axios';
+import { CLIENT_ID, REDIRECT_URI, discovery } from '../authConstants';
 
 WebBrowser.maybeCompleteAuthSession();
 
 export function useRedditAuth() {
   const addToast = useToastStore((state) => state.addToast);
   const setToken = useAuthStore((state) => state.setToken);
+  const setUser = useAuthStore((state) => state.setUser);
   const loggedIn = useAuthStore((state) => state.isAuthenticated);
   const [isAuthenticated] = useState(loggedIn);
 
@@ -72,6 +74,14 @@ export function useRedditAuth() {
           discovery
         );
         setToken(result);
+        const res = await axios.get('/api/v1/me');
+        setUser({
+          icon: res.icon_img,
+          name: res.name,
+          karma: res.total_karma,
+          id: res.id,
+          createdAt: res.created_utc,
+        });
       }
     }
 

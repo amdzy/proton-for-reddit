@@ -2,16 +2,30 @@ import create from 'zustand';
 import { persist } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+interface User {
+  icon: string;
+  name: string;
+  karma: number;
+  id: string;
+  createdAt: number;
+}
+
 interface Store {
   token: string | null;
   refreshToken: string | null;
   expiresIn: number | null;
   issuedAt: number | null;
   isAuthenticated: boolean;
+  userName: null | string;
+  userIcon: null | string;
+  karma: null | number;
+  id: null | string;
+  createdAt: null | number;
   setToken: (token: any) => void;
-  clearToken: () => void;
+  logout: () => void;
   setTokenRefresh: (token: any) => void;
   setTokenAnon: (token: any) => void;
+  setUser: (user: User) => void;
 }
 
 export const useAuthStore = create<Store>(
@@ -22,6 +36,11 @@ export const useAuthStore = create<Store>(
       expiresIn: null,
       issuedAt: null,
       isAuthenticated: false,
+      userName: null,
+      userIcon: null,
+      karma: null,
+      id: null,
+      createdAt: null,
 
       setToken: (token) =>
         set(() => ({
@@ -32,13 +51,18 @@ export const useAuthStore = create<Store>(
           isAuthenticated: true,
         })),
 
-      clearToken: () =>
+      logout: () =>
         set(() => ({
           token: null,
           refreshToken: null,
           expiresIn: null,
           issuedAt: null,
           isAuthenticated: false,
+          userIcon: null,
+          userName: null,
+          karma: null,
+          id: null,
+          createdAt: null,
         })),
 
       setTokenRefresh: (token) =>
@@ -53,6 +77,15 @@ export const useAuthStore = create<Store>(
           token: token.access_token,
           expiresIn: token.expires_in,
           issuedAt: Math.floor(Date.now() / 1000),
+        })),
+
+      setUser: (user) =>
+        set(() => ({
+          userIcon: user.icon,
+          userName: user.name,
+          karma: user.karma,
+          id: user.id,
+          createdAt: user.createdAt,
         })),
     }),
     {

@@ -20,9 +20,9 @@ describe('Auth store', () => {
   });
 
   it('Clear token', () => {
-    const { clearToken } = useAuthStore.getState();
+    const { logout } = useAuthStore.getState();
 
-    clearToken();
+    logout();
 
     const token = getItems();
     expect(token).toMatchObject({
