@@ -1,12 +1,12 @@
-import { useSubStore } from '..';
+import { useSubIconStore } from '..';
 
 describe('SubStore store', () => {
   it('add icon', () => {
-    const { addIcon } = useSubStore.getState();
+    const { addIcon } = useSubIconStore.getState();
     const icon = 'icon';
     const sub = 'sub';
     addIcon(sub, icon);
-    const { icons } = useSubStore.getState();
+    const { icons } = useSubIconStore.getState();
     expect(icons.has(sub)).toBe(true);
     expect(icons.get(sub)).toBe(icon);
   });

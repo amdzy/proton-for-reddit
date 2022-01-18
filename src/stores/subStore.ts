@@ -9,9 +9,7 @@ interface Sub {
 }
 
 interface StoreState {
-  icons: Map<string, string>;
   subs: Record<string, { id: string; icon: string; name: string }>;
-  addIcon: (sub: string, icon: string) => void;
   setSubs: (subs: Array<Sub>) => void;
   setSub: (sub: Sub) => void;
 }
@@ -19,12 +17,7 @@ interface StoreState {
 export const useSubStore = create<StoreState>(
   persist(
     (set) => ({
-      icons: new Map(),
       subs: {},
-      addIcon: (sub, icon) =>
-        set((state) => ({
-          icons: state.icons.set(sub, icon),
-        })),
       setSubs: (subs) =>
         set(() => {
           const subsObj: any = {};

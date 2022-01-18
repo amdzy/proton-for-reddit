@@ -1,5 +1,6 @@
 import React from 'react';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
+import { StyleSheet } from 'react-native';
 import { Divider, Icon, Text } from '@/components';
 import { useTheme } from '@/hooks';
 import { DrawerSubList } from './DrawerSubList';
@@ -14,30 +15,34 @@ export function DrawerItems({ navigation }: Props) {
   return (
     <DrawerContentScrollView>
       <DrawerItem
-        label={() => <Text style={{ fontSize: 16 }}>Home</Text>}
+        label={() => <Text style={styles.text}>Home</Text>}
         onPress={() => {
-          navigation.navigate('Feed');
+          navigation.navigate('Home');
         }}
         icon={() => <Icon icon="home" color={theme.placeholder} />}
       />
       <DrawerItem
-        label={() => <Text style={{ fontSize: 16 }}>Popular</Text>}
-        onPress={() => {}}
+        label={() => <Text style={styles.text}>Popular</Text>}
+        onPress={() => {
+          navigation.navigate('Popular');
+        }}
         icon={() => <Icon icon="trending-up" color={theme.placeholder} />}
       />
       <DrawerItem
-        label={() => <Text style={{ fontSize: 16 }}>All</Text>}
-        onPress={() => {}}
+        label={() => <Text style={styles.text}>All</Text>}
+        onPress={() => {
+          navigation.navigate('All');
+        }}
         icon={() => <Icon icon="chart-bar" color={theme.placeholder} />}
       />
       <DrawerItem
-        label={() => <Text style={{ fontSize: 16 }}>Saved</Text>}
+        label={() => <Text style={styles.text}>Saved</Text>}
         onPress={() => {}}
         icon={() => <Icon icon="bookmark" color={theme.placeholder} />}
       />
       <Divider />
       <DrawerItem
-        label={() => <Text style={{ fontSize: 16 }}>Profile</Text>}
+        label={() => <Text style={styles.text}>Profile</Text>}
         onPress={() => {
           navigation.navigate('Profile');
         }}
@@ -46,7 +51,7 @@ export function DrawerItems({ navigation }: Props) {
         )}
       />
       <DrawerItem
-        label={() => <Text style={{ fontSize: 16 }}>Inbox</Text>}
+        label={() => <Text style={styles.text}>Inbox</Text>}
         onPress={() => {
           navigation.navigate('Inbox');
         }}
@@ -56,7 +61,7 @@ export function DrawerItems({ navigation }: Props) {
       />
       <Divider />
       <DrawerItem
-        label={() => <Text style={{ fontSize: 16 }}>Settings</Text>}
+        label={() => <Text style={styles.text}>Settings</Text>}
         onPress={() => {
           navigation.navigate('Settings');
         }}
@@ -67,3 +72,9 @@ export function DrawerItems({ navigation }: Props) {
     </DrawerContentScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  text: {
+    fontSize: 16,
+  },
+});

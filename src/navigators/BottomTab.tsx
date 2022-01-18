@@ -1,22 +1,15 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Button, View } from 'react-native';
-import { Icon, IconButton, SubText, Text } from '@/components';
-import { TabNavigatorButtons } from './Components/TabNavigatorButtons';
-import {
-  LoginScreen,
-  MainScreen,
-  SettingsScreen,
-  SubscriptionsScreen,
-} from '@/screens';
-import { useAuthStore, useSettingsStore, useSubStore } from '@/stores';
-import { axios } from '@/lib/axios';
+import { Icon, IconButton, Text } from '@/components';
+import { LoginScreen, SettingsScreen, SubscriptionsScreen } from '@/screens';
+import { useAuthStore } from '@/stores';
+import { FeedStack } from './FeedStack';
 
 const Tab = createBottomTabNavigator();
 
 export function BottomTab() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  const sort = useSettingsStore((state) => state.posts.feedSort);
   return (
     <Tab.Navigator
       screenOptions={({ navigation }) => ({
@@ -35,18 +28,11 @@ export function BottomTab() {
     >
       <Tab.Screen
         name="Feed"
-        component={MainScreen}
-        options={({ navigation }) => ({
-          headerShadowVisible: false,
+        component={FeedStack}
+        options={() => ({
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <Icon color={color} icon="home" size={size} />
-          ),
-          headerRight: () => <TabNavigatorButtons navigation={navigation} />,
-          headerTitle: () => (
-            <View>
-              <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Proton</Text>
-              <SubText style={{ textTransform: 'capitalize' }}>{sort}</SubText>
-            </View>
           ),
         })}
       />
@@ -92,27 +78,7 @@ export function BottomTab() {
   );
 }
 
-function SecondScreen({ navigation }: any) {
-  const setSubs = useSubStore((state) => state.setSubs);
-  const subs = useSubStore((state) => state.subs);
-
-  const fetchSubs = async () => {
-    const res = await axios.get('/subreddits/mine/subscriber');
-    const data = res.data.children;
-    const subs = data.map((sub: any) => ({
-      icon: sub.data.icon_img || sub.data.community_icon,
-      name: sub.data.display_name,
-      id: sub.data.id,
-    }));
-    setSubs(subs);
-  };
-
-  useEffect(() => {
-    fetchSubs();
-  }, []);
-
-  console.log(subs);
-
+function SecondScreen() {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Second Screen</Text>

@@ -6,12 +6,9 @@ import { ImageScreen, VideoScreen } from '@/screens';
 import { useTheme } from '@/hooks';
 import { SearchBar } from '@/features/search';
 import { SettingsStack } from './SettingsStack';
-import { BottomTab } from './BottomTab';
 import { DrawerNav } from './DrawerNav';
 
 const Stack = createNativeStackNavigator();
-
-const search = () => <SearchBar />;
 
 export function RootNavigator() {
   const theme = useTheme();
@@ -47,7 +44,7 @@ export function RootNavigator() {
           name="Search"
           component={SecondScreen}
           options={{
-            headerTitle: search,
+            headerTitle: () => <SearchBar />,
             headerBackTitleVisible: false,
           }}
         />
