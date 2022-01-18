@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Button, View } from 'react-native';
 import { Icon, IconButton, SubText, Text } from '@/components';
@@ -9,7 +9,8 @@ import {
   SettingsScreen,
   SubscriptionsScreen,
 } from '@/screens';
-import { useAuthStore, useSettingsStore } from '@/stores';
+import { useAuthStore, useSettingsStore, useSubStore } from '@/stores';
+import { axios } from '@/lib/axios';
 
 const Tab = createBottomTabNavigator();
 
@@ -92,6 +93,26 @@ export function BottomTab() {
 }
 
 function SecondScreen({ navigation }: any) {
+  const setSubs = useSubStore((state) => state.setSubs);
+  const subs = useSubStore((state) => state.subs);
+
+  const fetchSubs = async () => {
+    const res = await axios.get('/subreddits/mine/subscriber');
+    const data = res.data.children;
+    const subs = data.map((sub: any) => ({
+      icon: sub.data.icon_img || sub.data.community_icon,
+      name: sub.data.display_name,
+      id: sub.data.id,
+    }));
+    setSubs(subs);
+  };
+
+  useEffect(() => {
+    fetchSubs();
+  }, []);
+
+  console.log(subs);
+
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Second Screen</Text>

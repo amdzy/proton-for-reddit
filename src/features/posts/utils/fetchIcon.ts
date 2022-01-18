@@ -1,4 +1,4 @@
-import { useSubIconStore } from '@/stores';
+import { useSubStore } from '@/stores';
 
 export const fetchIcon = async (sub: string) => {
   try {
@@ -7,7 +7,7 @@ export const fetchIcon = async (sub: string) => {
     );
     const data = await res.json();
     const icon = data.data.icon_img || data.data.community_icon;
-    const { addIcon } = useSubIconStore.getState();
+    const { addIcon } = useSubStore.getState();
     addIcon(sub, icon);
     return icon;
   } catch {

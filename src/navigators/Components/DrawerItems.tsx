@@ -2,6 +2,7 @@ import React from 'react';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { Divider, Icon, Text } from '@/components';
 import { useTheme } from '@/hooks';
+import { DrawerSubList } from './DrawerSubList';
 
 interface Props {
   navigation: any;
@@ -62,6 +63,7 @@ export function DrawerItems({ navigation }: Props) {
         icon={() => <Icon icon="cog" color={theme.placeholder} />}
       />
       <Divider />
+      <DrawerSubList navigation={navigation} />
     </DrawerContentScrollView>
   );
 }

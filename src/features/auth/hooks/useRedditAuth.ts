@@ -5,7 +5,7 @@ import {
   exchangeCodeAsync,
 } from 'expo-auth-session';
 import * as WebBrowser from 'expo-web-browser';
-import { useAuthStore, useToastStore } from '@/stores';
+import { useAuthStore, useSubStore, useToastStore } from '@/stores';
 import { axios } from '@/lib/axios';
 import { CLIENT_ID, REDIRECT_URI, discovery } from '../authConstants';
 
@@ -15,6 +15,7 @@ export function useRedditAuth() {
   const addToast = useToastStore((state) => state.addToast);
   const setToken = useAuthStore((state) => state.setToken);
   const setUser = useAuthStore((state) => state.setUser);
+  const setSubs = useSubStore((state) => state.setSubs);
   const loggedIn = useAuthStore((state) => state.isAuthenticated);
   const [isAuthenticated] = useState(loggedIn);
 
@@ -74,14 +75,23 @@ export function useRedditAuth() {
           discovery
         );
         setToken(result);
-        const res = await axios.get('/api/v1/me');
+        const [user, subsRes] = await Promise.all([
+          axios.get('/api/v1/me'),
+          axios.get('/subreddits/mine/subscriber'),
+        ]);
+        const subs = subsRes.data.children.map((sub: any) => ({
+          icon: sub.data.icon_img || sub.data.community_icon,
+          name: sub.data.display_name,
+          id: sub.data.id,
+        }));
         setUser({
-          icon: res.icon_img,
-          name: res.name,
-          karma: res.total_karma,
-          id: res.id,
-          createdAt: res.created_utc,
+          icon: user.icon_img,
+          name: user.name,
+          karma: user.total_karma,
+          id: user.id,
+          createdAt: user.created_utc,
         });
+        setSubs(subs);
       }
     }
 

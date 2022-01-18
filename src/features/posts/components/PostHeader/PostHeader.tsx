@@ -4,7 +4,7 @@ import { formatDistanceToNowStrict } from 'date-fns';
 import { useNavigation } from '@react-navigation/core';
 import { Avatar, SubText } from '@/components';
 import { useTheme } from '@/hooks';
-import { useSettingsStore, useSubIconStore } from '@/stores';
+import { useSettingsStore, useSubStore } from '@/stores';
 import { fetchIcon } from '../../utils/fetchIcon';
 import { ColorsDTO } from '@/stores/types';
 
@@ -17,7 +17,7 @@ interface Props {
 
 export function PostHeader({ subName, author, createdAt, sub }: Props) {
   const theme = useTheme();
-  const subIcon = useSubIconStore((state) => state.icons.get(sub));
+  const subIcon = useSubStore((state) => state.icons.get(sub));
   const styles = useMemo(() => makeStyles(theme), [theme]);
   const postSettings = useSettingsStore((state) => state.posts);
   const navigation = useNavigation<any>();
