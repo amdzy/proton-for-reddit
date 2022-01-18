@@ -6,17 +6,38 @@ interface Props {
   size: number;
   style?: ImageStyle;
   showPlaceholder?: boolean;
+  placeholder?: 'user' | 'sub';
 }
 
-export function Avatar({ image, size, style, showPlaceholder = true }: Props) {
+export function Avatar({
+  image,
+  size,
+  style,
+  showPlaceholder = true,
+  placeholder = 'sub',
+}: Props) {
   const newImage = image;
   const styles = makeStyle(size);
 
-  if (!image && showPlaceholder) {
+  if (!image && showPlaceholder && placeholder === 'sub') {
     return (
       <Image
         // eslint-disable-next-line global-require
         source={require('@/assets/sub-icon.jpg')}
+        width={size}
+        height={size}
+        style={[styles.avatar, style]}
+        testID="avatar"
+      />
+    );
+  }
+
+  if (!image && showPlaceholder && placeholder === 'user') {
+    return (
+      <Image
+        source={{
+          uri: 'https://www.redditstatic.com/avatars/defaults/v2/avatar_default_7.png',
+        }}
         width={size}
         height={size}
         style={[styles.avatar, style]}

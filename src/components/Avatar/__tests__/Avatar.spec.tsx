@@ -30,4 +30,18 @@ describe('Avatar Component', () => {
     );
     expect(getByTestId('avatar')).not.toBe(null);
   });
+
+  it('renders with placeholder sub', () => {
+    const { getByTestId } = render(
+      <Avatar size={24} showPlaceholder image={undefined} placeholder="sub" />
+    );
+    expect(getByTestId('avatar')).not.toBe(null);
+  });
+
+  it('renders with placeholder user', () => {
+    const { getByTestId } = render(
+      <Avatar size={24} showPlaceholder image={undefined} placeholder="user" />
+    );
+    expect(getByTestId('avatar')).not.toBe(null);
+  });
 });
