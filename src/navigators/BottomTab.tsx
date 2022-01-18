@@ -92,17 +92,10 @@ export function BottomTab() {
 }
 
 function SecondScreen({ navigation }: any) {
-  const logout = useAuthStore((state) => state.logout);
-  const modhash = useAuthStore((state) => state.modhash);
-  const token = useAuthStore((state) => state.token);
-
-  console.log(modhash);
-  console.log(token);
-
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Second Screen</Text>
-      <Button title="button" onPress={logout} />
+      <Button title="button" onPress={() => {}} />
     </View>
   );
 }

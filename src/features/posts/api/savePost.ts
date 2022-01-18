@@ -8,10 +8,14 @@ interface SaveProps {
 }
 
 const savePost = async ({ id }: SaveProps) => {
-  const res = await axios.post('/api/save', {
-    category: 'post',
-    id,
-  });
+  const res = await axios.post(
+    '/api/save',
+    {},
+    { params: { category: 'post', id } }
+  );
+  if (!Object.keys(res).length) {
+    return res;
+  }
   if (!res.sucess) {
     throw new Error('Failed to save post, try again');
   }
@@ -40,7 +44,7 @@ export const useSavePost = ({ config }: UseSavePostOptions) => {
         type: 'success',
         text: 'Post Saved',
       });
-      await queryClient.refetchQueries({ active: true });
+      // await queryClient.refetchQueries({ active: true });
     },
     ...config,
     mutationFn: savePost,

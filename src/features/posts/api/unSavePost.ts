@@ -8,10 +8,14 @@ interface UnSaveProps {
 }
 
 const unSavePost = async ({ id }: UnSaveProps) => {
-  const res = await axios.post('/api/unsave', {
-    category: 'post',
-    id,
-  });
+  const res = await axios.post(
+    '/api/unsave',
+    {},
+    { params: { category: 'post', id } }
+  );
+  if (!Object.keys(res).length) {
+    return res;
+  }
   if (!res.sucess) {
     throw new Error('Failed to unsave post, try again');
   }
@@ -40,7 +44,7 @@ export const useUnSavePost = ({ config }: UseUnSavePostOptions) => {
         type: 'success',
         text: 'Post Unsaved',
       });
-      await queryClient.refetchQueries({ active: true });
+      // await queryClient.refetchQueries({ active: true });
     },
     ...config,
     mutationFn: unSavePost,

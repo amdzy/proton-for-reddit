@@ -8,7 +8,6 @@ interface User {
   karma: number;
   id: string;
   createdAt: number;
-  modhash: string;
 }
 
 interface Store {
@@ -22,7 +21,6 @@ interface Store {
   karma: null | number;
   id: null | string;
   createdAt: null | number;
-  modhash: null | string;
   setToken: (token: any) => void;
   logout: () => void;
   setTokenRefresh: (token: any) => void;
@@ -43,7 +41,6 @@ export const useAuthStore = create<Store>(
       karma: null,
       id: null,
       createdAt: null,
-      modhash: null,
 
       setToken: (token) =>
         set(() => ({
@@ -66,7 +63,6 @@ export const useAuthStore = create<Store>(
           karma: null,
           id: null,
           createdAt: null,
-          modhash: null,
         })),
 
       setTokenRefresh: (token) =>
@@ -90,7 +86,6 @@ export const useAuthStore = create<Store>(
           karma: user.karma,
           id: user.id,
           createdAt: user.createdAt,
-          modhash: user.modhash,
         })),
     }),
     {

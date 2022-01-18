@@ -9,10 +9,11 @@ interface VotePostProps {
 }
 
 const votePost = async ({ id, dist }: VotePostProps) => {
-  const res = await axios.post('/api/vote', {
-    dir: dist,
-    id,
-  });
+  const res = await axios.post('/api/vote', {}, { params: { dir: dist, id } });
+  console.log(res);
+  if (!Object.keys(res).length) {
+    return res;
+  }
   if (res.json && res.json.errors) {
     throw new Error('Failed to vote, try again');
   }
@@ -41,30 +42,9 @@ export const useVotePost = ({ config }: UseVotePostOptions) => {
         type: 'success',
         text: 'Vote Recorded',
       });
-      await queryClient.refetchQueries({ active: true });
+      // await queryClient.refetchQueries({ active: true });
     },
     ...config,
     mutationFn: votePost,
   });
 };
-
-// const previousData = queryClient.getQueryData<{
-//   pages: Array<PostsApiResponse>;
-// }>([page, sort]);
-
-// const newData = previousData?.pages.map((page) => {
-//   page.children.map((post) => {
-//     if (post.data.name === data.id) {
-//       post.data.likes = true;
-//     }
-//     return post;
-//   });
-//   return page;
-// });
-
-// queryClient.setQueryData([page, sort], {
-//   ...previousData,
-//   pages: newData,
-// });
-
-// return { previousData: { ...previousData } };
