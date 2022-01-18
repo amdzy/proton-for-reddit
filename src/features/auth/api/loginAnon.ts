@@ -4,7 +4,6 @@ import { useAuthStore } from '@/stores';
 import { CLIENT_ID } from '../authConstants';
 
 export const loginAnon = async () => {
-  console.log('ran login anon');
   const auth = Buffer.from(`${CLIENT_ID}:`).toString('base64');
   const body = new FormData();
   body.append('grant_type', 'https://oauth.reddit.com/grants/installed_client');

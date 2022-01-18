@@ -75,12 +75,14 @@ export function useRedditAuth() {
         );
         setToken(result);
         const res = await axios.get('/api/v1/me');
+        console.log(res);
         setUser({
           icon: res.icon_img,
           name: res.name,
           karma: res.total_karma,
           id: res.id,
           createdAt: res.created_utc,
+          modhash: res.modhash,
         });
       }
     }

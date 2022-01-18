@@ -13,7 +13,6 @@ export const refreshToken = async (
   if (isFresh) {
     return;
   }
-  console.log('ran refresh token');
 
   const data = await refreshAsync(
     {

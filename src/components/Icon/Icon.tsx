@@ -5,12 +5,12 @@ import { TextStyle } from 'react-native';
 interface Props {
   icon: any;
   color: string;
-  size: number;
+  size?: number;
   style?: TextStyle;
   testID?: string;
 }
 
-export function Icon({ icon, color, size, testID, style }: Props) {
+export function Icon({ icon, color, size = 24, testID, style }: Props) {
   return (
     <MaterialCommunityIcons
       name={icon}

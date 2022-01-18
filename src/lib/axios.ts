@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import Axios, { AxiosRequestConfig } from 'axios';
 import { useAuthStore, useToastStore } from '@/stores';
-import { handleToken } from '@/features/auth';
+import { handleToken } from '@/features/auth/api/handleToken';
 
 async function authRequestInterceptor(config: AxiosRequestConfig) {
   if (config.headers === undefined) {

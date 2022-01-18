@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Button, Pressable, View } from 'react-native';
-import { Avatar, Icon, SubText, Text } from '@/components';
+import { Button, View } from 'react-native';
+import { Icon, IconButton, SubText, Text } from '@/components';
 import { TabNavigatorButtons } from './Components/TabNavigatorButtons';
 import {
   LoginScreen,
@@ -24,9 +24,7 @@ export function BottomTab() {
           marginRight: 12,
         },
         headerLeft: () => (
-          <Pressable onPress={() => navigation.navigate('Profile')}>
-            <Avatar size={30} image={undefined} />
-          </Pressable>
+          <IconButton icon="menu" onPress={() => navigation.openDrawer()} />
         ),
         headerLeftContainerStyle: {
           marginRight: 12,
@@ -53,7 +51,7 @@ export function BottomTab() {
       />
       <Tab.Screen
         name="Inbox"
-        component={isAuthenticated ? SecondScreen : LoginScreen}
+        component={SecondScreen}
         options={{
           headerShadowVisible: false,
           tabBarIcon: ({ color, size }) => (
@@ -78,7 +76,6 @@ export function BottomTab() {
           tabBarIcon: ({ color, size }) => (
             <Icon color={color} icon="account-circle-outline" size={size} />
           ),
-          headerLeft: () => null,
         }}
       />
       <Tab.Screen
@@ -88,7 +85,6 @@ export function BottomTab() {
           tabBarIcon: ({ color, size }) => (
             <Icon color={color} icon="cog" size={size} />
           ),
-          headerLeft: () => null,
         }}
       />
     </Tab.Navigator>
@@ -96,10 +92,17 @@ export function BottomTab() {
 }
 
 function SecondScreen({ navigation }: any) {
+  const logout = useAuthStore((state) => state.logout);
+  const modhash = useAuthStore((state) => state.modhash);
+  const token = useAuthStore((state) => state.token);
+
+  console.log(modhash);
+  console.log(token);
+
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Second Screen</Text>
-      <Button title="button" onPress={() => navigation.navigate('Images')} />
+      <Button title="button" onPress={logout} />
     </View>
   );
 }

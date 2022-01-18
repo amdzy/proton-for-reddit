@@ -7,6 +7,7 @@ import { useTheme } from '@/hooks';
 import { SearchBar } from '@/features/search';
 import { SettingsStack } from './SettingsStack';
 import { BottomTab } from './BottomTab';
+import { DrawerNav } from './DrawerNav';
 
 const Stack = createNativeStackNavigator();
 
@@ -34,8 +35,8 @@ export function RootNavigator() {
     <NavigationContainer theme={myTheme}>
       <Stack.Navigator screenOptions={{ animation: 'slide_from_right' }}>
         <Stack.Screen
-          name="Main"
-          component={BottomTab}
+          name="Root"
+          component={DrawerNav}
           options={{
             headerShown: false,
           }}
