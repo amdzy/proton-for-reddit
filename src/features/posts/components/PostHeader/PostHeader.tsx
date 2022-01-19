@@ -88,12 +88,13 @@ const makeStyles = (theme: ColorsDTO) =>
       padding: 10,
       flex: 1,
       paddingBottom: 4,
+      justifyContent: 'flex-start',
     },
     avatar: {
       marginRight: 8,
     },
     subName: { color: theme.highlight, marginRight: 8 },
     userName: { marginRight: 8 },
-    linksContainer: { flex: 1, marginLeft: 6 },
-    subContainer: { flex: 1, flexDirection: 'row', alignItems: 'center' },
+    linksContainer: { marginLeft: 6 },
+    subContainer: { flexDirection: 'row', alignItems: 'center' },
   });

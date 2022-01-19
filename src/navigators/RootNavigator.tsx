@@ -48,7 +48,6 @@ export function RootNavigator() {
             headerBackTitleVisible: false,
           }}
         />
-        {SettingsStack()}
         <Stack.Screen
           name="Video"
           component={VideoScreen}
@@ -68,6 +67,7 @@ export function RootNavigator() {
             animation: 'none',
           }}
         />
+        {SettingsStack()}
       </Stack.Navigator>
     </NavigationContainer>
   );
