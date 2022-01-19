@@ -59,7 +59,6 @@ export function PostCard({ post, page }: Props) {
           tag={post.link_flair_text}
           bgColor={post.link_flair_background_color}
           color={post.link_flair_text_color}
-          hint={post.post_hint}
           isNsfw={post.over_18}
         />
       )}

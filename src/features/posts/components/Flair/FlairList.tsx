@@ -6,19 +6,16 @@ interface Props {
   tag: string | undefined;
   bgColor: string;
   color: string;
-  hint: string | undefined;
   isNsfw: boolean;
 }
 
-const regExp = /rich:|hosted:/g;
+// const regExp = /rich:|hosted:/g;
 // const emojiReg = /:(\w*):/g;
 
-export function FlairList({ tag, bgColor, color, hint, isNsfw }: Props) {
-  const newHint = hint?.replace(regExp, '').toUpperCase();
+export function FlairList({ tag, bgColor, color, isNsfw }: Props) {
   // const newTag = tag?.replace(emojiReg, "").trim();
   return (
     <View style={styles.container}>
-      {newHint && <Flair tag={newHint} bgColor="#FFFFFF" color="dark" />}
       {tag && <Flair tag={tag} bgColor={bgColor} color={color} />}
       {isNsfw && <Flair tag="NSFW" bgColor="#e52d27" color="light" />}
     </View>

@@ -33,21 +33,15 @@ export function MainScreen() {
     return <Spinner animating />;
   }
 
-  if (query.data) {
+  if (query.data && query.posts) {
     return (
       <FlatList
         ref={flatlistRef}
-        renderItem={({ item }) => (
-          <>
-            {item.children.map((post) => (
-              <PostCard post={post.data} page key={post.data.id} />
-            ))}
-          </>
-        )}
-        data={query.data.pages}
-        keyExtractor={(item, index) => item.after + item.before + index}
+        renderItem={({ item }) => <PostCard post={item.data} page />}
+        data={query.posts}
+        keyExtractor={(item, index) => item.data.id + index}
         style={styles.flatlist}
-        onEndReachedThreshold={10}
+        onEndReachedThreshold={0.5}
         onEndReached={() => {
           if (!query.isFetchingNextPage && !query.isFetching) {
             query.fetchNextPage();
@@ -70,6 +64,41 @@ export function MainScreen() {
           query.refetch();
         }}
       />
+      // <FlatList
+      //   ref={flatlistRef}
+      //   renderItem={({ item }) => (
+      //     <>
+      //       {item.children.map((post) => (
+      //         <PostCard post={post.data} page key={post.data.id} />
+      //       ))}
+      //     </>
+      //   )}
+      //   data={query.data.pages}
+      //   keyExtractor={(item, index) => item.after + item.before + index}
+      //   style={styles.flatlist}
+      //   onEndReachedThreshold={10}
+      //   onEndReached={() => {
+      //     if (!query.isFetchingNextPage && !query.isFetching) {
+      //       query.fetchNextPage();
+      //     }
+      //   }}
+      //   ListFooterComponent={() => {
+      //     if (query.isFetchingNextPage) {
+      //       return (
+      //         <View style={styles.spinnerContainer}>
+      //           <ActivityIndicator animating color="red" size="large" />
+      //         </View>
+      //       );
+      //     }
+      //     return null;
+      //   }}
+      //   showsVerticalScrollIndicator={false}
+      //   refreshing={refreshing}
+      //   onRefresh={() => {
+      //     setIsRefreshing(true);
+      //     query.refetch();
+      //   }}
+      // />
     );
   }
   return null;
