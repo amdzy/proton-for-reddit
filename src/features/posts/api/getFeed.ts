@@ -6,9 +6,21 @@ const fetchPosts = async ({
   pageParam,
   queryKey,
 }: any): Promise<PostsApiResponse> => {
-  const [key, sort] = queryKey;
+  const [page, sort] = queryKey;
+  if (page === 'home') {
+    const res = await axios({
+      url: `/${sort}`,
+      params: {
+        limit: 25,
+        after: pageParam,
+      },
+    });
+
+    return res.data;
+  }
+
   const res = await axios({
-    url: `/${sort}`,
+    url: `/r/${page}/${sort}`,
     params: {
       limit: 25,
       after: pageParam,
@@ -17,7 +29,7 @@ const fetchPosts = async ({
   return res.data;
 };
 
-export const useGetFeed = (sort: string) =>
-  useInfiniteQuery(['feed', sort], fetchPosts, {
+export const useGetFeed = (page: string, sort: string) =>
+  useInfiniteQuery([page, sort], fetchPosts, {
     getNextPageParam: (lastPage) => lastPage.after,
   });

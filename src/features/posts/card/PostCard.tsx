@@ -16,7 +16,7 @@ import { ColorsDTO } from '@/stores/types';
 
 interface Props {
   post: PostType;
-  page?: string;
+  page?: boolean;
 }
 
 export function PostCard({ post, page }: Props) {
@@ -73,7 +73,7 @@ export function PostCard({ post, page }: Props) {
         isVideo={post.is_video}
         url={post.url}
         openLink={openLink}
-        fullText={page === undefined}
+        fullText={!page}
         isNsfw={post.over_18}
       />
       <CardFooter

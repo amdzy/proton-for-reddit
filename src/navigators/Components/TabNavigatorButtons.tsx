@@ -2,10 +2,15 @@ import React from 'react';
 import { View } from 'react-native';
 import { IconButton } from '@/components';
 import { useThemeStore } from '@/stores/themeStore';
-import { FeedSortModal } from '@/features/sort';
+import { FeedSortModal, PageSortModal } from '@/features/sort';
 import { useModal } from '@/hooks';
 
-export function TabNavigatorButtons({ navigation }: any) {
+interface Props {
+  navigation: any;
+  page: string;
+}
+
+export function TabNavigatorButtons({ navigation, page }: Props) {
   const theme = useThemeStore((state) => state.theme);
   const color = useThemeStore((state) => state.colors[theme].text);
   const { isModalOpen, openModal, closeModal } = useModal();
@@ -25,7 +30,11 @@ export function TabNavigatorButtons({ navigation }: any) {
           onPress={openModal}
         />
       </View>
-      <FeedSortModal visible={isModalOpen} onClose={closeModal} />
+      {page === 'home' ? (
+        <FeedSortModal visible={isModalOpen} onClose={closeModal} />
+      ) : (
+        <PageSortModal visible={isModalOpen} onClose={closeModal} page={page} />
+      )}
     </>
   );
 }

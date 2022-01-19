@@ -5,10 +5,10 @@ import { PostCard } from '@/features/posts';
 import { useGetFeed } from '@/features/posts/api';
 import { useSettingsStore } from '@/stores';
 
-export function MainScreen() {
+export function PopularScreen() {
   const flatlistRef = useRef<any>();
-  const sort = useSettingsStore((state) => state.posts.feedSort);
-  const query = useGetFeed(sort);
+  const sort = useSettingsStore((state) => state.posts.sort);
+  const query = useGetFeed('popular', sort);
   const [refreshing, setIsRefreshing] = useState(false);
 
   useEffect(() => {
@@ -18,16 +18,6 @@ export function MainScreen() {
       }
     }
   }, [query.isRefetching, refreshing]);
-
-  // useEffect(() => {
-  //   if (flatlistRef.current) {
-  //     flatlistRef.current.scrollToIndex({
-  //       index: 0,
-  //       animated: true,
-  //       viewPosition: 0,
-  //     });
-  //   }
-  // }, [sort]);
 
   if (query.isLoading) {
     return <Spinner animating />;
@@ -40,7 +30,7 @@ export function MainScreen() {
         renderItem={({ item }) => (
           <>
             {item.children.map((post) => (
-              <PostCard post={post.data} page="feed" key={post.data.id} />
+              <PostCard post={post.data} page key={post.data.id} />
             ))}
           </>
         )}

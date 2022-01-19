@@ -1,7 +1,7 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet, View } from 'react-native';
-import { MainScreen } from '@/screens';
+import { AllScreen, MainScreen, PopularScreen } from '@/screens';
 import { TabNavigatorButtons } from './Components/TabNavigatorButtons';
 import { IconButton, SubText, Text } from '@/components';
 import { useSettingsStore } from '@/stores';
@@ -35,7 +35,9 @@ export function FeedStack() {
         component={MainScreen}
         options={({ navigation }) => ({
           headerShadowVisible: false,
-          headerRight: () => <TabNavigatorButtons navigation={navigation} />,
+          headerRight: () => (
+            <TabNavigatorButtons navigation={navigation} page="home" />
+          ),
           headerTitle: () => (
             <View>
               <Text style={styles.text}>Proton</Text>
@@ -46,10 +48,12 @@ export function FeedStack() {
       />
       <Stack.Screen
         name="Popular"
-        component={MainScreen}
+        component={PopularScreen}
         options={({ navigation }) => ({
           headerShadowVisible: false,
-          headerRight: () => <TabNavigatorButtons navigation={navigation} />,
+          headerRight: () => (
+            <TabNavigatorButtons navigation={navigation} page="popular" />
+          ),
           headerTitle: () => (
             <View>
               <Text style={styles.text}>Popular</Text>
@@ -60,10 +64,12 @@ export function FeedStack() {
       />
       <Stack.Screen
         name="All"
-        component={MainScreen}
+        component={AllScreen}
         options={({ navigation }) => ({
           headerShadowVisible: false,
-          headerRight: () => <TabNavigatorButtons navigation={navigation} />,
+          headerRight: () => (
+            <TabNavigatorButtons navigation={navigation} page="all" />
+          ),
           headerTitle: () => (
             <View>
               <Text style={styles.text}>All</Text>
