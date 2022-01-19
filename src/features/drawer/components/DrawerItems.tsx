@@ -1,5 +1,5 @@
 import React from 'react';
-import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
+import { DrawerItem } from '@react-navigation/drawer';
 import { StyleSheet } from 'react-native';
 import { Divider, Icon, Text } from '@/components';
 import { useTheme } from '@/hooks';
@@ -13,7 +13,7 @@ export function DrawerItems({ navigation }: Props) {
   const theme = useTheme();
 
   return (
-    <DrawerContentScrollView>
+    <>
       <DrawerItem
         label={() => <Text style={styles.text}>Home</Text>}
         onPress={() => {
@@ -69,7 +69,7 @@ export function DrawerItems({ navigation }: Props) {
       />
       <Divider />
       <DrawerSubList navigation={navigation} />
-    </DrawerContentScrollView>
+    </>
   );
 }
 

@@ -12,6 +12,7 @@ interface StoreState {
   subs: Record<string, { id: string; icon: string; name: string }>;
   setSubs: (subs: Array<Sub>) => void;
   setSub: (sub: Sub) => void;
+  clearSubs: () => void;
 }
 
 export const useSubStore = create<StoreState>(
@@ -30,6 +31,7 @@ export const useSubStore = create<StoreState>(
         set((state) => ({
           subs: { ...state.subs, [sub.name]: sub },
         })),
+      clearSubs: () => set(() => ({ subs: {} })),
     }),
     {
       name: 'subStore',

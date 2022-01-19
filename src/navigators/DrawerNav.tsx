@@ -1,7 +1,7 @@
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { BottomTab } from './BottomTab';
-import { DrawerItems } from './Components/DrawerItems';
+import { Drawer as DrawerComponent } from '@/features/drawer';
 
 const Drawer = createDrawerNavigator();
 
@@ -16,7 +16,7 @@ export function DrawerNav() {
         headerShown: false,
       })}
       drawerContent={({ navigation }) => (
-        <DrawerItems navigation={navigation} />
+        <DrawerComponent navigation={navigation} />
       )}
     >
       <Drawer.Screen name="Main" component={BottomTab} />
