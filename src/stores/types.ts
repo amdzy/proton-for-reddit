@@ -11,6 +11,7 @@ export interface ColorsDTO {
   upvote: string;
   downvote: string;
   error: string;
+  announcement: string;
   statusBar: 'dark' | 'light';
 }
 

@@ -51,8 +51,11 @@ export function PostCard({ post, page }: Props) {
         showDomain={
           // (post.post_hint === 'link' && post.domain !== 'i.imgur.com') ||
           // (post.post_hint === 'rich:video' && post.domain === 'youtu.be')
-          post.domain !== 'i.redd.it' && !post.domain.includes('self.')
+          post.domain !== 'i.redd.it' &&
+          post.domain !== 'v.redd.it' &&
+          !post.domain.includes('self.')
         }
+        sticky={post.stickied}
       />
       {postSettings.awards && <Awards awards={post.all_awardings} />}
       {postSettings.flairs && (
@@ -75,6 +78,7 @@ export function PostCard({ post, page }: Props) {
         openLink={openLink}
         fullText={!page}
         isNsfw={post.over_18}
+        isRedditDomain={post.is_reddit_media_domain}
       />
       <CardFooter
         numLikes={post.ups}

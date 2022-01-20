@@ -23,14 +23,20 @@ export function PostHeader({ subName, author, createdAt, sub }: Props) {
   const navigation = useNavigation<any>();
 
   const handleAvatarRedirect = () => {
-    navigation.navigate('Sub');
+    navigation.navigate('Sub', {
+      sub: subName,
+      subIcon,
+    });
   };
 
   const handleSubRedirect = () => {
     if (!postSettings.tapSub) {
       return;
     }
-    navigation.navigate('Sub');
+    navigation.navigate('Sub', {
+      sub: subName,
+      subIcon,
+    });
   };
 
   const handleuserRedirect = () => {
@@ -47,46 +53,45 @@ export function PostHeader({ subName, author, createdAt, sub }: Props) {
   }, [subIcon, sub]);
 
   return (
-    <View style={styles.container}>
-      {postSettings.subIcon && (
-        <Pressable onPress={handleAvatarRedirect}>
-          <Avatar
-            size={26}
-            style={styles.avatar}
-            image={subIcon}
-            showPlaceholder
-          />
-        </Pressable>
-      )}
-      <View style={styles.linksContainer}>
-        <Pressable onPress={handleSubRedirect}>
-          <Text style={styles.subName}>{subName}</Text>
-        </Pressable>
-        <View style={styles.subContainer}>
+    <View style={styles.mainContainer}>
+      <View style={styles.container}>
+        {postSettings.subIcon && (
+          <Pressable onPress={handleAvatarRedirect}>
+            <Avatar size={26} style={styles.avatar} image={subIcon} />
+          </Pressable>
+        )}
+        <View style={styles.linksContainer}>
+          <Pressable onPress={handleSubRedirect}>
+            <Text style={styles.subName}>{subName}</Text>
+          </Pressable>
           {postSettings.author && (
             <Pressable onPress={handleuserRedirect}>
               <SubText fontSize={12} style={styles.userName}>
-                u/
-                {author}
+                u/{author}
               </SubText>
             </Pressable>
           )}
-          <SubText fontSize={12}>
-            {formatDistanceToNowStrict(createdAt * 1000)} ago
-          </SubText>
         </View>
       </View>
+      <SubText fontSize={12}>
+        {formatDistanceToNowStrict(createdAt * 1000)} ago
+      </SubText>
     </View>
   );
 }
 
 const makeStyles = (theme: ColorsDTO) =>
   StyleSheet.create({
+    mainContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      padding: 10,
+      paddingBottom: 5,
+    },
     container: {
       flexDirection: 'row',
       alignItems: 'center',
-      padding: 10,
-      flex: 1,
       paddingBottom: 4,
       justifyContent: 'flex-start',
     },

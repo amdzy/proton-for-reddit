@@ -5,42 +5,16 @@ import { FlairList } from '../FlairList';
 describe('FlairList Component', () => {
   it('renders', () => {
     const { getByText } = render(
-      <FlairList
-        tag="flair"
-        color="light"
-        bgColor="#FFFFFF"
-        hint={undefined}
-        isNsfw={false}
-      />
+      <FlairList tag="flair" color="light" bgColor="#FFFFFF" isNsfw={false} />
     );
     expect(getByText('flair')).not.toBe(null);
   });
 
   it('renders link flair', () => {
     const { getByText } = render(
-      <FlairList
-        tag="flair"
-        color="light"
-        bgColor="#FFFFFF"
-        hint="link"
-        isNsfw={false}
-      />
-    );
-    expect(getByText('LINK')).not.toBe(null);
-  });
-
-  it('renders link flair & passed tag', () => {
-    const { getByText } = render(
-      <FlairList
-        tag="flair"
-        color="light"
-        bgColor="#FFFFFF"
-        hint="link"
-        isNsfw={false}
-      />
+      <FlairList tag="flair" color="light" bgColor="#FFFFFF" isNsfw={false} />
     );
     expect(getByText('flair')).not.toBe(null);
-    expect(getByText('LINK')).not.toBe(null);
   });
 
   it('renders nothing', () => {
@@ -49,7 +23,6 @@ describe('FlairList Component', () => {
         tag={undefined}
         color="light"
         bgColor="#FFFFFF"
-        hint={undefined}
         isNsfw={false}
       />
     );
@@ -59,13 +32,7 @@ describe('FlairList Component', () => {
 
   it('renders nsfw flair', () => {
     const { getByText } = render(
-      <FlairList
-        tag="flair"
-        color="light"
-        bgColor="#FFFFFF"
-        hint="link"
-        isNsfw
-      />
+      <FlairList tag="flair" color="light" bgColor="#FFFFFF" isNsfw />
     );
     expect(getByText('NSFW')).not.toBe(null);
   });

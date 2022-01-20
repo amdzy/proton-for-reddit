@@ -19,4 +19,15 @@ describe('Header component', () => {
       color: theme.text,
     });
   });
+
+  it('renders with the correct style when highlighted', () => {
+    const { getByText } = render(<Header highlighted>Header</Header>);
+    const chosenTheme = useThemeStore.getState().theme;
+    const theme = useThemeStore.getState().colors[chosenTheme];
+    const { fonts } = useThemeStore.getState();
+    expect(getByText('Header')).toHaveStyle({
+      fontSize: fonts.fontSize.header,
+      color: theme.announcement,
+    });
+  });
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { Header, SubText } from '@/components';
 import { Thumbnail } from '../Thumbnail/Thumbnail';
 
@@ -9,6 +9,7 @@ interface Props {
   showThumbnail: boolean;
   domain: string;
   showDomain: boolean;
+  sticky: boolean;
   onPressThumbnail: () => void;
 }
 
@@ -18,13 +19,18 @@ export function CardTitle({
   showThumbnail,
   domain,
   showDomain,
+  sticky,
   onPressThumbnail,
 }: Props) {
   return (
     <View style={styles.container} testID="CardTitle">
       <View style={styles.textContainer}>
-        <Header>{title}</Header>
-        {showDomain && <SubText>{domain}</SubText>}
+        <Header highlighted={sticky}>{title}</Header>
+        {showDomain && (
+          <Pressable onPress={onPressThumbnail}>
+            <SubText>{domain}</SubText>
+          </Pressable>
+        )}
       </View>
       {showThumbnail && (
         <Thumbnail url={thumbnail} onPress={onPressThumbnail} />

@@ -20,6 +20,7 @@ interface Props {
   url: string;
   fullText?: boolean;
   isNsfw: boolean;
+  isRedditDomain: boolean;
   openLink: () => void;
 }
 
@@ -36,6 +37,7 @@ export function CardMain({
   url,
   fullText,
   isNsfw,
+  isRedditDomain,
   openLink,
 }: Props) {
   const navigation = useNavigation<any>();
@@ -113,7 +115,6 @@ export function CardMain({
     const imgSourceArr: any = [];
     const gallery = Object.values(mediaMetadata) as any;
     if (!gallery[0].s) {
-      console.log(gallery);
       return null;
     }
 
@@ -233,6 +234,10 @@ export function CardMain({
         }
       />
     );
+  }
+
+  if (isRedditDomain) {
+    return <PostImage url={url} width={1000} height={600} />;
   }
 
   if (url.slice(-3) === 'mp4') {

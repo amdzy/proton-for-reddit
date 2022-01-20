@@ -15,6 +15,7 @@ describe('CardTitle component', () => {
         domain="test.com"
         showDomain
         onPressThumbnail={() => {}}
+        sticky={false}
       />
     ));
   });
