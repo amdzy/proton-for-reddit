@@ -19,7 +19,7 @@ interface Props {
   page?: boolean;
 }
 
-export function PostCard({ post, page }: Props) {
+function Card({ post, page }: Props) {
   const theme = useTheme();
   const styles = useMemo(() => makeStyles(theme), [theme]);
   const postSettings = useSettingsStore((state) => state.posts);
@@ -91,6 +91,8 @@ export function PostCard({ post, page }: Props) {
     </View>
   );
 }
+
+export const PostCard = React.memo(Card, () => false);
 
 const makeStyles = (theme: ColorsDTO) =>
   StyleSheet.create({

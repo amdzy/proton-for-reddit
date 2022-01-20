@@ -39,6 +39,7 @@ export function MainScreen({ route }: Props) {
   const flatListOnRefresh = useCallback(() => {
     setIsRefreshing(true);
     query.refetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const flatListOnEnd = () => {
