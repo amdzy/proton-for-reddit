@@ -1,17 +1,22 @@
 import React, { useMemo } from 'react';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Button, Text, View } from 'react-native';
+import { Button, View } from 'react-native';
 import { ImageScreen, SubredditScreen, VideoScreen } from '@/screens';
 import { useTheme } from '@/hooks';
 import { SearchBar } from '@/features/search';
 import { SettingsStack } from './SettingsStack';
 import { DrawerNav } from './DrawerNav';
+import { useSettingsStore } from '@/stores';
+import { Text } from '@/components';
+import { TabNavigatorButtons } from './Components/TabNavigatorButtons';
+import { HeaderTitle } from './Components/HeaderTitle';
 
 const Stack = createNativeStackNavigator();
 
 export function RootNavigator() {
   const theme = useTheme();
+  const sort = useSettingsStore((state) => state.posts.sort);
 
   const myTheme = useMemo(
     () => ({
@@ -42,7 +47,20 @@ export function RootNavigator() {
         <Stack.Screen
           name="Sub"
           component={SubredditScreen}
-          options={{ headerShadowVisible: false }}
+          // Typescript error Property 'sub' does not exist on type 'object'
+          options={({ route, navigation }: any) => ({
+            headerShadowVisible: false,
+            headerTitle: () => (
+              <HeaderTitle page={route.params?.sub} sort={sort} />
+            ),
+            headerRight: () => (
+              <TabNavigatorButtons
+                navigation={navigation}
+                page={route.params?.sub}
+              />
+            ),
+          })}
+          initialParams={{ sub: '' }}
         />
         <Stack.Screen
           name="Search"

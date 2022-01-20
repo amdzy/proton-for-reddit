@@ -58,6 +58,7 @@ export function SubredditScreen({ route }: Props) {
   const flatListOnRefresh = useCallback(() => {
     setIsRefreshing(true);
     postsQuery.refetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const flatListOnEnd = () => {
@@ -71,11 +72,30 @@ export function SubredditScreen({ route }: Props) {
     []
   );
 
+  if (postsQuery.isLoading && aboutQuery.data) {
+    return (
+      <View style={styles.headerContainer}>
+        <SubHeader
+          name={aboutQuery.data.display_name}
+          icon={aboutQuery.data.community_icon || aboutQuery.data.icon_img}
+          active={aboutQuery.data.accounts_active}
+          subscriber={aboutQuery.data.subscribers}
+          description={aboutQuery.data.public_description}
+          subscribed={aboutQuery.data.user_is_subscriber}
+          showData
+        />
+        <View style={styles.headerSpinner}>
+          <Spinner animating />
+        </View>
+      </View>
+    );
+  }
+
   if (postsQuery.isLoading || aboutQuery.isLoading) {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={styles.headerContainer}>
         <SubHeader name={sub} icon={subIcon} />
-        <View style={{ flex: 1, paddingTop: 40 }}>
+        <View style={styles.headerSpinner}>
           <Spinner animating />
         </View>
       </View>
@@ -110,6 +130,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
   },
+  headerSpinner: { flex: 1, paddingTop: 40 },
+  headerContainer: { flex: 1 },
   flatlist: {
     width: '100%',
   },

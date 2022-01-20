@@ -1,10 +1,11 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { TabNavigatorButtons } from './Components/TabNavigatorButtons';
-import { IconButton, SubText, Text } from '@/components';
+import { IconButton } from '@/components';
 import { useSettingsStore } from '@/stores';
 import { MainScreen } from '@/screens';
+import { HeaderTitle } from './Components/HeaderTitle';
 
 const Stack = createNativeStackNavigator();
 
@@ -38,12 +39,7 @@ export function FeedStack() {
           headerRight: () => (
             <TabNavigatorButtons navigation={navigation} page="home" />
           ),
-          headerTitle: () => (
-            <View>
-              <Text style={styles.text}>Proton</Text>
-              <SubText style={styles.sort}>{HomeSort}</SubText>
-            </View>
-          ),
+          headerTitle: () => <HeaderTitle page="Proton" sort={HomeSort} />,
         })}
         initialParams={{ page: 'home' }}
       />
@@ -55,12 +51,7 @@ export function FeedStack() {
           headerRight: () => (
             <TabNavigatorButtons navigation={navigation} page="popular" />
           ),
-          headerTitle: () => (
-            <View>
-              <Text style={styles.text}>Popular</Text>
-              <SubText style={styles.sort}>{sort}</SubText>
-            </View>
-          ),
+          headerTitle: () => <HeaderTitle page="Popular" sort={sort} />,
         })}
         initialParams={{ page: 'popular' }}
       />
@@ -72,12 +63,7 @@ export function FeedStack() {
           headerRight: () => (
             <TabNavigatorButtons navigation={navigation} page="all" />
           ),
-          headerTitle: () => (
-            <View>
-              <Text style={styles.text}>All</Text>
-              <SubText style={styles.sort}>{sort}</SubText>
-            </View>
-          ),
+          headerTitle: () => <HeaderTitle page="All" sort={sort} />,
         })}
         initialParams={{ page: 'all' }}
       />
@@ -87,6 +73,4 @@ export function FeedStack() {
 
 const styles = StyleSheet.create({
   icon: { marginRight: 24 },
-  text: { fontSize: 18, fontWeight: 'bold' },
-  sort: { textTransform: 'capitalize' },
 });

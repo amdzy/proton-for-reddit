@@ -1,9 +1,8 @@
 import React from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { IconButton } from '@/components';
-import { useThemeStore } from '@/stores/themeStore';
 import { FeedSortModal, PageSortModal } from '@/features/sort';
-import { useModal } from '@/hooks';
+import { useModal, useTheme } from '@/hooks';
 
 interface Props {
   navigation: any;
@@ -11,22 +10,21 @@ interface Props {
 }
 
 export function TabNavigatorButtons({ navigation, page }: Props) {
-  const theme = useThemeStore((state) => state.theme);
-  const color = useThemeStore((state) => state.colors[theme].text);
+  const theme = useTheme();
   const { isModalOpen, openModal, closeModal } = useModal();
   return (
     <>
-      <View style={{ flexDirection: 'row' }}>
+      <View style={styles.row}>
         <IconButton
-          color={color}
+          color={theme.text}
           icon="magnify"
-          style={{ marginRight: 16 }}
+          style={styles.icon}
           onPress={() => navigation.navigate('Search')}
         />
         <IconButton
-          color={color}
+          color={theme.text}
           icon="sort-variant"
-          style={{ marginRight: 16 }}
+          style={styles.icon}
           onPress={openModal}
         />
       </View>
@@ -38,3 +36,8 @@ export function TabNavigatorButtons({ navigation, page }: Props) {
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  row: { flexDirection: 'row' },
+  icon: { marginRight: 16 },
+});
