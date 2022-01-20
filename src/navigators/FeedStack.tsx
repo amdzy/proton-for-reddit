@@ -1,10 +1,10 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet, View } from 'react-native';
-import { AllScreen, MainScreen, PopularScreen } from '@/screens';
 import { TabNavigatorButtons } from './Components/TabNavigatorButtons';
 import { IconButton, SubText, Text } from '@/components';
 import { useSettingsStore } from '@/stores';
+import { MainScreen } from '@/screens';
 
 const Stack = createNativeStackNavigator();
 
@@ -45,10 +45,11 @@ export function FeedStack() {
             </View>
           ),
         })}
+        initialParams={{ page: 'home' }}
       />
       <Stack.Screen
         name="Popular"
-        component={PopularScreen}
+        component={MainScreen}
         options={({ navigation }) => ({
           headerShadowVisible: false,
           headerRight: () => (
@@ -61,10 +62,11 @@ export function FeedStack() {
             </View>
           ),
         })}
+        initialParams={{ page: 'popular' }}
       />
       <Stack.Screen
         name="All"
-        component={AllScreen}
+        component={MainScreen}
         options={({ navigation }) => ({
           headerShadowVisible: false,
           headerRight: () => (
@@ -77,6 +79,7 @@ export function FeedStack() {
             </View>
           ),
         })}
+        initialParams={{ page: 'all' }}
       />
     </Stack.Navigator>
   );

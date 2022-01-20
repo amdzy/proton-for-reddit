@@ -1,4 +1,5 @@
 import { useInfiniteQuery } from 'react-query';
+import { useMemo } from 'react';
 import { axios } from '@/lib/axios';
 import { PostsApiResponse, PostType } from '../types';
 
@@ -34,10 +35,14 @@ export const useGetFeed = (page: string, sort: string) => {
     getNextPageParam: (lastPage) => lastPage.after,
   });
 
-  // eslint-disable-next-line arrow-body-style
-  const posts = query.data?.pages.reduce((a: Array<{ data: PostType }>, b) => {
-    return [...a, ...b.children];
-  }, []);
+  const posts = useMemo(
+    () =>
+      query.data?.pages.reduce(
+        (a: Array<{ data: PostType }>, b) => [...a, ...b.children],
+        []
+      ),
+    [query.data?.pages]
+  );
 
   return { ...query, posts };
 };

@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Button, Text, View } from 'react-native';
-import { ImageScreen, VideoScreen } from '@/screens';
+import { ImageScreen, SubredditScreen, VideoScreen } from '@/screens';
 import { useTheme } from '@/hooks';
 import { SearchBar } from '@/features/search';
 import { SettingsStack } from './SettingsStack';
@@ -39,7 +39,7 @@ export function RootNavigator() {
           }}
         />
         <Stack.Screen name="Comments" component={SecondScreen} />
-        <Stack.Screen name="Sub" component={SecondScreen} />
+        <Stack.Screen name="Sub" component={SubredditScreen} />
         <Stack.Screen
           name="Search"
           component={SecondScreen}
