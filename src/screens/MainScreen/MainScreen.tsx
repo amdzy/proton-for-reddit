@@ -41,6 +41,12 @@ export function MainScreen({ route }: Props) {
     query.refetch();
   }, []);
 
+  const flatListOnEnd = () => {
+    if (!query.isFetchingNextPage && !query.isFetching) {
+      query.fetchNextPage();
+    }
+  };
+
   const rendreItemMemoized = useCallback(
     ({ item }) => <PostCard post={item.data} page />,
     []
@@ -69,11 +75,7 @@ export function MainScreen({ route }: Props) {
         keyExtractor={(item) => item.data.id}
         style={styles.flatlist}
         onEndReachedThreshold={10}
-        onEndReached={() => {
-          if (!query.isFetchingNextPage && !query.isFetching) {
-            query.fetchNextPage();
-          }
-        }}
+        onEndReached={flatListOnEnd}
         ListFooterComponent={flatListFooter}
         showsVerticalScrollIndicator={false}
         refreshing={refreshing}

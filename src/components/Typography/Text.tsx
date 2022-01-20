@@ -19,6 +19,8 @@ export function Text({ children, ...props }: Props) {
         },
         props.style,
       ]}
+      numberOfLines={props.numberOfLines}
+      ellipsizeMode={props.ellipsizeMode}
     >
       {children}
     </ReactText>

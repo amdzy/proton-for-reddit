@@ -39,7 +39,11 @@ export function RootNavigator() {
           }}
         />
         <Stack.Screen name="Comments" component={SecondScreen} />
-        <Stack.Screen name="Sub" component={SubredditScreen} />
+        <Stack.Screen
+          name="Sub"
+          component={SubredditScreen}
+          options={{ headerShadowVisible: false }}
+        />
         <Stack.Screen
           name="Search"
           component={SecondScreen}

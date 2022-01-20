@@ -25,7 +25,10 @@ export function DrawerSubList({ navigation }: Props) {
           <DrawerItem
             label={() => <Text>{sub.name}</Text>}
             onPress={() => {
-              navigation.navigate('Sub');
+              navigation.navigate('Sub', {
+                sub: sub.name,
+                subIcon: sub.icon,
+              });
               navigation.closeDrawer();
             }}
             icon={() => <Avatar image={sub.icon} size={24} showPlaceholder />}

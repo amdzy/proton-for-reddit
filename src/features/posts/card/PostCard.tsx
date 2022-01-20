@@ -49,8 +49,9 @@ export function PostCard({ post, page }: Props) {
         onPressThumbnail={openLink}
         domain={post.domain}
         showDomain={
-          (post.post_hint === 'link' && post.domain !== 'i.imgur.com') ||
-          (post.post_hint === 'rich:video' && post.domain === 'youtu.be')
+          // (post.post_hint === 'link' && post.domain !== 'i.imgur.com') ||
+          // (post.post_hint === 'rich:video' && post.domain === 'youtu.be')
+          post.domain !== 'i.redd.it' && !post.domain.includes('self.')
         }
       />
       {postSettings.awards && <Awards awards={post.all_awardings} />}

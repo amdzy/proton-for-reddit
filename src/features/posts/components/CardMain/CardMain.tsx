@@ -45,6 +45,10 @@ export function CardMain({
   const previewText = useSettingsStore((state) => state.card.previewText);
 
   const handleImageChoice = () => {
+    if (!preview && !preview) {
+      return { url: null, width: 0, height: 0 };
+    }
+
     let image = preview.images[0].source;
 
     if (dataSaver) {
@@ -179,6 +183,9 @@ export function CardMain({
     if (preview.reddit_video_preview) {
       const video = preview.reddit_video_preview;
       const image = handleImageChoice();
+      if (!image.url) {
+        return null;
+      }
       return (
         <ImageWithIcon
           url={image.url}
@@ -210,6 +217,9 @@ export function CardMain({
   if (hint === 'link' && preview.reddit_video_preview) {
     const video = preview.reddit_video_preview;
     const image = handleImageChoice();
+    if (!image.url) {
+      return null;
+    }
     return (
       <ImageWithIcon
         url={image.url}
