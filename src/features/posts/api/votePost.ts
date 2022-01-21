@@ -10,10 +10,6 @@ interface VotePostProps {
 
 const votePost = async ({ id, dist }: VotePostProps) => {
   const res = await axios.post('/api/vote', {}, { params: { dir: dist, id } });
-  console.log(res);
-  if (!Object.keys(res).length) {
-    return res;
-  }
   if (res.json && res.json.errors) {
     throw new Error('Failed to vote, try again');
   }

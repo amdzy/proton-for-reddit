@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
-import { Spinner } from '@/components';
+import { ErrorLoading, Spinner } from '@/components';
 import { PostCard } from '@/features/posts';
 import { useGetFeed } from '@/features/posts/api';
 import { useSettingsStore } from '@/stores';
@@ -48,7 +48,6 @@ export function SubredditScreen({ route }: Props) {
           subscriber={aboutQuery.data.subscribers}
           description={aboutQuery.data.public_description}
           subscribed={aboutQuery.data.user_is_subscriber}
-          showData
         />
       );
     }
@@ -72,20 +71,17 @@ export function SubredditScreen({ route }: Props) {
     []
   );
 
-  if (postsQuery.isLoading && aboutQuery.data) {
+  if (postsQuery.isError || aboutQuery.isError) {
     return (
       <View style={styles.headerContainer}>
-        <SubHeader
-          name={aboutQuery.data.display_name}
-          icon={aboutQuery.data.community_icon || aboutQuery.data.icon_img}
-          active={aboutQuery.data.accounts_active}
-          subscriber={aboutQuery.data.subscribers}
-          description={aboutQuery.data.public_description}
-          subscribed={aboutQuery.data.user_is_subscriber}
-          showData
-        />
+        <SubHeader name={sub} icon={subIcon} />
         <View style={styles.headerSpinner}>
-          <Spinner animating />
+          <ErrorLoading
+            onPress={() => {
+              aboutQuery.refetch();
+              postsQuery.refetch();
+            }}
+          />
         </View>
       </View>
     );
@@ -94,7 +90,18 @@ export function SubredditScreen({ route }: Props) {
   if (postsQuery.isLoading || aboutQuery.isLoading) {
     return (
       <View style={styles.headerContainer}>
-        <SubHeader name={sub} icon={subIcon} />
+        <SubHeader
+          name={aboutQuery.data?.display_name || sub}
+          icon={
+            aboutQuery.data?.community_icon ||
+            aboutQuery.data?.icon_img ||
+            subIcon
+          }
+          active={aboutQuery.data?.accounts_active}
+          subscriber={aboutQuery.data?.subscribers}
+          description={aboutQuery.data?.public_description}
+          subscribed={aboutQuery.data?.user_is_subscriber}
+        />
         <View style={styles.headerSpinner}>
           <Spinner animating />
         </View>

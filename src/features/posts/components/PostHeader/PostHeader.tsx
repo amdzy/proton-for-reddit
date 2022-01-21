@@ -24,7 +24,7 @@ export function PostHeader({ subName, author, createdAt, sub }: Props) {
 
   const handleAvatarRedirect = () => {
     navigation.navigate('Sub', {
-      sub: subName,
+      sub: subName.slice(2),
       subIcon,
     });
   };
@@ -34,7 +34,7 @@ export function PostHeader({ subName, author, createdAt, sub }: Props) {
       return;
     }
     navigation.navigate('Sub', {
-      sub: subName,
+      sub: subName.slice(2),
       subIcon,
     });
   };

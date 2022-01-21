@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
-import { Spinner } from '@/components';
+import { ErrorLoading, Spinner } from '@/components';
 import { PostCard } from '@/features/posts';
 import { useGetFeed } from '@/features/posts/api';
 import { useSettingsStore } from '@/stores';
@@ -53,15 +53,9 @@ export function MainScreen({ route }: Props) {
     []
   );
 
-  // useEffect(() => {
-  //   if (flatlistRef.current) {
-  //     flatlistRef.current.scrollToIndex({
-  //       index: 0,
-  //       animated: true,
-  //       viewPosition: 0,
-  //     });
-  //   }
-  // }, [sort]);
+  if (query.isError) {
+    return <ErrorLoading onPress={query.refetch} />;
+  }
 
   if (query.isLoading) {
     return <Spinner animating />;
@@ -134,3 +128,13 @@ const styles = StyleSheet.create({
 //     query.refetch();
 //   }}
 // />
+
+// useEffect(() => {
+//   if (flatlistRef.current) {
+//     flatlistRef.current.scrollToIndex({
+//       index: 0,
+//       animated: true,
+//       viewPosition: 0,
+//     });
+//   }
+// }, [sort]);

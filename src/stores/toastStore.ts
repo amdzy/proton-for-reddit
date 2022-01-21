@@ -17,7 +17,8 @@ export const useToastStore = create<StoreState>((set) => ({
   toasts: [],
   addToast: (toast) =>
     set((state) => ({
-      toasts: [...state.toasts, { id: nanoid(), ...toast }],
+      // toasts: [...state.toasts, { id: nanoid(), ...toast }],
+      toasts: [{ id: nanoid(), ...toast }],
     })),
   dismissToast: (id) =>
     set((state) => ({

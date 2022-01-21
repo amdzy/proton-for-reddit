@@ -8,7 +8,7 @@ import { queryClient } from '@/lib/react-query';
 import { RootNavigator } from '@/navigators';
 import { useSettingsStore } from '@/stores';
 import { Toasts } from '@/features/toast';
-import { ErrorFallback } from '@/components/Error/ErrorFallback';
+import { ErrorFallback } from '@/components';
 
 export default function App() {
   const theme = useTheme();

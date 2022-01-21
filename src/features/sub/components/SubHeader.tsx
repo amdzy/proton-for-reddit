@@ -10,7 +10,6 @@ interface Props {
   subscriber?: number;
   description?: string;
   subscribed?: boolean;
-  showData?: boolean;
 }
 
 export function SubHeader({
@@ -20,7 +19,6 @@ export function SubHeader({
   subscriber,
   description = '',
   subscribed,
-  showData = false,
 }: Props) {
   const theme = useTheme();
   return (
@@ -33,18 +31,18 @@ export function SubHeader({
       <Avatar image={icon} size={80} />
       <View style={styles.rowContainer}>
         <Text style={styles.subName}>{name}</Text>
-        {showData && (
+        {subscribed !== undefined && (
           <IconButton icon="plus-circle" size={18} style={styles.icon} />
         )}
       </View>
-      {showData && (
+      {subscriber !== undefined && (
         <View style={styles.rowContainer}>
           <SubText fontSize={12}>{subscriber} members</SubText>
           <Spacer horizontal size={8} />
           <SubText fontSize={12}>{active} online</SubText>
         </View>
       )}
-      {showData && description?.length > 0 && (
+      {description?.length > 0 && (
         <Text style={styles.subDesc} numberOfLines={2} ellipsizeMode="tail">
           {description}
         </Text>

@@ -13,10 +13,7 @@ const unSavePost = async ({ id }: UnSaveProps) => {
     {},
     { params: { category: 'post', id } }
   );
-  if (!Object.keys(res).length) {
-    return res;
-  }
-  if (!res.sucess) {
+  if (res.sucess === false) {
     throw new Error('Failed to unsave post, try again');
   }
   return res;
