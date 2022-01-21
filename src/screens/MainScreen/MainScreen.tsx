@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
-import { ErrorLoading, Spinner } from '@/components';
+import { ErrorFetchingMore, ErrorLoading, Spinner } from '@/components';
 import { PostCard } from '@/features/posts';
 import { useGetFeed } from '@/features/posts/api';
 import { useSettingsStore } from '@/stores';
@@ -25,7 +25,7 @@ export function MainScreen({ route }: Props) {
     }
   }, [query.isRefetching, refreshing]);
 
-  const flatListFooter = useCallback(() => {
+  const flatListFooter = () => {
     if (query.isFetchingNextPage) {
       return (
         <View style={styles.spinnerContainer}>
@@ -33,8 +33,24 @@ export function MainScreen({ route }: Props) {
         </View>
       );
     }
+    if (query.isError && query.data) {
+      return (
+        <ErrorFetchingMore
+          disabled={query.isFetchingNextPage}
+          onPress={() => {
+            query.fetchNextPage();
+          }}
+        />
+      );
+    }
     return null;
-  }, [query.isFetchingNextPage]);
+  };
+
+  const flatListOnEnd = () => {
+    if (!query.isFetchingNextPage && !query.isFetching && !query.isError) {
+      query.fetchNextPage();
+    }
+  };
 
   const flatListOnRefresh = useCallback(() => {
     setIsRefreshing(true);
@@ -42,19 +58,19 @@ export function MainScreen({ route }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const flatListOnEnd = () => {
-    if (!query.isFetchingNextPage && !query.isFetching) {
-      query.fetchNextPage();
-    }
-  };
-
   const rendreItemMemoized = useCallback(
     ({ item }) => <PostCard post={item.data} page />,
     []
   );
 
-  if (query.isError) {
-    return <ErrorLoading onPress={query.refetch} />;
+  if (query.isError && !query.data) {
+    return (
+      <ErrorLoading
+        onPress={() => {
+          query.refetch();
+        }}
+      />
+    );
   }
 
   if (query.isLoading) {

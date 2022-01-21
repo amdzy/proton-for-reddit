@@ -236,7 +236,7 @@ export function CardMain({
     );
   }
 
-  if (isRedditDomain) {
+  if (isRedditDomain && url.slice(-3) === 'jpg') {
     return <PostImage url={url} width={1000} height={600} />;
   }
 

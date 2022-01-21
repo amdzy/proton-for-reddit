@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
-import { ErrorLoading, Spinner } from '@/components';
+import { ErrorFetchingMore, ErrorLoading, Spinner } from '@/components';
 import { PostCard } from '@/features/posts';
 import { useGetFeed } from '@/features/posts/api';
 import { useSettingsStore } from '@/stores';
@@ -27,7 +27,7 @@ export function SubredditScreen({ route }: Props) {
     }
   }, [postsQuery.isRefetching, refreshing]);
 
-  const flatListFooter = useCallback(() => {
+  const flatListFooter = () => {
     if (postsQuery.isFetchingNextPage) {
       return (
         <View style={styles.spinnerContainer}>
@@ -35,24 +35,31 @@ export function SubredditScreen({ route }: Props) {
         </View>
       );
     }
-    return null;
-  }, [postsQuery.isFetchingNextPage]);
-
-  const flatListHeader = () => {
-    if (aboutQuery.data) {
+    if (postsQuery.isError && postsQuery.data) {
       return (
-        <SubHeader
-          name={aboutQuery.data.display_name}
-          icon={aboutQuery.data.community_icon || aboutQuery.data.icon_img}
-          active={aboutQuery.data.accounts_active}
-          subscriber={aboutQuery.data.subscribers}
-          description={aboutQuery.data.public_description}
-          subscribed={aboutQuery.data.user_is_subscriber}
+        <ErrorFetchingMore
+          disabled={postsQuery.isFetchingNextPage}
+          onPress={() => {
+            postsQuery.fetchNextPage();
+          }}
         />
       );
     }
     return null;
   };
+
+  const flatListHeader = () => (
+    <SubHeader
+      name={aboutQuery.data?.display_name || sub}
+      icon={
+        aboutQuery.data?.community_icon || aboutQuery.data?.icon_img || subIcon
+      }
+      active={aboutQuery.data?.accounts_active}
+      subscriber={aboutQuery.data?.subscribers}
+      description={aboutQuery.data?.public_description}
+      subscribed={aboutQuery.data?.user_is_subscriber}
+    />
+  );
 
   const flatListOnRefresh = useCallback(() => {
     setIsRefreshing(true);
@@ -61,7 +68,11 @@ export function SubredditScreen({ route }: Props) {
   }, []);
 
   const flatListOnEnd = () => {
-    if (!postsQuery.isFetchingNextPage && !postsQuery.isFetching) {
+    if (
+      !postsQuery.isFetchingNextPage &&
+      !postsQuery.isFetching &&
+      !postsQuery.isError
+    ) {
       postsQuery.fetchNextPage();
     }
   };
@@ -71,7 +82,7 @@ export function SubredditScreen({ route }: Props) {
     []
   );
 
-  if (postsQuery.isError || aboutQuery.isError) {
+  if (postsQuery.isError || (aboutQuery.isError && !postsQuery.data)) {
     return (
       <View style={styles.headerContainer}>
         <SubHeader name={sub} icon={subIcon} />
