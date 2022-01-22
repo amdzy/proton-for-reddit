@@ -25,7 +25,7 @@ export function DrawerHeader({ showLogin, onPress }: Props) {
       <Avatar image={userIcon || undefined} size={50} placeholder="user" />
       <View style={{ marginLeft: 16 }}>
         <Text>{userName || 'Anonymous'}</Text>
-        {karma && <SubText>{karma}</SubText>}
+        {karma && <SubText>Karma: {karma}</SubText>}
       </View>
       {showLogin ? (
         <Icon icon="menu-up" color={theme.text} style={styles.icon} />

@@ -8,6 +8,7 @@ import * as WebBrowser from 'expo-web-browser';
 import { useAuthStore, useSubStore, useToastStore } from '@/stores';
 import { axios } from '@/lib/axios';
 import { CLIENT_ID, REDIRECT_URI, discovery } from '../authConstants';
+import { queryClient } from '@/lib/react-query';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -92,12 +93,14 @@ export function useRedditAuth() {
           createdAt: user.created_utc,
         });
         setSubs(subs);
+        queryClient.clear();
       }
     }
 
     if (!isAuthenticated) {
       updateFromAuthResponseAsync();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authResponse]);
 
   return {
