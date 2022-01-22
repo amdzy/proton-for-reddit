@@ -13,7 +13,7 @@ export function DrawerSubList({ navigation }: Props) {
 
   const items = useMemo(
     () =>
-      Object.values(subs)
+      subs
         .sort((a, b) => {
           const first = a.name.toLowerCase();
           const second = b.name.toLowerCase();

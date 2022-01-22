@@ -1,7 +1,8 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Avatar, IconButton, Spacer, SubText, Text } from '@/components';
+import { Avatar, Spacer, SubText, Text } from '@/components';
 import { useTheme } from '@/hooks';
+import { SubscriptionBtn } from './SubscriptionBtn';
 
 interface Props {
   name: string;
@@ -10,6 +11,7 @@ interface Props {
   subscriber?: number;
   description?: string;
   subscribed?: boolean;
+  id?: string;
 }
 
 export function SubHeader({
@@ -19,6 +21,7 @@ export function SubHeader({
   subscriber,
   description = '',
   subscribed,
+  id,
 }: Props) {
   const theme = useTheme();
   return (
@@ -31,8 +34,14 @@ export function SubHeader({
       <Avatar image={icon} size={80} />
       <View style={styles.rowContainer}>
         <Text style={styles.subName}>{name}</Text>
-        {subscribed !== undefined && (
-          <IconButton icon="plus-circle" size={18} style={styles.icon} />
+        {subscribed !== undefined && id !== undefined && (
+          <SubscriptionBtn
+            id={id}
+            subscribed={subscribed}
+            name={name}
+            style={styles.icon}
+            icon={icon}
+          />
         )}
       </View>
       {subscriber !== undefined && (

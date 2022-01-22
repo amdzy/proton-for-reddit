@@ -1,7 +1,30 @@
 import React, { useMemo } from 'react';
 import { FlatList, View } from 'react-native';
-import { SubListItem } from './components/SubListItem/SubListItem';
 import { useSubStore } from '@/stores';
+import { SubListItem } from '@/features/sub/components';
+
+const pagesArr = [
+  {
+    id: '1',
+    name: 'Home',
+    icon: '',
+  },
+  {
+    id: '2',
+    name: 'Popular',
+    icon: '',
+  },
+  {
+    id: '3',
+    name: 'All',
+    icon: '',
+  },
+  {
+    id: '4',
+    name: 'Saved',
+    icon: '',
+  },
+];
 
 interface Props {
   navigation: any;
@@ -11,7 +34,7 @@ export function SubscriptionsScreen({ navigation }: Props) {
   const subs = useSubStore((state) => state.subs);
 
   const memoizedSubs = useMemo(() => {
-    const subsSorted = Object.values(subs).sort((a, b) => {
+    const subsSorted = subs.sort((a, b) => {
       const first = a.name.toLowerCase();
       const second = b.name.toLowerCase();
       if (first > second) return 1;
@@ -27,8 +50,9 @@ export function SubscriptionsScreen({ navigation }: Props) {
         data={memoizedSubs}
         renderItem={({ item, index }) => (
           <SubListItem
-            image={item.icon}
-            text={item.name}
+            icon={item.icon}
+            name={item.name}
+            id={item.id}
             navigation={navigation}
             actions={index >= pagesArr.length}
           />
@@ -37,26 +61,3 @@ export function SubscriptionsScreen({ navigation }: Props) {
     </View>
   );
 }
-
-const pagesArr = [
-  {
-    id: 1,
-    name: 'Home',
-    icon: '',
-  },
-  {
-    id: 2,
-    name: 'Popular',
-    icon: '',
-  },
-  {
-    id: 3,
-    name: 'All',
-    icon: '',
-  },
-  {
-    id: 4,
-    name: 'Saved',
-    icon: '',
-  },
-];

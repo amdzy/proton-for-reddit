@@ -9,29 +9,25 @@ interface Sub {
 }
 
 interface StoreState {
-  subs: Record<string, { id: string; icon: string; name: string }>;
+  subs: Array<Sub>;
   setSubs: (subs: Array<Sub>) => void;
-  setSub: (sub: Sub) => void;
+  addSub: (sub: Sub) => void;
+  removeSub: (name: string) => void;
   clearSubs: () => void;
 }
 
 export const useSubStore = create<StoreState>(
   persist(
-    (set) => ({
-      subs: {},
-      setSubs: (subs) =>
-        set(() => {
-          const subsObj: any = {};
-          subs.forEach((sub) => {
-            subsObj[sub.name] = sub;
-          });
-          return { subs: subsObj };
-        }),
-      setSub: (sub) =>
+    (set, get) => ({
+      subs: [],
+      setSubs: (subs) => set(() => ({ subs })),
+      addSub: (sub) =>
         set((state) => ({
-          subs: { ...state.subs, [sub.name]: sub },
+          subs: state.subs.concat(sub),
         })),
-      clearSubs: () => set(() => ({ subs: {} })),
+      removeSub: (name) =>
+        set((state) => ({ subs: state.subs.filter((x) => x.name !== name) })),
+      clearSubs: () => set(() => ({ subs: [] })),
     }),
     {
       name: 'subStore',

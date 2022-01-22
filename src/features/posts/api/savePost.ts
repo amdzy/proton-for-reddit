@@ -13,7 +13,7 @@ const savePost = async ({ id }: SaveProps) => {
     {},
     { params: { category: 'post', id } }
   );
-  if (res.sucess === false) {
+  if (res.success === false) {
     throw new Error('Failed to save post, try again');
   }
   return res;

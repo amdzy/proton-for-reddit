@@ -58,6 +58,7 @@ export function SubredditScreen({ route }: Props) {
       subscriber={aboutQuery.data?.subscribers}
       description={aboutQuery.data?.public_description}
       subscribed={aboutQuery.data?.user_is_subscriber}
+      id={aboutQuery.data?.name}
     />
   );
 

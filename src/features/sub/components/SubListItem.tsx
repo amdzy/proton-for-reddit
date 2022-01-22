@@ -1,41 +1,49 @@
 import React from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
-
-import { Avatar, IconButton, Spacer, Text } from '@/components';
-import { useTheme } from '@/hooks';
+import { Avatar, Spacer, Text } from '@/components';
+import { SubscriptionBtn } from './SubscriptionBtn';
 
 interface Props {
-  text: string;
-  image: string;
+  name: string;
+  icon: string;
+  id: string;
   actions?: boolean;
   navigation: any;
 }
 
 export function SubListItem({
-  text,
-  image,
+  name,
+  icon,
+  id,
   actions = true,
   navigation,
 }: Props) {
-  const theme = useTheme();
-
   const handleRedirect = () => {
     if (actions) {
-      navigation.navigate('Sub');
+      navigation.navigate('Sub', {
+        sub: name,
+        subIcon: icon,
+      });
     } else {
-      navigation.navigate(text);
+      navigation.navigate(name);
     }
   };
 
   return (
     <View style={styles.container}>
       <Pressable style={styles.nameButton} onPress={handleRedirect}>
-        <Avatar size={30} image={image} />
-        <Text style={styles.subName}>{text}</Text>
+        <Avatar size={30} image={icon} />
+        <Text style={styles.subName}>{name}</Text>
       </Pressable>
       {actions && (
         <View style={styles.row}>
-          <IconButton icon="check-circle" color={theme.primary} />
+          <SubscriptionBtn
+            name={name}
+            icon={icon}
+            id={id}
+            subscribed
+            size={24}
+          />
           <Spacer size={16} horizontal />
           {/* <IconButton icon="dots-vertical" color={theme.text} /> */}
         </View>

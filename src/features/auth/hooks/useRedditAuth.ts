@@ -82,7 +82,7 @@ export function useRedditAuth() {
         const subs = subsRes.data.children.map((sub: any) => ({
           icon: sub.data.icon_img || sub.data.community_icon,
           name: sub.data.display_name,
-          id: sub.data.id,
+          id: sub.data.name,
         }));
         setUser({
           icon: user.icon_img,
