@@ -2,14 +2,14 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Button, View } from 'react-native';
 import { Icon, IconButton, Text } from '@/components';
-import { LoginScreen, SettingsScreen, SubscriptionsScreen } from '@/screens';
-import { useAuthStore } from '@/stores';
+import { ProfileScreen, SettingsScreen, SubscriptionsScreen } from '@/screens';
 import { FeedStack } from './FeedStack';
+import { useAuthStore } from '@/stores';
 
 const Tab = createBottomTabNavigator();
 
 export function BottomTab() {
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const userName = useAuthStore((state) => state.userName);
   return (
     <Tab.Navigator
       screenOptions={({ navigation }) => ({
@@ -58,12 +58,15 @@ export function BottomTab() {
       />
       <Tab.Screen
         name="Profile"
-        component={isAuthenticated ? SecondScreen : LoginScreen}
-        options={{
+        component={ProfileScreen}
+        options={({ route }: any) => ({
+          headerShadowVisible: false,
           tabBarIcon: ({ color, size }) => (
             <Icon color={color} icon="account-circle-outline" size={size} />
           ),
-        }}
+          title: route.params.name,
+        })}
+        initialParams={{ name: userName }}
       />
       <Tab.Screen
         name="Settings"
@@ -78,7 +81,7 @@ export function BottomTab() {
   );
 }
 
-function SecondScreen() {
+export function SecondScreen() {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Second Screen</Text>

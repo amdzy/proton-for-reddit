@@ -15,7 +15,7 @@ export function Text({ children, ...props }: Props) {
       style={[
         {
           color: theme.text,
-          fontSize: fonts.fontSize.content,
+          fontSize: 14,
         },
         props.style,
       ]}

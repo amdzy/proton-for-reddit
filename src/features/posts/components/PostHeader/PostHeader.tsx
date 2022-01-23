@@ -43,7 +43,7 @@ export function PostHeader({ subName, author, createdAt, sub }: Props) {
     if (!postSettings.tapUser) {
       return;
     }
-    navigation.navigate('Comments');
+    navigation.navigate('Profile', { name: author });
   };
 
   useEffect(() => {
