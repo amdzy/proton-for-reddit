@@ -8,13 +8,16 @@ const fetchPosts = async ({
   queryKey,
 }: any): Promise<PostsApiResponse> => {
   const [page, sort] = queryKey;
+  const params = {
+    limit: 25,
+    after: pageParam,
+    sr_detail: true,
+  };
+
   if (page === 'home') {
     const res = await axios({
       url: `/${sort}`,
-      params: {
-        limit: 25,
-        after: pageParam,
-      },
+      params,
     });
 
     return res.data;
@@ -22,10 +25,7 @@ const fetchPosts = async ({
 
   const res = await axios({
     url: `/r/${page}/${sort}`,
-    params: {
-      limit: 25,
-      after: pageParam,
-    },
+    params,
   });
   return res.data;
 };

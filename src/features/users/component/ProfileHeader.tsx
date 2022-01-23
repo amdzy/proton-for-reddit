@@ -1,12 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import {
-  Avatar,
-  HighlightedText,
-  SubText,
-  TabButton,
-  Text,
-} from '@/components';
+import { format } from 'date-fns';
+import { Avatar, HighlightedText, SubText, Text } from '@/components';
 import { useTheme } from '@/hooks';
 import { ColorsDTO } from '@/stores/types';
 import { FollowBtn } from './FollowBtn';
@@ -47,15 +42,13 @@ export function ProfileHeader({
             <Text>{karma}</Text>
           </View>
           <View>
-            <Text>Cake Day:</Text>
-            <SubText>{date}</SubText>
+            <Text style={{ textAlign: 'center' }}>Cake Day:</Text>
+            {date && (
+              <SubText fontSize={13}>{format(date * 1000, 'PPP')}</SubText>
+            )}
           </View>
         </View>
       </View>
-      {/* <View style={styles.dataContainer}>
-        <TabButton text="Posts" active onPress={() => {}} />
-        <TabButton text="Comments" active={false} onPress={() => {}} />
-      </View> */}
     </View>
   );
 }

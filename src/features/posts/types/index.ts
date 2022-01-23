@@ -125,6 +125,10 @@ export interface PostType {
       id: number;
     }>;
   };
+  sr_detail: {
+    community_icon: string;
+    icon_img: string;
+  };
 }
 
 export interface AwardsDTO {

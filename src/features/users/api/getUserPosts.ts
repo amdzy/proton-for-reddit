@@ -14,6 +14,7 @@ const fetchPosts = async ({
     params: {
       limit: 25,
       after: pageParam,
+      sr_detail: true,
     },
   });
 

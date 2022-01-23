@@ -36,6 +36,7 @@ function Card({ post, page }: Props) {
     <View style={styles.card}>
       <PostHeader
         subName={post.subreddit_name_prefixed}
+        subIcon={post?.sr_detail?.community_icon || post?.sr_detail?.icon_img}
         author={post.author}
         createdAt={post.created_utc}
         sub={post.subreddit}

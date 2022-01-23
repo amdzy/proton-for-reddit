@@ -1,30 +1,35 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { formatDistanceToNowStrict } from 'date-fns';
 import { useNavigation } from '@react-navigation/core';
 import { Avatar, SubText } from '@/components';
 import { useTheme } from '@/hooks';
-import { useSettingsStore, useSubIconStore } from '@/stores';
-import { fetchIcon } from '../../utils/fetchIcon';
+import { useSettingsStore } from '@/stores';
 import { ColorsDTO } from '@/stores/types';
 
 interface Props {
+  subIcon?: string;
   subName: string;
   author: string;
   createdAt: number;
   sub: string;
 }
 
-export function PostHeader({ subName, author, createdAt, sub }: Props) {
+export function PostHeader({
+  subIcon,
+  subName,
+  author,
+  createdAt,
+  sub,
+}: Props) {
   const theme = useTheme();
-  const subIcon = useSubIconStore((state) => state.icons.get(sub));
   const styles = useMemo(() => makeStyles(theme), [theme]);
   const postSettings = useSettingsStore((state) => state.posts);
   const navigation = useNavigation<any>();
 
   const handleAvatarRedirect = () => {
     navigation.navigate('Sub', {
-      sub: subName.slice(2),
+      sub,
       subIcon,
     });
   };
@@ -34,23 +39,17 @@ export function PostHeader({ subName, author, createdAt, sub }: Props) {
       return;
     }
     navigation.navigate('Sub', {
-      sub: subName.slice(2),
+      sub,
       subIcon,
     });
   };
 
-  const handleuserRedirect = () => {
+  const handleUserRedirect = () => {
     if (!postSettings.tapUser) {
       return;
     }
     navigation.navigate('Profile', { name: author });
   };
-
-  useEffect(() => {
-    if (!subIcon) {
-      fetchIcon(sub);
-    }
-  }, [subIcon, sub]);
 
   return (
     <View style={styles.mainContainer}>
@@ -65,7 +64,7 @@ export function PostHeader({ subName, author, createdAt, sub }: Props) {
             <Text style={styles.subName}>{subName}</Text>
           </Pressable>
           {postSettings.author && (
-            <Pressable onPress={handleuserRedirect}>
+            <Pressable onPress={handleUserRedirect}>
               <SubText fontSize={12} style={styles.userName}>
                 u/{author}
               </SubText>
