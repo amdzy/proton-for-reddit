@@ -1,7 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Button, View } from 'react-native';
-import { Icon, IconButton, Text } from '@/components';
+import { Icon, IconButton } from '@/components';
 import { ProfileScreen, SettingsScreen, SubscriptionsScreen } from '@/screens';
 import { FeedStack } from './FeedStack';
 import { useAuthStore } from '@/stores';
@@ -82,10 +81,5 @@ export function BottomTab() {
 }
 
 export function SecondScreen() {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Second Screen</Text>
-      <Button title="button" onPress={() => {}} />
-    </View>
-  );
+  return null;
 }

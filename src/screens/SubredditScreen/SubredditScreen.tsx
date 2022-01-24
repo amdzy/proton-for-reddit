@@ -72,7 +72,8 @@ export function SubredditScreen({ route }: Props) {
     if (
       !postsQuery.isFetchingNextPage &&
       !postsQuery.isFetching &&
-      !postsQuery.isError
+      !postsQuery.isError &&
+      postsQuery.hasNextPage
     ) {
       postsQuery.fetchNextPage();
     }

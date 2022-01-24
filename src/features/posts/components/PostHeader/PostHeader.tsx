@@ -1,11 +1,11 @@
 import React, { useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { formatDistanceToNowStrict } from 'date-fns';
 import { useNavigation } from '@react-navigation/core';
 import { Avatar, SubText } from '@/components';
 import { useTheme } from '@/hooks';
 import { useSettingsStore } from '@/stores';
 import { ColorsDTO } from '@/stores/types';
+import { timeRelative } from '@/utils';
 
 interface Props {
   subIcon?: string;
@@ -72,9 +72,7 @@ export function PostHeader({
           )}
         </View>
       </View>
-      <SubText fontSize={12}>
-        {formatDistanceToNowStrict(createdAt * 1000)} ago
-      </SubText>
+      <SubText fontSize={12}>{timeRelative(createdAt)} ago</SubText>
     </View>
   );
 }

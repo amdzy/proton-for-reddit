@@ -1,17 +1,13 @@
 import React, { useRef } from 'react';
-import { View } from 'react-native';
 import { Tabs, MaterialTabBar } from 'react-native-collapsible-tab-view';
 import { ProfileHeader } from '@/features/users/component';
 import { useGetUserAbout } from '@/features/users/api';
 import { useTheme } from '@/hooks';
-import { ProfilePosts } from '@/features/users';
+import { ProfileAbout, ProfilePosts } from '@/features/users';
 
 interface Props {
   route: any;
 }
-
-// const Tab = createMaterialTopTabNavigator();
-// const END_POSITION = -232;
 
 export function ProfileScreen({ route }: Props) {
   const name = route.params?.name;
@@ -20,7 +16,6 @@ export function ProfileScreen({ route }: Props) {
   const tabRef = useRef<any>();
 
   const theme = useTheme();
-  // const position = useSharedValue(0);
 
   const header = () => (
     <ProfileHeader
@@ -37,6 +32,7 @@ export function ProfileScreen({ route }: Props) {
     <Tabs.Container
       ref={tabRef}
       renderHeader={header}
+      headerHeight={232}
       containerStyle={{ maxWidth: '100%' }}
       headerContainerStyle={{
         backgroundColor: theme.toolbar,
@@ -52,25 +48,29 @@ export function ProfileScreen({ route }: Props) {
       lazy
     >
       <Tabs.Tab name="A" label="About">
-        <Tabs.ScrollView>
-          <View
-            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
-          >
-            <View style={{ width: 40, height: 40, backgroundColor: 'blue' }} />
-          </View>
-        </Tabs.ScrollView>
+        <ProfileAbout
+          name={name}
+          totalKarma={aboutQuery.data?.total_karma}
+          linkKarma={aboutQuery.data?.link_karma}
+          commentKarma={aboutQuery.data?.comment_karma}
+          awardeeKarma={aboutQuery.data?.awardee_karma}
+          awarderKarma={aboutQuery.data?.awarder_karma}
+          date={aboutQuery.data?.created_utc}
+        />
       </Tabs.Tab>
       <Tabs.Tab name="B" label="Posts">
         <ProfilePosts name={name} />
       </Tabs.Tab>
       <Tabs.Tab name="C" label="Comments">
-        <Tabs.ScrollView>
-          <View
-            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
-          >
-            <View style={{ width: 40, height: 40, backgroundColor: 'blue' }} />
-          </View>
-        </Tabs.ScrollView>
+        <ProfileAbout
+          name={name}
+          totalKarma={aboutQuery.data?.total_karma}
+          linkKarma={aboutQuery.data?.link_karma}
+          commentKarma={aboutQuery.data?.comment_karma}
+          awardeeKarma={aboutQuery.data?.awardee_karma}
+          awarderKarma={aboutQuery.data?.awarder_karma}
+          date={aboutQuery.data?.created_utc}
+        />
       </Tabs.Tab>
     </Tabs.Container>
   );

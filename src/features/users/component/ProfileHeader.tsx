@@ -5,6 +5,7 @@ import { Avatar, HighlightedText, SubText, Text } from '@/components';
 import { useTheme } from '@/hooks';
 import { ColorsDTO } from '@/stores/types';
 import { FollowBtn } from './FollowBtn';
+import { timeFormatted } from '@/utils/timeFormatted';
 
 interface Props {
   id?: string;
@@ -43,9 +44,7 @@ export function ProfileHeader({
           </View>
           <View>
             <Text style={{ textAlign: 'center' }}>Cake Day:</Text>
-            {date && (
-              <SubText fontSize={13}>{format(date * 1000, 'PPP')}</SubText>
-            )}
+            {date && <SubText fontSize={13}>{timeFormatted(date)}</SubText>}
           </View>
         </View>
       </View>

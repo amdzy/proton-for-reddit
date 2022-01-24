@@ -47,7 +47,12 @@ export function MainScreen({ route }: Props) {
   };
 
   const flatListOnEnd = () => {
-    if (!query.isFetchingNextPage && !query.isFetching && !query.isError) {
+    if (
+      !query.isFetchingNextPage &&
+      !query.isFetching &&
+      !query.isError &&
+      query.hasNextPage
+    ) {
       query.fetchNextPage();
     }
   };

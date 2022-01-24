@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 import { HighlightedText, Icon, Spacer, Text } from '@/components';
 import { useTheme } from '@/hooks';
@@ -15,7 +15,6 @@ interface Props {
 export function FollowBtn({ following, name, id }: Props) {
   const theme = useTheme();
   const styles = makeStyles(theme);
-  const [isFollowing, setIsFollowing] = useState(following);
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const addToast = useToastStore((state) => state.addToast);
   const followMutation = useFollowUser({ name });
@@ -29,16 +28,14 @@ export function FollowBtn({ following, name, id }: Props) {
       return;
     }
     if (action === 'SUB') {
-      setIsFollowing(true);
       followMutation.mutate({ id, action: 'sub' });
     }
     if (action === 'UNSUB') {
-      setIsFollowing(false);
       followMutation.mutate({ id, action: 'unsub' });
     }
   };
 
-  return isFollowing ? (
+  return following ? (
     <Pressable style={styles.button} onPress={() => handleActions('UNSUB')}>
       <Icon icon="check-circle" size={16} color={theme.primary} />
       <Spacer horizontal size={8} />

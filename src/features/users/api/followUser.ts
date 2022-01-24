@@ -2,6 +2,7 @@ import { useMutation } from 'react-query';
 import { axios } from '@/lib/axios';
 import { MutationConfig, queryClient } from '@/lib/react-query';
 import { useToastStore } from '@/stores';
+import { User } from '../types';
 
 interface FollowUserProps {
   id: string;
@@ -37,13 +38,17 @@ export const useFollowUser = ({ config, name }: UseFollowUserOptions) => {
   return useMutation({
     onMutate: async (data) => {
       await queryClient.cancelQueries();
-      const previousData = queryClient.getQueryData<any>(['aboutUser', name]);
-      //   if (previousData) {
-      //     queryClient.setQueryData(['about', name], {
-      //       ...previousData,
-      //       user_is_subscriber: data.action === 'sub',
-      //     });
-      //   }
+      const previousData = queryClient.getQueryData<User>(['aboutUser', name]);
+      if (previousData) {
+        queryClient.setQueryData(['aboutUser', name], {
+          ...previousData,
+          subreddit: {
+            ...previousData.subreddit,
+            user_is_subscriber: data.action === 'sub',
+          },
+        });
+      }
+
       return { ...previousData };
     },
     onError: (err, variable, ctx: any) => {
