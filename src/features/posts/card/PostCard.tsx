@@ -80,6 +80,7 @@ function Card({ post, page }: Props) {
         fullText={!page}
         isNsfw={post.over_18}
         isRedditDomain={post.is_reddit_media_domain}
+        removed={post.removed_by_category !== null}
       />
       <CardFooter
         numLikes={post.ups}

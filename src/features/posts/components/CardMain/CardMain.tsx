@@ -8,6 +8,7 @@ import { PostImage } from '../PostImage/PostImage';
 import { ImageWithIcon } from '../ImageWithIcon/ImageWithIcon';
 import { YoutubeImage } from '../YoutubeImage/YoutubeImage';
 import { MediaDto, PreviewDTO } from '../../types';
+import { PostRemovedText } from '../PostRemovedText/PostRemovedText';
 
 interface Props {
   selftext: string;
@@ -21,12 +22,13 @@ interface Props {
   fullText?: boolean;
   isNsfw: boolean;
   isRedditDomain: boolean;
+  removed: boolean;
   openLink: () => void;
 }
 
 const regex = /\/DASH(.*)$/g;
 
-export function CardMain({
+export function CardMainComponent({
   selftext,
   hint,
   preview,
@@ -38,6 +40,7 @@ export function CardMain({
   fullText,
   isNsfw,
   isRedditDomain,
+  removed,
   openLink,
 }: Props) {
   const navigation = useNavigation<any>();
@@ -47,7 +50,7 @@ export function CardMain({
   const previewText = useSettingsStore((state) => state.card.previewText);
 
   const handleImageChoice = () => {
-    if (!preview && !preview) {
+    if (!preview) {
       return { url: null, width: 0, height: 0 };
     }
 
@@ -67,6 +70,10 @@ export function CardMain({
     }
     return image;
   };
+
+  if (removed && fullText) {
+    return <PostRemovedText />;
+  }
 
   if (selftext && previewText) {
     return <CardText text={selftext} fullText={fullText} />;
@@ -113,6 +120,9 @@ export function CardMain({
 
   if (isGallery) {
     const imgSourceArr: any = [];
+    if (!mediaMetadata) {
+      return null;
+    }
     const gallery = Object.values(mediaMetadata) as any;
     if (!gallery[0].s) {
       return null;
@@ -237,7 +247,18 @@ export function CardMain({
   }
 
   if (isRedditDomain && url.slice(-3) === 'jpg') {
-    return <PostImage url={url} width={1000} height={600} />;
+    return (
+      <PostImage
+        url={url}
+        width={1000}
+        height={600}
+        onPress={() => {
+          navigation.navigate('Images', {
+            images: [{ url, width: 1000, height: 600 }],
+          });
+        }}
+      />
+    );
   }
 
   if (url.slice(-3) === 'mp4') {
@@ -257,3 +278,5 @@ export function CardMain({
 
   return null;
 }
+
+export const CardMain = React.memo(CardMainComponent, () => false);
