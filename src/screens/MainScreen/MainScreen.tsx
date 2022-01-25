@@ -1,6 +1,12 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
-import { ErrorFetchingMore, ErrorLoading, Spinner } from '@/components';
+import { FlatList, StyleSheet } from 'react-native';
+import {
+  ErrorEmpty,
+  ErrorFetchingMore,
+  ErrorLoading,
+  Indicator,
+  Spinner,
+} from '@/components';
 import { PostCard } from '@/features/posts';
 import { useGetFeed } from '@/features/posts/api';
 import { useSettingsStore } from '@/stores';
@@ -27,11 +33,7 @@ export function MainScreen({ route }: Props) {
 
   const flatListFooter = () => {
     if (query.isFetchingNextPage) {
-      return (
-        <View style={styles.spinnerContainer}>
-          <ActivityIndicator animating color="red" size="large" />
-        </View>
-      );
+      return <Indicator />;
     }
     if (query.isError && query.data) {
       return (
@@ -42,6 +44,13 @@ export function MainScreen({ route }: Props) {
           }}
         />
       );
+    }
+    return null;
+  };
+
+  const flatlistEmpty = () => {
+    if (!query.isLoading || !query.isFetching) {
+      return <ErrorEmpty onPress={() => query.refetch()} />;
     }
     return null;
   };
@@ -63,7 +72,7 @@ export function MainScreen({ route }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const rendreItemMemoized = useCallback(
+  const renderItemMemoized = useCallback(
     ({ item }) => <PostCard post={item.data} page />,
     []
   );
@@ -86,13 +95,14 @@ export function MainScreen({ route }: Props) {
     return (
       <FlatList
         ref={flatlistRef}
-        renderItem={rendreItemMemoized}
+        renderItem={renderItemMemoized}
         data={query.posts}
         keyExtractor={(item) => item.data.id}
         style={styles.flatlist}
         onEndReachedThreshold={10}
         onEndReached={flatListOnEnd}
         ListFooterComponent={flatListFooter}
+        ListEmptyComponent={flatlistEmpty}
         showsVerticalScrollIndicator={false}
         refreshing={refreshing}
         onRefresh={flatListOnRefresh}
@@ -103,12 +113,6 @@ export function MainScreen({ route }: Props) {
 }
 
 const styles = StyleSheet.create({
-  spinnerContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
   flatlist: {
     width: '100%',
   },

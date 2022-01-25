@@ -1,14 +1,21 @@
 import React from 'react';
-import { Pressable, PressableProps, StyleSheet, ViewStyle } from 'react-native';
+import {
+  Pressable,
+  PressableProps,
+  StyleSheet,
+  TextStyle,
+  ViewStyle,
+} from 'react-native';
 import { useTheme } from '@/hooks';
 import { Text } from '../Typography/Text';
 
 interface Props extends PressableProps {
   text: string;
   style?: ViewStyle;
+  textStyle?: TextStyle;
 }
 
-export function Button({ text, disabled, onPress, style }: Props) {
+export function Button({ text, disabled, style, textStyle, onPress }: Props) {
   const theme = useTheme();
 
   return (
@@ -19,7 +26,7 @@ export function Button({ text, disabled, onPress, style }: Props) {
       android_ripple={{ color: theme.placeholder }}
       testID="button"
     >
-      <Text>{text}</Text>
+      <Text style={textStyle}>{text}</Text>
     </Pressable>
   );
 }

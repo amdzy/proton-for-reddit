@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import {
-  ActivityIndicator,
-  StyleSheet,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import { useWindowDimensions } from 'react-native';
 import { Tabs } from 'react-native-collapsible-tab-view';
 import { useGetUserPosts } from '@/features/users/api';
-import { ErrorFetchingMore, ErrorLoading } from '@/components';
+import {
+  ErrorEmpty,
+  ErrorFetchingMore,
+  ErrorLoading,
+  Indicator,
+} from '@/components';
 import { PostCard } from '@/features/posts';
 
 interface Props {
@@ -30,11 +30,7 @@ export function ProfilePosts({ name }: Props) {
 
   const flatListFooter = () => {
     if (query.isFetchingNextPage) {
-      return (
-        <View style={styles.spinnerContainer}>
-          <ActivityIndicator animating color="red" size="large" />
-        </View>
-      );
+      return <Indicator />;
     }
     if (query.isError && query.data) {
       return (
@@ -50,20 +46,10 @@ export function ProfilePosts({ name }: Props) {
   };
 
   const flatlistEmpty = () => {
-    if (query.isLoading) {
-      return (
-        <View style={styles.spinnerContainer}>
-          <ActivityIndicator animating color="red" size="large" />
-        </View>
-      );
+    if (query.isLoading || query.isFetching) {
+      return <Indicator />;
     }
-    return (
-      <ErrorLoading
-        onPress={() => {
-          query.refetch();
-        }}
-      />
-    );
+    return <ErrorEmpty onPress={() => query.refetch()} />;
   };
 
   const flatListOnEnd = () => {
@@ -115,12 +101,3 @@ export function ProfilePosts({ name }: Props) {
     />
   );
 }
-
-const styles = StyleSheet.create({
-  spinnerContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-});

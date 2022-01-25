@@ -8,5 +8,5 @@ export * from './RadioButton/RadioButton';
 export * from './CustomModal/CustomModal';
 export * from './Typography';
 export * from './Buttons';
-export * from './Spinner/Spinner';
+export * from './Spinner';
 export * from './Error';

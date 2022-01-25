@@ -1,6 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
-import { ErrorFetchingMore, ErrorLoading, Spinner } from '@/components';
+import { FlatList, StyleSheet } from 'react-native';
+import {
+  ErrorEmpty,
+  ErrorFetchingMore,
+  ErrorLoading,
+  Indicator,
+} from '@/components';
 import { PostCard } from '@/features/posts';
 import { useGetFeed } from '@/features/posts/api';
 import { useSettingsStore } from '@/stores';
@@ -29,11 +34,7 @@ export function SubredditScreen({ route }: Props) {
 
   const flatListFooter = () => {
     if (postsQuery.isFetchingNextPage) {
-      return (
-        <View style={styles.spinnerContainer}>
-          <ActivityIndicator animating color="red" size="large" />
-        </View>
-      );
+      return <Indicator />;
     }
     if (postsQuery.isError && postsQuery.data) {
       return (
@@ -62,6 +63,13 @@ export function SubredditScreen({ route }: Props) {
     />
   );
 
+  const flatlistEmpty = () => {
+    if (postsQuery.isLoading || postsQuery.isFetching) {
+      return <Indicator />;
+    }
+    return <ErrorEmpty onPress={() => postsQuery.refetch()} />;
+  };
+
   const flatListOnRefresh = useCallback(() => {
     setIsRefreshing(true);
     postsQuery.refetch();
@@ -79,77 +87,43 @@ export function SubredditScreen({ route }: Props) {
     }
   };
 
-  const rendreItemMemoized = useCallback(
+  const renderItemMemoized = useCallback(
     ({ item }) => <PostCard post={item.data} page />,
     []
   );
 
-  if (postsQuery.isError || (aboutQuery.isError && !postsQuery.data)) {
+  if (postsQuery.isError && !postsQuery.data) {
     return (
-      <View style={styles.headerContainer}>
-        <SubHeader name={sub} icon={subIcon} />
-        <View style={styles.headerSpinner}>
-          <ErrorLoading
-            onPress={() => {
-              aboutQuery.refetch();
-              postsQuery.refetch();
-            }}
-          />
-        </View>
-      </View>
-    );
-  }
-
-  if (postsQuery.isLoading || aboutQuery.isLoading) {
-    return (
-      <View style={styles.headerContainer}>
-        <SubHeader
-          name={aboutQuery.data?.display_name || sub}
-          icon={
-            aboutQuery.data?.community_icon ||
-            aboutQuery.data?.icon_img ||
-            subIcon
-          }
-          active={aboutQuery.data?.accounts_active}
-          subscriber={aboutQuery.data?.subscribers}
-          description={aboutQuery.data?.public_description}
-          subscribed={aboutQuery.data?.user_is_subscriber}
-        />
-        <View style={styles.headerSpinner}>
-          <Spinner animating />
-        </View>
-      </View>
-    );
-  }
-
-  if (postsQuery.data && postsQuery.posts && aboutQuery.data) {
-    return (
-      <FlatList
-        ref={flatlistRef}
-        renderItem={rendreItemMemoized}
-        data={postsQuery.posts}
-        keyExtractor={(item) => item.data.id}
-        style={styles.flatlist}
-        onEndReachedThreshold={10}
-        onEndReached={flatListOnEnd}
-        showsVerticalScrollIndicator={false}
-        refreshing={refreshing}
-        onRefresh={flatListOnRefresh}
-        ListFooterComponent={flatListFooter}
-        ListHeaderComponent={flatListHeader}
+      <ErrorLoading
+        onPress={() => {
+          postsQuery.refetch();
+        }}
       />
     );
   }
+
+  return (
+    <FlatList
+      ref={flatlistRef}
+      renderItem={renderItemMemoized}
+      data={postsQuery.posts}
+      keyExtractor={(item) => item.data.id}
+      style={styles.flatlist}
+      onEndReachedThreshold={10}
+      onEndReached={flatListOnEnd}
+      showsVerticalScrollIndicator={false}
+      refreshing={refreshing}
+      onRefresh={flatListOnRefresh}
+      ListFooterComponent={flatListFooter}
+      ListHeaderComponent={flatListHeader}
+      ListEmptyComponent={flatlistEmpty}
+    />
+  );
+
   return null;
 }
 
 const styles = StyleSheet.create({
-  spinnerContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
   headerSpinner: { flex: 1, paddingTop: 40 },
   headerContainer: { flex: 1 },
   flatlist: {
