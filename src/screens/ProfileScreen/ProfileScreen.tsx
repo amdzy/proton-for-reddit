@@ -23,8 +23,6 @@ export function ProfileScreen({ route }: Props) {
       name={aboutQuery.data?.name || name}
       icon={aboutQuery.data?.snoovatar_img || aboutQuery.data?.icon_img}
       following={aboutQuery.data?.subreddit.user_is_subscriber}
-      karma={aboutQuery.data?.total_karma}
-      date={aboutQuery.data?.created_utc}
     />
   );
 
@@ -46,6 +44,9 @@ export function ProfileScreen({ route }: Props) {
         />
       )}
       lazy
+      pagerProps={{
+        scrollEnabled: true,
+      }}
     >
       <Tabs.Tab name="A" label="About">
         <ProfileAbout
@@ -60,17 +61,6 @@ export function ProfileScreen({ route }: Props) {
       </Tabs.Tab>
       <Tabs.Tab name="B" label="Posts">
         <ProfilePosts name={name} />
-      </Tabs.Tab>
-      <Tabs.Tab name="C" label="Comments">
-        <ProfileAbout
-          name={name}
-          totalKarma={aboutQuery.data?.total_karma}
-          linkKarma={aboutQuery.data?.link_karma}
-          commentKarma={aboutQuery.data?.comment_karma}
-          awardeeKarma={aboutQuery.data?.awardee_karma}
-          awarderKarma={aboutQuery.data?.awarder_karma}
-          date={aboutQuery.data?.created_utc}
-        />
       </Tabs.Tab>
     </Tabs.Container>
   );

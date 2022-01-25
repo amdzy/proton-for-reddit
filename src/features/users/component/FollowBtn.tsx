@@ -54,13 +54,12 @@ const makeStyles = (theme: ColorsDTO) =>
   StyleSheet.create({
     button: {
       flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
       padding: 6,
-      paddingHorizontal: 8,
       borderWidth: 1,
-      borderRadius: 16,
+      borderRadius: 13,
       borderColor: theme.placeholder,
       marginTop: 12,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
   });

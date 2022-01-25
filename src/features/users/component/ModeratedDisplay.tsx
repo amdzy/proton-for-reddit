@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import { FlatList, Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 import { Avatar, Spacer, SubText, Text } from '@/components';
 import { useTheme } from '@/hooks';
@@ -16,7 +16,7 @@ export function ModeratedDisplay({ moderated }: Props) {
   const navigation = useNavigation<any>();
 
   const renderItemMemo = useCallback(
-    ({ item }) => {
+    (item) => {
       const icon = item.community_icon || item.icon_img;
       return (
         <Pressable
@@ -27,6 +27,7 @@ export function ModeratedDisplay({ moderated }: Props) {
               subIcon: icon,
             });
           }}
+          key={item.name}
         >
           <View style={styles.avatar}>
             <Avatar image={icon} size={45} />
@@ -49,12 +50,9 @@ export function ModeratedDisplay({ moderated }: Props) {
         <Text>Moderated Subs({moderated ? moderated.length : 0})</Text>
       </View>
       {moderated && (
-        <FlatList
-          data={moderated}
-          renderItem={renderItemMemo}
-          keyExtractor={(item) => item.name}
-          horizontal
-        />
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+          {moderated.map(renderItemMemo)}
+        </View>
       )}
     </View>
   );
@@ -90,3 +88,8 @@ const makeStyles = (theme: ColorsDTO) =>
       justifyContent: 'center',
     },
   });
+
+// Use scroll view when i fix nested horizontal lists
+// <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+//   {moderated.map(renderItemMemo)}
+// </ScrollView>

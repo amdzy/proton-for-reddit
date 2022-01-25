@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import { FlatList, Image, StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import { SubText, Text } from '@/components';
 import { useTheme } from '@/hooks';
 import { ColorsDTO } from '@/stores/types';
@@ -15,8 +15,8 @@ export function TrophyDisplay({ trophies }: Props) {
   const styles = useMemo(() => makeStyles(theme), [theme]);
 
   const renderItemMemo = useCallback(
-    ({ item }) => (
-      <View style={styles.trophyContainer}>
+    (item) => (
+      <View style={styles.trophyContainer} key={item.data.award_id}>
         <Image
           source={{ uri: item.data.icon_70 }}
           width={50}
@@ -25,7 +25,9 @@ export function TrophyDisplay({ trophies }: Props) {
         />
         <SubText>{item.data.name}</SubText>
         {item.data.granted_at && (
-          <SubText>{timeRelative(item.data.granted_at)} ago</SubText>
+          <SubText fontSize={12}>
+            {timeRelative(item.data.granted_at)} ago
+          </SubText>
         )}
       </View>
     ),
@@ -38,12 +40,9 @@ export function TrophyDisplay({ trophies }: Props) {
         <Text>Trophy Case({trophies ? trophies.length : 0})</Text>
       </View>
       {trophies && (
-        <FlatList
-          data={trophies}
-          renderItem={renderItemMemo}
-          keyExtractor={(item) => item.data.award_id}
-          horizontal
-        />
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+          {trophies.map(renderItemMemo)}
+        </View>
       )}
     </View>
   );
@@ -60,3 +59,8 @@ const makeStyles = (theme: ColorsDTO) =>
     },
     image: { width: 50, height: 50, marginBottom: 4 },
   });
+
+// Use scroll view when i fix nested horizontal lists
+// <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+//   {trophies.map(renderItemMemo)}
+// </ScrollView>
