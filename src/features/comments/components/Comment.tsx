@@ -1,21 +1,19 @@
-import React, { useRef, useState } from 'react';
-import { Pressable, View } from 'react-native';
+import React, { useState } from 'react';
+import { FlatList, Pressable, View } from 'react-native';
 import { useTheme } from '@/hooks';
 import { Comment as C } from '../types';
 import { CommentHeader } from './CommentHeader/CommentHeader';
 import { CommentText } from './CommentText/CommentText';
-import { Text } from '@/components';
+import { CommentLines } from './CommentLines/CommentLines';
+import { CommentCollapsed } from './CommentCollapsed/CommentCollapsed';
 
 interface Props {
   comment: C;
 }
 
-const arr = new Array(2).fill(1);
-
 export function Comment({ comment }: Props) {
   const theme = useTheme();
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const depth = useRef(new Array(comment.depth).fill(1));
 
   if (!comment) {
     return null;
@@ -23,29 +21,20 @@ export function Comment({ comment }: Props) {
 
   if (isCollapsed) {
     return (
-      <Pressable
-        onLongPress={() => setIsCollapsed(false)}
-        style={{ padding: 14 }}
-      >
-        <Text>Collapsed</Text>
-      </Pressable>
+      <CommentCollapsed
+        author={comment.author}
+        score={comment.ups}
+        date={comment.created_utc}
+        depth={comment.depth}
+        onPress={() => setIsCollapsed(false)}
+      />
     );
   }
 
   return (
     <>
       <View style={{ flexDirection: 'row', flex: 1 }}>
-        {depth.current.map((x, i) => (
-          <View
-            style={{
-              width: 12,
-              borderRightWidth: 1,
-              borderRightColor: theme.backdrop,
-              backgroundColor: theme.surface,
-            }}
-            key={i}
-          />
-        ))}
+        <CommentLines depth={comment.depth} />
         <Pressable
           style={{
             padding: 14,
@@ -53,6 +42,7 @@ export function Comment({ comment }: Props) {
             flex: 1,
           }}
           onLongPress={() => setIsCollapsed(true)}
+          android_ripple={{ color: theme.placeholder }}
         >
           <CommentHeader
             author={comment.author}
@@ -63,10 +53,17 @@ export function Comment({ comment }: Props) {
         </Pressable>
       </View>
 
-      {typeof comment.replies !== 'string' &&
-        comment.replies?.data?.children.map((item) => (
-          <Comment comment={item.data} key={item.data.id} />
-        ))}
+      {typeof comment.replies !== 'string' && (
+        <FlatList
+          data={comment.replies?.data?.children}
+          renderItem={({ item }) => (
+            <CommentMemoized comment={item.data} key={item.data.id} />
+          )}
+          keyExtractor={(item) => item.data.id}
+        />
+      )}
     </>
   );
 }
+
+export const CommentMemoized = React.memo(Comment, () => false);
