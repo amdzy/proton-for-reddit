@@ -1,13 +1,17 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Avatar, Spacer, SubText } from '@/components';
-import { AwardsDTO } from '../../types';
+import { Awards as AwardsType } from '../../types';
 
 interface Props {
-  awards: Array<AwardsDTO>;
+  awards?: Array<AwardsType>;
 }
 
 export const Awards = React.memo(({ awards }: Props) => {
+  if (!awards) {
+    return null;
+  }
+
   if (awards.length === 0) {
     return null;
   }
@@ -17,7 +21,7 @@ export const Awards = React.memo(({ awards }: Props) => {
       {awards.map((award: any) => (
         <View style={styles.awardContainer} key={award.id}>
           <Avatar size={16} image={award.resized_static_icons[1].url} />
-          <Spacer size={6} horizontal />
+          <Spacer size={3} horizontal />
           <SubText>x{award.count}</SubText>
         </View>
       ))}

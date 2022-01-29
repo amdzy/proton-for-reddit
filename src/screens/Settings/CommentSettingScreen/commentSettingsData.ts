@@ -18,15 +18,11 @@ export const awards = [
     text: 'Show awards',
     type: 'awards',
   },
-  {
-    text: 'Clickable awards',
-    type: 'tapAwards',
-  },
 ] as const;
 
 export const flairs = [
   {
-    text: 'Show post flairs',
+    text: 'Show user flair',
     type: 'flairs',
   },
 ] as const;

@@ -11,6 +11,7 @@ interface Props {
   score: number;
   date: number;
   depth: number;
+  scoreHidden: boolean;
   onPress: () => void;
 }
 
@@ -19,6 +20,7 @@ export function CommentCollapsed({
   score,
   date,
   depth,
+  scoreHidden,
   onPress,
 }: Props) {
   const theme = useTheme();
@@ -36,9 +38,18 @@ export function CommentCollapsed({
           <SubText style={styles.text}>{author}</SubText>
         </View>
         <View style={styles.rowContainer}>
-          <SubText fontSize={15} style={styles.text}>
-            {score}
-          </SubText>
+          {scoreHidden ? (
+            <Icon
+              icon="help"
+              size={15}
+              color={theme.placeholder}
+              style={styles.text}
+            />
+          ) : (
+            <SubText fontSize={15} style={styles.text}>
+              {score}
+            </SubText>
+          )}
           <SubText fontSize={12}>{timeRelative(date)}</SubText>
         </View>
       </Pressable>

@@ -1,5 +1,9 @@
 import { formatDistanceToNowStrict } from 'date-fns';
 
 export function timeRelative(time: number) {
-  return formatDistanceToNowStrict(time * 1000);
+  try {
+    return formatDistanceToNowStrict(time * 1000);
+  } catch {
+    return time;
+  }
 }

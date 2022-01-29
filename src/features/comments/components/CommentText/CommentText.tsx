@@ -6,5 +6,9 @@ interface Props {
 }
 
 export function CommentText({ text }: Props) {
-  return <Text style={{ lineHeight: 18 }}>{text}</Text>;
+  return (
+    <Text style={{ lineHeight: 18, paddingHorizontal: 14, paddingBottom: 14 }}>
+      {text}
+    </Text>
+  );
 }

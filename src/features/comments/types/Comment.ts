@@ -41,7 +41,7 @@ export interface Comment {
   name: string;
   is_submitter: boolean;
   downs: number;
-  author_flair_richtext: any[];
+  author_flair_richtext: Array<Flairs>;
   author_patreon_flair: boolean;
   body_html: string;
   removal_reason: string | null;
@@ -81,4 +81,10 @@ interface Replies {
       data: Comment;
     }>;
   };
+}
+
+interface Flairs {
+  a: string;
+  u: string;
+  e: string;
 }
