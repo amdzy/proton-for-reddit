@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
+import { useNavigation } from '@react-navigation/core';
 import { useTheme } from '@/hooks';
-import { PostType } from '../types';
 import {
   Awards,
   CardFooter,
@@ -13,14 +13,16 @@ import {
 } from '../components';
 import { useSettingsStore } from '@/stores';
 import { ColorsDTO } from '@/stores/types';
+import { Post } from '../types';
 
 interface Props {
-  post: PostType;
+  post: Post;
   page?: boolean;
 }
 
 function Card({ post, page }: Props) {
   const theme = useTheme();
+  const navigation = useNavigation<any>();
   const styles = useMemo(() => makeStyles(theme), [theme]);
   const postSettings = useSettingsStore((state) => state.posts);
 
@@ -32,8 +34,17 @@ function Card({ post, page }: Props) {
     WebBrowser.openBrowserAsync(`https://www.reddit.com${post.permalink}`);
   };
 
+  const handlePress = () => {
+    if (page) {
+      navigation.navigate('Comments', { post });
+    }
+  };
+
   return (
-    <View style={styles.card}>
+    <Pressable
+      style={page ? styles.card : styles.cardRough}
+      onPress={handlePress}
+    >
       <PostHeader
         subName={post.subreddit_name_prefixed}
         subIcon={post?.sr_detail?.community_icon || post?.sr_detail?.icon_img}
@@ -90,7 +101,7 @@ function Card({ post, page }: Props) {
         postName={post.name}
         openLink={openRedditLink}
       />
-    </View>
+    </Pressable>
   );
 }
 
@@ -100,11 +111,20 @@ const makeStyles = (theme: ColorsDTO) =>
   StyleSheet.create({
     card: {
       width: '100%',
-      marginVertical: 6,
       elevation: 2,
       shadowOffset: { width: 1, height: 1 },
       shadowOpacity: 0.1,
+      marginVertical: 6,
       borderRadius: 20,
+      overflow: 'hidden',
+      backgroundColor: theme.surface,
+      shadowColor: theme.backdrop,
+    },
+    cardRough: {
+      width: '100%',
+      elevation: 2,
+      shadowOffset: { width: 1, height: 1 },
+      shadowOpacity: 0.1,
       overflow: 'hidden',
       backgroundColor: theme.surface,
       shadowColor: theme.backdrop,

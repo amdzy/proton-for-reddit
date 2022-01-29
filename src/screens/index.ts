@@ -7,3 +7,4 @@ export * from './VideoScreen/VideoScreen';
 export * from './ImageScreen/ImageScreen';
 export * from './SubredditScreen/SubredditScreen';
 export * from './ProfileScreen/ProfileScreen';
+export * from './CommentsScreen/CommentsScreen';

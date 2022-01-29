@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from 'react-query';
 import { useMemo } from 'react';
 import { axios } from '@/lib/axios';
-import { PostsApiResponse, PostType } from '../types';
+import { Post, PostsApiResponse } from '../types';
 
 const fetchPosts = async ({
   pageParam,
@@ -38,7 +38,7 @@ export const useGetFeed = (page: string, sort: string) => {
   const posts = useMemo(
     () =>
       query.data?.pages.reduce(
-        (a: Array<{ data: PostType }>, b) => [...a, ...b.children],
+        (a: Array<{ data: Post }>, b) => [...a, ...b.children],
         []
       ),
     [query.data?.pages]
