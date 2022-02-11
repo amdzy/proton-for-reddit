@@ -44,6 +44,7 @@ function Card({ post, page }: Props) {
     <Pressable
       style={page ? styles.card : styles.cardRough}
       onPress={handlePress}
+      android_ripple={page ? styles.ripple : null}
     >
       <PostHeader
         subName={post.subreddit_name_prefixed}
@@ -61,8 +62,6 @@ function Card({ post, page }: Props) {
         onPressThumbnail={openLink}
         domain={post.domain}
         showDomain={
-          // (post.post_hint === 'link' && post.domain !== 'i.imgur.com') ||
-          // (post.post_hint === 'rich:video' && post.domain === 'youtu.be')
           post.domain !== 'i.redd.it' &&
           post.domain !== 'v.redd.it' &&
           !post.domain.includes('self.')
@@ -129,4 +128,5 @@ const makeStyles = (theme: ColorsDTO) =>
       backgroundColor: theme.surface,
       shadowColor: theme.backdrop,
     },
+    ripple: { color: theme.placeholder },
   });
