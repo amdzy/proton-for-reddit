@@ -5,6 +5,7 @@ import { ColorsDTO } from '@/stores/types';
 import { CommentLines } from '../CommentLines/CommentLines';
 import { Icon, SubText } from '@/components';
 import { timeRelative } from '@/utils';
+import { CommentScore } from '../CommentScore/CommentScore';
 
 interface Props {
   author: string;
@@ -12,6 +13,7 @@ interface Props {
   date: number;
   depth: number;
   scoreHidden: boolean;
+  voted: boolean | null;
   onPress: () => void;
 }
 
@@ -21,6 +23,7 @@ export function CommentCollapsed({
   date,
   depth,
   scoreHidden,
+  voted,
   onPress,
 }: Props) {
   const theme = useTheme();
@@ -38,18 +41,7 @@ export function CommentCollapsed({
           <SubText style={styles.text}>{author}</SubText>
         </View>
         <View style={styles.rowContainer}>
-          {scoreHidden ? (
-            <Icon
-              icon="help"
-              size={15}
-              color={theme.placeholder}
-              style={styles.text}
-            />
-          ) : (
-            <SubText fontSize={15} style={styles.text}>
-              {score}
-            </SubText>
-          )}
+          <CommentScore score={score} scoreHidden={scoreHidden} voted={voted} />
           <SubText fontSize={12}>{timeRelative(date)}</SubText>
         </View>
       </Pressable>

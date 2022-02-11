@@ -4,7 +4,7 @@ import { PostCard } from '@/features/posts';
 import { Post } from '@/features/posts/types';
 import { useGetComments } from '@/features/comments/api';
 import { Divider, Indicator } from '@/components';
-import { CommentMemoized } from '@/features/comments/components/Comment';
+import { CommentMemoized } from '@/features/comments';
 import { useTheme } from '@/hooks';
 
 interface Props {

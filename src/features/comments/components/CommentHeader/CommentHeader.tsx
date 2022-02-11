@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Avatar, HighlightedText, Icon, SubText } from '@/components';
+import { Avatar, HighlightedText, SubText } from '@/components';
 import { timeRelative } from '@/utils';
 import { useSettingsStore } from '@/stores';
 import { CommentFlairs } from '../CommentFlairs/CommentFlairs';
-import { useTheme } from '@/hooks';
+import { CommentScore } from '../CommentScore/CommentScore';
 
 interface Props {
   author: string;
@@ -14,6 +14,7 @@ interface Props {
   flairText: string | null;
   flairRichText: Array<{ u: string }> | [];
   scoreHidden: boolean;
+  voted: boolean | null;
 }
 
 export function CommentHeader({
@@ -24,9 +25,9 @@ export function CommentHeader({
   flairText,
   flairRichText,
   scoreHidden,
+  voted,
 }: Props) {
   const avatarVisible = useSettingsStore((state) => state.comments.avatar);
-  const theme = useTheme();
   return (
     <View style={styles.container}>
       <View style={styles.rowContainer}>
@@ -46,19 +47,8 @@ export function CommentHeader({
         />
       </View>
       <View style={styles.rowContainer}>
-        {scoreHidden ? (
-          <Icon
-            icon="help"
-            size={15}
-            color={theme.placeholder}
-            style={styles.text}
-          />
-        ) : (
-          <SubText fontSize={15} style={styles.text}>
-            {score}
-          </SubText>
-        )}
-        <SubText fontSize={12}>{timeRelative(date)}</SubText>
+        <CommentScore score={score} scoreHidden={scoreHidden} voted={voted} />
+        <SubText fontSize={12}>{timeRelative(date).slice(0, 3)}</SubText>
       </View>
     </View>
   );
@@ -76,6 +66,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  text: { marginRight: 6, marginLeft: 6 },
   marginRight: { marginRight: 6 },
 });
