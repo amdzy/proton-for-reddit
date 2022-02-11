@@ -17,7 +17,7 @@ export function CommentsScreen({ route }: Props) {
   const theme = useTheme();
 
   const renderItemMemoized = useCallback(
-    ({ item }) => <CommentMemoized comment={item.data} />,
+    ({ item }) => <CommentMemoized comment={item.data} kind={item.kind} />,
     []
   );
 

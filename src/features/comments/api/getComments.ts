@@ -2,7 +2,7 @@ import { useQuery } from 'react-query';
 import { axios } from '@/lib/axios';
 import { CommentApiRes } from '../types/CommentApiRes';
 
-const fetchComments = async ({ queryKey }: any): Promise<CommentApiRes> => {
+const fetchComments = async ({ queryKey }: any): Promise<any> => {
   const [id, sort, sub] = queryKey;
 
   const res = await axios({

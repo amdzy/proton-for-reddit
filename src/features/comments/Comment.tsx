@@ -2,20 +2,24 @@ import React, { useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { useTheme } from '@/hooks';
 import { Comment as C } from './types';
-import { CommentHeader } from './components/CommentHeader/CommentHeader';
-import { CommentText } from './components/CommentText/CommentText';
-import { CommentLines } from './components/CommentLines/CommentLines';
-import { CommentCollapsed } from './components/CommentCollapsed/CommentCollapsed';
-import { CommentActions } from './components/CommentActions/CommentActions';
 import { useSettingsStore } from '@/stores';
 import { Awards } from '@/features/posts/components';
 import { ColorsDTO } from '@/stores/types';
+import {
+  CommentActions,
+  CommentAddMore,
+  CommentCollapsed,
+  CommentHeader,
+  CommentLines,
+  CommentText,
+} from './components';
 
 interface Props {
   comment: C;
+  kind: string;
 }
 
-export function Comment({ comment }: Props) {
+export function Comment({ comment, kind }: Props) {
   const theme = useTheme();
   const [isCollapsed, setIsCollapsed] = useState(comment.collapsed);
   const [showActions, setShowActions] = useState(
@@ -23,6 +27,10 @@ export function Comment({ comment }: Props) {
   );
   const awards = useSettingsStore((state) => state.comments.awards);
   const styles = makeStyles(theme);
+
+  if (kind === 'more') {
+    return <CommentAddMore depth={comment.depth} />;
+  }
 
   if (!comment) {
     return null;
@@ -70,7 +78,11 @@ export function Comment({ comment }: Props) {
 
       {typeof comment.replies !== 'string' &&
         comment.replies?.data?.children.map((item) => (
-          <CommentMemoized comment={item.data} key={item.data.id} />
+          <CommentMemoized
+            comment={item.data}
+            kind={item.kind}
+            key={item.data.id}
+          />
         ))}
     </>
   );
