@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Pressable, StyleSheet, View, Text } from 'react-native';
 import { useTheme } from '@/hooks';
 import { ColorsDTO } from '@/stores/types';
@@ -15,11 +15,20 @@ interface Props {
 export function CommentAddMore({ depth, id, commentsIds, onPress }: Props) {
   const theme = useTheme();
   const styles = makeStyles(theme);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const handlePress = async () => {
-    const data = await fetchMoreComments(id, commentsIds);
-    const newData = data.json.data.things;
-    onPress(newData);
+    try {
+      setIsLoading(true);
+      setIsError(false);
+      const data = await fetchMoreComments(id, commentsIds);
+      const newData = data.json.data.things;
+      onPress(newData);
+    } catch (err) {
+      setIsLoading(false);
+      setIsError(true);
+    }
   };
 
   return (
@@ -29,8 +38,13 @@ export function CommentAddMore({ depth, id, commentsIds, onPress }: Props) {
         style={styles.button}
         onPress={handlePress}
         android_ripple={styles.ripple}
+        disabled={isLoading}
       >
-        <Text style={styles.text}>Load More Comments</Text>
+        <Text style={styles.text}>
+          {isError && !isLoading && 'Error loading more comments'}
+          {isLoading && !isError && 'Loading...'}
+          {!isError && !isLoading && 'Load More Comments'}
+        </Text>
       </Pressable>
     </View>
   );
