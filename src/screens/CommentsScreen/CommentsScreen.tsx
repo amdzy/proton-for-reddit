@@ -13,11 +13,19 @@ interface Props {
 
 export function CommentsScreen({ route }: Props) {
   const post: Post = route.params?.post;
-  const query = useGetComments(post.id, 'hot', post.subreddit);
+  const query = useGetComments(post.id, post.subreddit);
   const theme = useTheme();
 
   const renderItemMemoized = useCallback(
-    ({ item }) => <CommentMemoized comment={item.data} kind={item.kind} />,
+    ({ item }) => (
+      <CommentMemoized
+        data={item.data}
+        kind={item.kind}
+        fullName={post.name}
+        id={post.id}
+        sub={post.subreddit}
+      />
+    ),
     []
   );
 

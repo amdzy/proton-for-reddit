@@ -1,6 +1,8 @@
 import { Awards } from '@/features/posts/types';
 
 export interface Comment {
+  children: any;
+  count: number;
   subreddit_id: string;
   approved_at_utc: null | string;
   author_is_blocked: boolean;
