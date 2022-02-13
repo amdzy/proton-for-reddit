@@ -1,6 +1,7 @@
 import React from 'react';
 import { Image } from 'react-native';
 import { SubText } from '@/components';
+import { useSettingsStore } from '@/stores';
 
 interface Props {
   type: string;
@@ -9,6 +10,12 @@ interface Props {
 }
 
 export function CommentFlairs({ type, text, richText }: Props) {
+  const showFlairs = useSettingsStore((state) => state.comments.flairs);
+
+  if (!showFlairs) {
+    return null;
+  }
+
   if (type === 'text' && text) {
     return <SubText>{text}</SubText>;
   }

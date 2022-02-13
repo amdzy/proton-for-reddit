@@ -52,16 +52,8 @@ export function Comment({ data, kind, fullName, sub, id }: Props) {
         ]);
         if (queryData) {
           const newQueryData = produce(queryData, (draft) => {
-            // let last = draft[1].data.children[draft[1].data.children.length - 1];
             draft[1].data.children.pop();
             draft[1].data.children.push(...newData);
-            // if (last.data.count > 100) {
-            //   last = {
-            //     ...last,
-            //     data: { ...last.data, children: last.data.children.slice(100) },
-            //   };
-            //   draft[1].data.children.push(last);
-            // }
           });
           queryClient.setQueryData([id, sub], newQueryData);
         }
@@ -122,7 +114,16 @@ export function Comment({ data, kind, fullName, sub, id }: Props) {
             />
             {awards && <Awards awards={comment.all_awardings} />}
             <CommentText text={comment.body} />
-            {showActions && <CommentActions isLiked={null} isSaved={false} />}
+            {showActions && (
+              <CommentActions
+                isLiked={comment.likes}
+                isSaved={comment.saved}
+                id={comment.name}
+                onVote={(value: boolean | null) => {
+                  setComment((old) => ({ ...old, likes: value }));
+                }}
+              />
+            )}
           </Pressable>
         </View>
       )}
@@ -150,3 +151,14 @@ const makeStyles = (theme: ColorsDTO) =>
     button: { backgroundColor: theme.surface, flex: 1 },
     ripple: { color: theme.placeholder },
   });
+
+// Add more comments last entry
+
+// let last = draft[1].data.children[draft[1].data.children.length - 1];
+// if (last.data.count > 100) {
+//   last = {
+//     ...last,
+//     data: { ...last.data, children: last.data.children.slice(100) },
+//   };
+//   draft[1].data.children.push(last);
+// }

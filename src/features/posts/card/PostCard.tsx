@@ -52,6 +52,7 @@ function Card({ post, page }: Props) {
         author={post.author}
         createdAt={post.created_utc}
         sub={post.subreddit}
+        isLocked={post.locked}
       />
       <CardTitle
         title={post.title}

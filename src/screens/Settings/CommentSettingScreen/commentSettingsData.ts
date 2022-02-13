@@ -7,10 +7,6 @@ export const appearance = [
     text: 'Buttons always visible',
     type: 'buttonsVisible',
   },
-  {
-    text: 'Highlight my username',
-    type: 'highlightName',
-  },
 ] as const;
 
 export const awards = [

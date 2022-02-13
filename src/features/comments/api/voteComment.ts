@@ -3,12 +3,12 @@ import { axios } from '@/lib/axios';
 import { MutationConfig, queryClient } from '@/lib/react-query';
 import { useToastStore } from '@/stores';
 
-interface VotePostProps {
+interface VoteCommentProps {
   id: string;
   dist: number;
 }
 
-const votePost = async ({ id, dist }: VotePostProps) => {
+const voteComment = async ({ id, dist }: VoteCommentProps) => {
   const res = await axios.post('/api/vote', {}, { params: { dir: dist, id } });
   if (res.json && res.json.errors) {
     throw new Error('Failed to vote, try again');
@@ -16,11 +16,11 @@ const votePost = async ({ id, dist }: VotePostProps) => {
   return res;
 };
 
-interface UseVotePostOptions {
-  config?: MutationConfig<typeof votePost>;
+interface UseVoteCommentOptions {
+  config?: MutationConfig<typeof voteComment>;
 }
 
-export const useVotePost = ({ config }: UseVotePostOptions) => {
+export const useVoteComment = ({ config }: UseVoteCommentOptions) => {
   const addToast = useToastStore((state) => state.addToast);
 
   return useMutation({
@@ -52,6 +52,6 @@ export const useVotePost = ({ config }: UseVotePostOptions) => {
       }
     },
     ...config,
-    mutationFn: votePost,
+    mutationFn: voteComment,
   });
 };
