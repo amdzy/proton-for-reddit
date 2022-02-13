@@ -5,21 +5,30 @@ import { IconButton } from '@/components';
 import { useTheme } from '@/hooks';
 import { ColorsDTO } from '@/stores/types';
 import { useAuthStore, useToastStore } from '@/stores';
-import { useVoteComment } from '../../api';
+import { useSaveComment, useUnSaveComment, useVoteComment } from '../../api';
 
 interface Props {
   isLiked: boolean | null;
   isSaved: boolean;
   id: string;
   onVote: (value: boolean | null) => void;
+  onSave: (value: boolean) => void;
 }
 
-export function CommentActions({ isLiked, isSaved, id, onVote }: Props) {
+export function CommentActions({
+  isLiked,
+  isSaved,
+  id,
+  onVote,
+  onSave,
+}: Props) {
   const theme = useTheme();
   const styles = makeStyles(theme);
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const addToast = useToastStore((state) => state.addToast);
   const voteMutation = useVoteComment({});
+  const saveMutation = useSaveComment({});
+  const unSaveMutation = useUnSaveComment({});
 
   const handleActions = useCallback((type: string) => {
     if (!isAuthenticated) {
@@ -43,6 +52,16 @@ export function CommentActions({ isLiked, isSaved, id, onVote }: Props) {
       case 'REMOVE_VOTE': {
         onVote(null);
         voteMutation.mutate({ id, dist: 0 });
+        break;
+      }
+      case 'SAVE': {
+        onSave(true);
+        saveMutation.mutate({ id });
+        break;
+      }
+      case 'UNSAVE': {
+        onSave(false);
+        unSaveMutation.mutate({ id });
         break;
       }
       default: {
@@ -91,9 +110,15 @@ export function CommentActions({ isLiked, isSaved, id, onVote }: Props) {
           color="gold"
           size={20}
           style={styles.icon}
+          onPress={() => handleActions('UNSAVE')}
         />
       ) : (
-        <IconButton icon="bookmark-outline" size={20} style={styles.icon} />
+        <IconButton
+          icon="bookmark-outline"
+          size={20}
+          style={styles.icon}
+          onPress={() => handleActions('SAVE')}
+        />
       )}
     </View>
   );

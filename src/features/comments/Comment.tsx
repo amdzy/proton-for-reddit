@@ -122,6 +122,9 @@ export function Comment({ data, kind, fullName, sub, id }: Props) {
                 onVote={(value: boolean | null) => {
                   setComment((old) => ({ ...old, likes: value }));
                 }}
+                onSave={(value: boolean) => {
+                  setComment((old) => ({ ...old, saved: value }));
+                }}
               />
             )}
           </Pressable>

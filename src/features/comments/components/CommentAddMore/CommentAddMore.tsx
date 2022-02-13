@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, View, Text } from 'react-native';
 import { useTheme } from '@/hooks';
 import { ColorsDTO } from '@/stores/types';
 import { CommentLines } from '../CommentLines/CommentLines';
-import { fetchMoreComments } from '../../api/getMoreComments';
+import { fetchMoreComments } from '../../api';
 
 interface Props {
   depth: number;
