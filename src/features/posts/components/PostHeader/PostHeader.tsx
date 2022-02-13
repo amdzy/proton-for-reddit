@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
-import { Avatar, SubText } from '@/components';
+import { Avatar, Icon, SubText } from '@/components';
 import { useTheme } from '@/hooks';
 import { useSettingsStore } from '@/stores';
 import { ColorsDTO } from '@/stores/types';
@@ -13,6 +13,7 @@ interface Props {
   author: string;
   createdAt: number;
   sub: string;
+  isLocked: boolean;
 }
 
 export function PostHeader({
@@ -21,6 +22,7 @@ export function PostHeader({
   author,
   createdAt,
   sub,
+  isLocked,
 }: Props) {
   const theme = useTheme();
   const styles = useMemo(() => makeStyles(theme), [theme]);
@@ -71,6 +73,14 @@ export function PostHeader({
             </Pressable>
           )}
         </View>
+        {isLocked && (
+          <Icon
+            icon="lock"
+            size={14}
+            color={theme.highlight}
+            style={styles.lock}
+          />
+        )}
       </View>
       <SubText fontSize={12}>{timeRelative(createdAt)} ago</SubText>
     </View>
@@ -99,4 +109,5 @@ const makeStyles = (theme: ColorsDTO) =>
     userName: { marginRight: 8 },
     linksContainer: { marginLeft: 6 },
     subContainer: { flexDirection: 'row', alignItems: 'center' },
+    lock: { marginHorizontal: 6 },
   });

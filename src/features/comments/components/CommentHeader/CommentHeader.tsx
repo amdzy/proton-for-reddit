@@ -1,11 +1,12 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Avatar, SubText } from '@/components';
+import { Avatar, Icon, SubText } from '@/components';
 import { timeRelative } from '@/utils';
 import { useSettingsStore } from '@/stores';
 import { CommentFlairs } from '../CommentFlairs/CommentFlairs';
 import { CommentScore } from '../CommentScore/CommentScore';
 import { CommentAuthor } from '../CommentAuthor/CommentAuthor';
+import { useTheme } from '@/hooks';
 
 interface Props {
   author: string;
@@ -18,6 +19,7 @@ interface Props {
   voted: boolean | null;
   isSticked: boolean;
   isSubmitter: boolean;
+  isLocked: boolean;
 }
 
 export function CommentHeader({
@@ -31,8 +33,11 @@ export function CommentHeader({
   voted,
   isSticked,
   isSubmitter,
+  isLocked,
 }: Props) {
   const avatarVisible = useSettingsStore((state) => state.comments.avatar);
+  const theme = useTheme();
+
   return (
     <View style={styles.container}>
       <View style={styles.rowContainer}>
@@ -54,6 +59,14 @@ export function CommentHeader({
           text={flairText}
           richText={flairRichText}
         />
+        {isLocked && (
+          <Icon
+            icon="lock"
+            size={13}
+            color={theme.highlight}
+            style={styles.lock}
+          />
+        )}
       </View>
       <View style={styles.rowContainer}>
         <CommentScore score={score} scoreHidden={scoreHidden} voted={voted} />
@@ -76,4 +89,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   marginRight: { marginRight: 6 },
+  lock: { marginHorizontal: 6 },
 });

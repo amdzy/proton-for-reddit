@@ -117,6 +117,7 @@ export function Comment({ data, kind, fullName, sub, id }: Props) {
               voted={comment.likes}
               isSticked={comment.stickied}
               isSubmitter={comment.is_submitter}
+              isLocked={comment.locked}
             />
             {awards && <Awards awards={comment.all_awardings} />}
             <CommentText text={comment.body} />
