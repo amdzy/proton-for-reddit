@@ -10,6 +10,7 @@ import { useTheme } from '@/hooks';
 
 interface Props {
   author: string;
+  avatar: string;
   score: number;
   date: number;
   flairType: string;
@@ -24,6 +25,7 @@ interface Props {
 
 export function CommentHeader({
   author,
+  avatar,
   score,
   date,
   flairType,
@@ -43,7 +45,7 @@ export function CommentHeader({
       <View style={styles.rowContainer}>
         {avatarVisible && (
           <Avatar
-            image={undefined}
+            image={avatar}
             size={18}
             placeholder="user"
             style={styles.marginRight}

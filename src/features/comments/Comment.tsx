@@ -108,6 +108,7 @@ export function Comment({ data, kind, fullName, sub, id }: Props) {
           >
             <CommentHeader
               author={comment.author}
+              avatar={comment.profile_img}
               score={comment.score}
               date={comment.created_utc}
               flairType={comment.author_flair_type}

@@ -7,6 +7,9 @@ const fetchComments = async ({ queryKey }: any): Promise<any> => {
 
   const res = await axios({
     url: `/r/${sub}/comments/${id}`,
+    params: {
+      profile_img: true,
+    },
   });
   return res;
 };
