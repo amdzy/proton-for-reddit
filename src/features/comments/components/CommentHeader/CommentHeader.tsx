@@ -1,10 +1,11 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Avatar, HighlightedText, SubText } from '@/components';
+import { Avatar, SubText } from '@/components';
 import { timeRelative } from '@/utils';
 import { useSettingsStore } from '@/stores';
 import { CommentFlairs } from '../CommentFlairs/CommentFlairs';
 import { CommentScore } from '../CommentScore/CommentScore';
+import { CommentAuthor } from '../CommentAuthor/CommentAuthor';
 
 interface Props {
   author: string;
@@ -15,6 +16,8 @@ interface Props {
   flairRichText: Array<{ u: string }> | [];
   scoreHidden: boolean;
   voted: boolean | null;
+  isSticked: boolean;
+  isSubmitter: boolean;
 }
 
 export function CommentHeader({
@@ -26,6 +29,8 @@ export function CommentHeader({
   flairRichText,
   scoreHidden,
   voted,
+  isSticked,
+  isSubmitter,
 }: Props) {
   const avatarVisible = useSettingsStore((state) => state.comments.avatar);
   return (
@@ -39,7 +44,11 @@ export function CommentHeader({
             style={styles.marginRight}
           />
         )}
-        <HighlightedText style={styles.marginRight}>{author}</HighlightedText>
+        <CommentAuthor
+          author={author}
+          isSticked={isSticked}
+          isSubmitter={isSubmitter}
+        />
         <CommentFlairs
           type={flairType}
           text={flairText}

@@ -115,6 +115,8 @@ export function Comment({ data, kind, fullName, sub, id }: Props) {
               flairRichText={comment.author_flair_richtext}
               scoreHidden={comment.score_hidden}
               voted={comment.likes}
+              isSticked={comment.stickied}
+              isSubmitter={comment.is_submitter}
             />
             {awards && <Awards awards={comment.all_awardings} />}
             <CommentText text={comment.body} />

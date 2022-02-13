@@ -14,6 +14,5 @@ export const fetchMoreComments = async (
       profile_img: true,
     },
   });
-  // console.log(res);
   return res;
 };

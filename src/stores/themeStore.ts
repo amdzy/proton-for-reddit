@@ -46,7 +46,7 @@ export const useThemeStore = create<StoreProps>(
           upvote: '#FF4500',
           downvote: '#7193FF',
           error: '#cc3700',
-          announcement: '#64ffda',
+          announcement: '#46D160',
         },
         light: {
           primary: '#64ffda',
@@ -62,7 +62,7 @@ export const useThemeStore = create<StoreProps>(
           upvote: '#FF4500',
           downvote: '#7193FF',
           error: '#cc3700',
-          announcement: '#64ffda',
+          announcement: '#46D160',
         },
       },
       theme: 'dark',
