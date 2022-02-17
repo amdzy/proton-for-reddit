@@ -37,7 +37,7 @@ const makeStyles = (theme: ColorsDTO) =>
       fontSize: 13,
     },
     submitter: {
-      color: theme.text,
+      color: theme.background,
       backgroundColor: theme.highlight,
       padding: 2,
       borderRadius: 3,

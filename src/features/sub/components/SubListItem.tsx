@@ -1,6 +1,6 @@
 import React from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
-import { Avatar, Spacer, Text } from '@/components';
+import { Avatar, Text } from '@/components';
 import { SubscriptionBtn } from './SubscriptionBtn';
 
 interface Props {
@@ -44,8 +44,8 @@ export function SubListItem({
             subscribed
             size={24}
           />
-          <Spacer size={16} horizontal />
-          {/* <IconButton icon="dots-vertical" color={theme.text} /> */}
+          {/* <Spacer size={16} horizontal />
+          <IconButton icon="dots-vertical" color={theme.text} /> */}
         </View>
       )}
     </View>

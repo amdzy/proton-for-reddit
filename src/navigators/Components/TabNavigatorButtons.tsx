@@ -24,7 +24,6 @@ export function TabNavigatorButtons({ navigation, page }: Props) {
         <IconButton
           color={theme.text}
           icon="sort-variant"
-          style={styles.icon}
           onPress={openModal}
         />
       </View>

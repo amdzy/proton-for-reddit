@@ -50,7 +50,7 @@ export function SubscriptionBtn({
     if (subscribeMutation.isError) {
       setIsSubscribed(subscribed);
     }
-  }, [subscribeMutation.isError]);
+  }, [subscribeMutation.isError, subscribed]);
 
   return isSubscribed ? (
     <IconButton
