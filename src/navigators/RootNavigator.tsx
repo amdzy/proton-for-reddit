@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Button, View } from 'react-native';
 import {
   CommentsScreen,
   ImageScreen,
@@ -13,9 +12,9 @@ import { SearchBar } from '@/features/search';
 import { SettingsStack } from './SettingsStack';
 import { DrawerNav } from './DrawerNav';
 import { useSettingsStore } from '@/stores';
-import { Text } from '@/components';
 import { TabNavigatorButtons } from './Components/TabNavigatorButtons';
 import { HeaderTitle } from './Components/HeaderTitle';
+import { SearchScreen } from '@/screens/Search';
 
 const Stack = createNativeStackNavigator();
 
@@ -69,10 +68,10 @@ export function RootNavigator() {
         />
         <Stack.Screen
           name="Search"
-          component={SecondScreen}
+          component={SearchScreen}
           options={{
             headerTitle: () => <SearchBar />,
-            headerBackTitleVisible: false,
+            headerBackVisible: false,
           }}
         />
         <Stack.Screen
@@ -97,14 +96,5 @@ export function RootNavigator() {
         {SettingsStack()}
       </Stack.Navigator>
     </NavigationContainer>
-  );
-}
-
-function SecondScreen({ navigation }: any) {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Second Screen</Text>
-      <Button title="button" onPress={() => navigation.navigate('Images')} />
-    </View>
   );
 }
