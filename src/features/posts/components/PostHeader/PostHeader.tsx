@@ -50,7 +50,7 @@ export function PostHeader({
     if (!postSettings.tapUser) {
       return;
     }
-    navigation.navigate('Profile', { name: author });
+    navigation.navigate('UsersProfile', { name: author });
   };
 
   return (

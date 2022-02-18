@@ -21,6 +21,10 @@ export function SearchScreen({ navigation }: any) {
     navigation.navigate('SearchPosts', { query: searchVal });
   };
 
+  const handleUserRedirect = () => {
+    navigation.navigate('SearchUsers', { query: searchVal });
+  };
+
   if (!searchVal && searchHistory.length) {
     return (
       <FlatList
@@ -52,7 +56,11 @@ export function SearchScreen({ navigation }: any) {
               icon="post"
               onPress={handlePostRedirect}
             />
-            <ListItem text={`Users with ${searchVal}`} icon="account-circle" />
+            <ListItem
+              text={`Users with ${searchVal}`}
+              icon="account-circle"
+              onPress={handleUserRedirect}
+            />
             <SubText style={styles.commText}>Communities</SubText>
           </View>
         )}

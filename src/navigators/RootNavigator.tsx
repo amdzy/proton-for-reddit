@@ -5,8 +5,10 @@ import {
   CommentsScreen,
   ImageScreen,
   PostSearchScreen,
+  ProfileScreen,
   SearchScreen,
   SubredditScreen,
+  UserSearchScreen,
   VideoScreen,
 } from '@/screens';
 import { useTheme } from '@/hooks';
@@ -68,6 +70,15 @@ export function RootNavigator() {
           initialParams={{ sub: '' }}
         />
         <Stack.Screen
+          name="UsersProfile"
+          component={ProfileScreen}
+          options={({ route }: any) => ({
+            headerShadowVisible: false,
+            headerTitle: route.params.name,
+          })}
+          initialParams={{ name: '' }}
+        />
+        <Stack.Screen
           name="Search"
           component={SearchScreen}
           options={{
@@ -78,6 +89,15 @@ export function RootNavigator() {
         <Stack.Screen
           name="SearchPosts"
           component={PostSearchScreen}
+          options={({ route }: any) => ({
+            headerShadowVisible: false,
+            headerTitle: route.params?.query,
+          })}
+          initialParams={{ query: '' }}
+        />
+        <Stack.Screen
+          name="SearchUsers"
+          component={UserSearchScreen}
           options={({ route }: any) => ({
             headerShadowVisible: false,
             headerTitle: route.params?.query,
