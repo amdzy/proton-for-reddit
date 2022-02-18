@@ -25,10 +25,8 @@ export function SubredditScreen({ route }: Props) {
   const [refreshing, setIsRefreshing] = useState(false);
 
   useEffect(() => {
-    if (refreshing) {
-      if (postsQuery.isRefetching === false) {
-        setIsRefreshing(false);
-      }
+    if (refreshing && !postsQuery.isRefetching) {
+      setIsRefreshing(false);
     }
   }, [postsQuery.isRefetching, refreshing]);
 

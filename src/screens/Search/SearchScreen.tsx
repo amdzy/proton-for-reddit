@@ -6,7 +6,7 @@ import { CommunitiesList, SearchHistory } from '@/features/search';
 import { ListItem, SubText } from '@/components';
 import { useSearchCommunities } from '@/features/search/api/searchCommunities';
 
-export function SearchScreen() {
+export function SearchScreen({ navigation }: any) {
   const searchVal = useSearchStore((state) => state.search);
   const searchHistory = useSearchStore((state) => state.searchHistory);
   const searchQuery = useSearchCommunities(searchVal);
@@ -16,6 +16,10 @@ export function SearchScreen() {
       searchQuery.refetch();
     }
   }, [searchVal]);
+
+  const handlePostRedirect = () => {
+    navigation.navigate('SearchPosts', { query: searchVal });
+  };
 
   if (!searchVal && searchHistory.length) {
     return (
@@ -43,7 +47,11 @@ export function SearchScreen() {
         )}
         ListHeaderComponent={() => (
           <View>
-            <ListItem text={`Posts with ${searchVal}`} icon="post" />
+            <ListItem
+              text={`Posts with ${searchVal}`}
+              icon="post"
+              onPress={handlePostRedirect}
+            />
             <ListItem text={`Users with ${searchVal}`} icon="account-circle" />
             <SubText style={styles.commText}>Communities</SubText>
           </View>

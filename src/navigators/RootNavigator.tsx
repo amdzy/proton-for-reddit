@@ -4,6 +4,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {
   CommentsScreen,
   ImageScreen,
+  PostSearchScreen,
+  SearchScreen,
   SubredditScreen,
   VideoScreen,
 } from '@/screens';
@@ -14,7 +16,6 @@ import { DrawerNav } from './DrawerNav';
 import { useSettingsStore } from '@/stores';
 import { TabNavigatorButtons } from './Components/TabNavigatorButtons';
 import { HeaderTitle } from './Components/HeaderTitle';
-import { SearchScreen } from '@/screens/Search';
 
 const Stack = createNativeStackNavigator();
 
@@ -73,6 +74,15 @@ export function RootNavigator() {
             headerTitle: () => <SearchBar />,
             headerBackVisible: false,
           }}
+        />
+        <Stack.Screen
+          name="SearchPosts"
+          component={PostSearchScreen}
+          options={({ route }: any) => ({
+            headerShadowVisible: false,
+            headerTitle: route.params?.query,
+          })}
+          initialParams={{ query: '' }}
         />
         <Stack.Screen
           name="Video"
