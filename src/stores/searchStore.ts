@@ -10,7 +10,7 @@ interface StoreState {
 
 export const useSearchStore = create<StoreState>((set) => ({
   search: '',
-  searchHistory: ['history', 'cats'],
+  searchHistory: ['cats'],
   setSearch: (val) => set(() => ({ search: val })),
   setSearchHistory: (val) =>
     set((state) => ({

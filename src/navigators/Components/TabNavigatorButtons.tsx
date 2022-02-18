@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { IconButton } from '@/components';
 import { FeedSortModal, PageSortModal } from '@/features/sort';
 import { useModal, useTheme } from '@/hooks';
+import { useSearchStore } from '@/stores';
 
 interface Props {
   navigation: any;
@@ -12,6 +13,12 @@ interface Props {
 export function TabNavigatorButtons({ navigation, page }: Props) {
   const theme = useTheme();
   const { isModalOpen, openModal, closeModal } = useModal();
+  const setSearch = useSearchStore((state) => state.setSearch);
+
+  const handleSearchPress = () => {
+    setSearch('');
+    navigation.navigate('Search');
+  };
   return (
     <>
       <View style={styles.row}>
@@ -19,7 +26,7 @@ export function TabNavigatorButtons({ navigation, page }: Props) {
           color={theme.text}
           icon="magnify"
           style={styles.icon}
-          onPress={() => navigation.navigate('Search')}
+          onPress={handleSearchPress}
         />
         <IconButton
           color={theme.text}

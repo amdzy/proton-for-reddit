@@ -34,21 +34,26 @@ export function UserSearchScreen({ route, navigation }: any) {
   }, [usersQuery]);
 
   const renderItemMemoized = useCallback(
-    ({ item }) => (
-      <ListItem
-        text={item.data.name}
-        left={
-          <Avatar
-            image={item.data?.snoovatar_img || item.data?.icon_img}
-            size={35}
-            placeholder="user"
-          />
-        }
-        onPress={() => {
-          navigation.navigate('UsersProfile', { name: item.data.name });
-        }}
-      />
-    ),
+    ({ item }) => {
+      if (item.data.is_suspended) {
+        return null;
+      }
+      return (
+        <ListItem
+          text={item.data.name}
+          left={
+            <Avatar
+              image={item.data?.snoovatar_img || item.data?.icon_img}
+              size={35}
+              placeholder="user"
+            />
+          }
+          onPress={() => {
+            navigation.navigate('UsersProfile', { name: item.data.name });
+          }}
+        />
+      );
+    },
     [navigation]
   );
 
@@ -67,7 +72,7 @@ export function UserSearchScreen({ route, navigation }: any) {
       ref={flatlistRef}
       renderItem={renderItemMemoized}
       data={usersQuery.data?.children}
-      keyExtractor={(item) => item.data.id}
+      keyExtractor={(item, i) => item.data.id + i}
       style={{ width: '100%' }}
       showsVerticalScrollIndicator={false}
       refreshing={refreshing}

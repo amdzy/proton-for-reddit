@@ -9,6 +9,7 @@ import { useSearchCommunities } from '@/features/search/api/searchCommunities';
 export function SearchScreen({ navigation }: any) {
   const searchVal = useSearchStore((state) => state.search);
   const searchHistory = useSearchStore((state) => state.searchHistory);
+  const setSearchHistory = useSearchStore((state) => state.setSearchHistory);
   const searchQuery = useSearchCommunities(searchVal);
 
   useEffect(() => {
@@ -18,10 +19,12 @@ export function SearchScreen({ navigation }: any) {
   }, [searchVal]);
 
   const handlePostRedirect = () => {
+    setSearchHistory(searchVal);
     navigation.navigate('SearchPosts', { query: searchVal });
   };
 
   const handleUserRedirect = () => {
+    setSearchHistory(searchVal);
     navigation.navigate('SearchUsers', { query: searchVal });
   };
 
