@@ -17,7 +17,7 @@ and many more features to come
 
 ## Run your own
 ```
-git clone https://github.com/Soul-Remix/proton-for-reddit.git
+git clone https://github.com/amdzy/proton-for-reddit.git
 cd proton-for-reddit
 npm install
 ```
